@@ -1,0 +1,14 @@
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.sendStatus(401);
+
+  try {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
+    next();
+  } catch {
+    return res.sendStatus(401);
+  }
+}
