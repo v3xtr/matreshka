@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { GetProfileSchema, UpdateProfileSchema } from '../../internal/validation/profile.validation.js'
-import { IProfileController } from './interfaces/profile.controller.interface.js'
+import { IProfileController } from './interfaces/profile.interface.service.js'
 import { IProfileService } from '../../internal/interfaces/profile.service.interface.js'
 import { User } from 'src/prisma/index.js'
 import { logger } from '#internal/adapter/logger/logger.js'
@@ -25,8 +25,8 @@ export class ProfileController implements IProfileController{
     }
 
     async updateProfile(req: Request, res: Response): Promise<Response>{
+        console.log("request body", req.body)
         logger.info("request body", req.body)
-
         const result = await UpdateProfileSchema.safeParseAsync(req.body)
 
         if(!result.success){
@@ -35,10 +35,8 @@ export class ProfileController implements IProfileController{
         }
 
         const user: TypeUserWithoutPassword = await this.profileService.updateUser(result.data)
-        
         logger.info(user)
         logger.info("Пользователь успешно обновил профиль")
-        
         return res.json({ message: "Профиль был успешно обновлен", user})
     }
 }
