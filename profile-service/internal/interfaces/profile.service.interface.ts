@@ -5,4 +5,5 @@ import { User } from "src/prisma/index.js";
 export interface IProfileService{
     getUser(id: string): Promise<TypeUserWithoutPassword | null>
     createUser(user: User): Promise<User>
-    updateUser(user: UpdateProfileRequest): Promise<TypeUserWithoutPassword>}
+    updateUser(user: UpdateProfileRequest): Promise<TypeUserWithoutPassword>
+}
