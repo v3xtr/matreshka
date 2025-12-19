@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { GetProfileSchema, UpdateProfileSchema } from '../../internal/validation/profile.validation.js'
-import { IProfileController } from './interfaces/profile.interface.controller.js'
+import { IProfileController } from './interfaces/profile.controller.interface.js'
 import { IProfileService } from '../../internal/interfaces/profile.service.interface.js'
 import { User } from 'src/prisma/index.js'
 import { logger } from '#internal/adapter/logger/logger.js'
