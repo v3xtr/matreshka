@@ -5,7 +5,7 @@ import { ProfileRepo } from "#internal/repo/repo.js";
 import { logger } from "#internal/adapter/logger/logger.js";
 import { IRabbitConsumer } from "#internal/interfaces/rabbit.consumer.interface.js";
 
-export class RabbitConsumer implements IRabbitConsumer {
+export class RabbitConsumer implements IRabbitConsumer{
   private profileService = new ProfileService(new ProfileRepo(prisma));
 
   async startConsumer(channel: Channel): Promise<void> {
