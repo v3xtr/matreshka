@@ -5,9 +5,7 @@ import { UpdateProfileRequest } from "#internal/validation/profile.validation.js
 import { User } from "src/prisma/index.js";
 
 export class ProfileService implements IProfileService{
-    constructor(
-        private readonly profileRepo: IProfileRepo
-    ){}
+    constructor(private readonly profileRepo: IProfileRepo){}
 
     async getUser(id: string): Promise<TypeUserWithoutPassword | null>{
         const responseUser = await this.profileRepo.get(id);
