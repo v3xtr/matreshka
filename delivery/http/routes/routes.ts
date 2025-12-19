@@ -1,6 +1,6 @@
 import { router } from '../../../internal/adapter/router/router.js'
 import { IProfileService } from '../../../internal/interfaces/profile.service.interface.js'
-import { IProfileController } from '../interfaces/profile.interface.service.js'
+import { IProfileController } from '../interfaces/profile.interface.controller.js'
 import { IProfileRepo } from '../../../internal/interfaces/profile.repo.interface.js'
 import { ProfileController } from '../profile.controller.js'
 import { ProfileService } from '../../../internal/services/profile.service.js'
