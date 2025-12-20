@@ -40,9 +40,7 @@ export class ProfileController implements IProfileController{
 
     async updateAvatar(req: Request, res: Response): Promise<Response>{
         const { id, avatar } = req.body
-
-        console.log(`${process.env.AWS_BUCKET_NAME}`, `${process.env.AWS_BUCKET_URL}`)
-
+        
         if (!avatar || !avatar.startsWith("data:image")) {
             return res.status(400).send("Некорректные данные изображения");
         }

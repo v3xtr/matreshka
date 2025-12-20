@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json({ limit: '100mb' }));
 app.use(cookieParser())
 app.use((req, _, next) => {
-    console.log("REQUEST", req.method, req.path, req.body);
+    logger.info("REQUEST", req.method, req.path, req.body);
     next();
 });
 
