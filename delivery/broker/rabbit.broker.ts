@@ -4,9 +4,10 @@ import { prisma } from "#internal/adapter/prisma/prisma.js";
 import { ProfileRepo } from "#internal/repo/repo.js";
 import { logger } from "#internal/adapter/logger/logger.js";
 import { IRabbitConsumer } from "#internal/interfaces/rabbit.consumer.interface.js";
+import { s3 } from "#internal/adapter/bucket/bucket.js";
 
 export class RabbitConsumer implements IRabbitConsumer{
-  private profileService = new ProfileService(new ProfileRepo(prisma));
+  private profileService = new ProfileService(new ProfileRepo(prisma), s3);
 
   async startConsumer(channel: Channel): Promise<void> {
     await channel.assertQueue("user", {
