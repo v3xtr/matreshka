@@ -4,6 +4,8 @@ import { TypeUserWithoutPassword } from "#internal/types/user.type.js";
 import { UpdateProfileRequest } from "#internal/validation/profile.validation.js";
 import { PutObjectCommand, DeleteObjectCommand, S3 } from "@aws-sdk/client-s3";
 import { User } from "src/prisma/index.js";
+import { v4 } from 'uuid'
+
 
 export class ProfileService implements IProfileService {
     constructor(
@@ -23,7 +25,7 @@ export class ProfileService implements IProfileService {
     }
 
     async #uploadAvatar(avatarBuffer: Buffer): Promise<string> {
-        const key = `avatars/${Date.now()}.png`;
+        const key = `avatars/${v4()}.png`;
 
         const command = new PutObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME as string,
