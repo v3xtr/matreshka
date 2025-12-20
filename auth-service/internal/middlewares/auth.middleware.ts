@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../adapter/prisma/prisma.js';
 import { AuthRepo } from '../repo/auth.repo.js';
+import { logger } from '#internal/adapter/logger/logger.js';
 
 declare global {
   namespace Express {
@@ -45,7 +46,7 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
       req.user = { id: decoded.id, email: decoded.email };
       return next();
     } catch (accessError) {
-      console.log('Access token invalid, trying refresh token');
+      logger.error('Access token invalid, trying refresh token');
     }
   }
 

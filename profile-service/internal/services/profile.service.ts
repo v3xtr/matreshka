@@ -22,8 +22,8 @@ export class ProfileService implements IProfileService {
         await this.s3.send(command);
     }
 
-    async #uploadAvatar(id: string, avatarBuffer: Buffer): Promise<string> {
-        const key = `avatars/${id}-${Date.now()}.png`;
+    async #uploadAvatar(avatarBuffer: Buffer): Promise<string> {
+        const key = `avatars/${Date.now()}.png`;
 
         const command = new PutObjectCommand({
             Bucket: process.env.AWS_BUCKET_NAME as string,
@@ -69,7 +69,7 @@ export class ProfileService implements IProfileService {
         const base64Data = avatarBase64.split(",")[1];
         const avatarBuffer = Buffer.from(base64Data, "base64");
 
-        const avatarUrl = await this.#uploadAvatar(user.id, avatarBuffer);
+        const avatarUrl = await this.#uploadAvatar(avatarBuffer);
 
         await this.profileRepo.updateAvatar(id, avatarUrl);
 

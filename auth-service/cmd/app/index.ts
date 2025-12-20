@@ -5,10 +5,8 @@ import authRoutes from '../../delivery/http/routes/auth.routes.js'
 import cookieParser from 'cookie-parser'
 import { logger } from 'internal/adapter/logger/logger.js'
 import { errorHandler } from '../../internal/middlewares/error.middleware.js'
-dotenv.config()
 
-console.log('ACCESS_TOKEN_SECRET:', process.env.ACCESS_TOKEN_SECRET);
-console.log('REFRESH_TOKEN_SECRET:', process.env.REFRESH_TOKEN_SECRET);
+dotenv.config()
 
 const app = express()
 app.use(cors())

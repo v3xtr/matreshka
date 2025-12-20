@@ -26,7 +26,6 @@ export class AuthController implements IAuthController{
             secure: false
         })
         
-        console.log(accessToken, refreshToken)
         return res.json({ message: "Вы зарегестрировались", user })
     }
 

@@ -31,8 +31,8 @@ export class ProfileRepo implements IProfileRepo{
                 description: data.description ?? ""
             }
          });
-        console.log(user)
-        return user;
+
+         return user;
     }
 
     async updateAvatar(id: string, avatarUrl: string): Promise<User>{
