@@ -35,5 +35,10 @@ export class ProfileRepo implements IProfileRepo{
         return user;
     }
 
-
+    async updateAvatar(id: string, avatarUrl: string): Promise<User>{
+        return this.prisma.user.update({
+            where: { id },
+            data: { avatarUrl }
+        })
     }
+}

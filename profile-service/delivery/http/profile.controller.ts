@@ -1,10 +1,9 @@
 import { Request, Response } from 'express'
 import { GetProfileSchema, UpdateProfileSchema } from '../../internal/validation/profile.validation.js'
-import { IProfileController } from './interfaces/profile.interface.service.js'
 import { IProfileService } from '../../internal/interfaces/profile.service.interface.js'
-import { User } from 'src/prisma/index.js'
 import { logger } from '#internal/adapter/logger/logger.js'
 import { TypeUserWithoutPassword } from '#internal/types/user.type.js'
+import { IProfileController } from './interfaces/profile.controller.interface.js'
 
 export class ProfileController implements IProfileController{
     constructor(private readonly profileService: IProfileService){}
@@ -25,7 +24,6 @@ export class ProfileController implements IProfileController{
     }
 
     async updateProfile(req: Request, res: Response): Promise<Response>{
-        console.log("request body", req.body)
         logger.info("request body", req.body)
         const result = await UpdateProfileSchema.safeParseAsync(req.body)
 
@@ -38,5 +36,19 @@ export class ProfileController implements IProfileController{
         logger.info(user)
         logger.info("Пользователь успешно обновил профиль")
         return res.json({ message: "Профиль был успешно обновлен", user})
+    }
+
+    async updateAvatar(req: Request, res: Response): Promise<Response>{
+        const { id, avatar } = req.body
+
+        console.log(`${process.env.AWS_BUCKET_NAME}`, `${process.env.AWS_BUCKET_URL}`)
+
+        if (!avatar || !avatar.startsWith("data:image")) {
+            return res.status(400).send("Некорректные данные изображения");
+        }
+
+        const avatarUrl: string = await this.profileService.updateAvatar(id, avatar)
+        
+        return res.json({ message: "Аватарка была успешно обновлена", avatarUrl })
     }
 }

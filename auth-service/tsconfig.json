@@ -28,7 +28,7 @@
     "pkg/**/*",
     "services/**/*",
     "prisma.config.ts"
-  ],
+, "delivery/http/interfaces/auth.controller.interface.ts"  ],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
     "esm": true

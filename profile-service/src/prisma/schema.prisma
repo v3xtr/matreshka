@@ -15,4 +15,5 @@ model User {
   name        String
   city        String? @default("")
   description String  @default("")
+  avatarUrl   String  @default("")
 }
