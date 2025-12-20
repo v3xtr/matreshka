@@ -14,5 +14,6 @@ model User {
   phone       String
   name        String
   city        String? @default("")
-  description String @default("")
+  description String  @default("")
+  avatarUrl   String  @default("")
 }

@@ -6,4 +6,5 @@ export interface IProfileService{
     getUser(id: string): Promise<TypeUserWithoutPassword | null>
     createUser(user: User): Promise<User>
     updateUser(user: UpdateProfileRequest): Promise<TypeUserWithoutPassword>
+    updateAvatar(id: string, avatarBase64: string): Promise<string> 
 }
