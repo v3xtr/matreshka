@@ -62,7 +62,7 @@ export class ProfileService implements IProfileService {
         if (!user) throw new Error("Пользователь не найден");
 
         if (user.avatarUrl) {
-            const oldKey = user.avatarUrl.replace(`${process.env.AWS_BUCKER_URL}/${process.env.AWS_BUCKET_NAME}/`, "");
+            const oldKey = user.avatarUrl.replace(`${process.env.AWS_BUCKET_URL}/${process.env.AWS_BUCKET_NAME}/`, "");
             await this.#deleteOldAvatar(oldKey);
         }
 
