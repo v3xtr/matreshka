@@ -9,6 +9,7 @@ import { errorHandler } from '../../internal/middlewares/error.middleware.js'
 dotenv.config()
 
 const app = express()
+
 app.use(cors())
 
 app.use(express.json())
