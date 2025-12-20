@@ -1,5 +1,4 @@
 import { Channel } from "amqplib";
-import { s3 } from "#internal/adapter/bucket/bucket.js";
 import { IRabbitConsumer } from "./interfaces/rabbit.interface";
 import { VideoRepo } from "#internal/repo/video.repo";
 import { prisma } from "#internal/adapter/prisma/prisma";
