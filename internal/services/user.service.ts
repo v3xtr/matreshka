@@ -1,6 +1,6 @@
 import { IUserRepo } from "#internal/interfaces/user.repo.interface.js";
 import { User } from "src/prisma/index.js";
-import { IUserService } from "../interfaces/video.service.interface.js";
+import { IUserService } from "../interfaces/user.service.interface.js";
 
 export class UserService implements IUserService{
     constructor (private readonly userRepo: IUserRepo){}
