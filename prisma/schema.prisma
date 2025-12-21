@@ -15,3 +15,36 @@ model User {
   name        String
   description String @default("")
 }
+
+model Video {
+  id           String   @id @default(cuid())
+  originalName String
+  fileName     String   @unique
+  s3Key        String   @unique
+  url          String
+  thumbnailUrl String?
+  size         Int
+  duration     Int?
+  mimeType     String
+  resolution   String?
+  status       VideoStatus @default(UPLOADING)
+  userId       String
+  uploadedAt   DateTime @default(now())
+  processedAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([uploadedAt])
+  @@index([createdAt])
+  @@map("videos")
+}
+
+enum VideoStatus {
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+  DELETED
+}

@@ -2,8 +2,8 @@ import { Channel, ConsumeMessage } from "amqplib";
 import { IRabbitConsumer } from "./interfaces/rabbit.interface.js";
 import { prisma } from "#internal/adapter/prisma/prisma.js";
 import { logger } from "#internal/adapter/logger/logger.js";
-import { UserService } from "#internal/services/video.service.js";
-import { IUserService } from "#internal/interfaces/video.service.interface.js";
+import { UserService } from "#internal/services/user.service.js";
+import { IUserService } from "#internal/interfaces/user.service.interface.js";
 import { UserRepo } from "#internal/repo/user.repo.js";
 
 const EXCHANGE = "user.created";

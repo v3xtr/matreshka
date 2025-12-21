@@ -129,6 +129,25 @@ exports.Prisma.UserScalarFieldEnum = {
   description: 'description'
 };
 
+exports.Prisma.VideoScalarFieldEnum = {
+  id: 'id',
+  originalName: 'originalName',
+  fileName: 'fileName',
+  s3Key: 's3Key',
+  url: 'url',
+  thumbnailUrl: 'thumbnailUrl',
+  size: 'size',
+  duration: 'duration',
+  mimeType: 'mimeType',
+  resolution: 'resolution',
+  status: 'status',
+  userId: 'userId',
+  uploadedAt: 'uploadedAt',
+  processedAt: 'processedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -139,9 +158,21 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.VideoStatus = exports.$Enums.VideoStatus = {
+  UPLOADING: 'UPLOADING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED',
+  DELETED: 'DELETED'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Video: 'Video'
 };
 
 /**
