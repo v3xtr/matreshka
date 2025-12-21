@@ -12,8 +12,10 @@ export class ProfileRepo implements IProfileRepo{
     }
 
     async create(data: User): Promise<User>{
-        return this.prisma.user.create({
-            data
+        return this.prisma.user.upsert({
+            where: { id: data.id },
+            update: data,
+            create: data
         })
     }
 
