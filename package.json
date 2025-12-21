@@ -17,7 +17,8 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/pg": "^8.16.0",
-    "tsup": "^8.5.1"
+    "tsup": "^8.5.1",
+    "video-service": "link:"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.956.0",
