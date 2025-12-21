@@ -1,7 +1,7 @@
 import { RabbitConnection } from './internal/adapter/rabbit/rabbit.js'
 import { RabbitConsumer } from './delivery/broker/rabbit.broker.js'
 import { Channel } from 'amqplib'
-import { logger } from '#internal/adapter/logger/logger.js'
+import { logger } from './internal/adapter/logger/logger.js'
 
 export async function bootstrap() {
     try {
