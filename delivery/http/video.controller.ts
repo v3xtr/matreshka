@@ -9,6 +9,10 @@ export class VideoController implements IVideoController {
         try {
             const userId = req.body.userId;
             
+            if(!req.file){
+                return res.status(400).json({ message: "Вы не загрузили Видео" })
+            }
+
             console.log('📦 Начало загрузки видео для пользователя:', userId);
             console.log('📄 Файл:', {
                 name: req.file!.originalname,
@@ -28,6 +32,7 @@ export class VideoController implements IVideoController {
             }
 
             const MAX_SIZE = 500 * 1024 * 1024;
+            
             if (req.file!.size > MAX_SIZE) {
                 return res.status(400).json({
                     error: `Файл слишком большой. Максимум: ${MAX_SIZE / 1024 / 1024}MB`

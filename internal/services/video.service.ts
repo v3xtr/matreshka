@@ -11,11 +11,7 @@ export class VideoService implements IVideoService {
         private readonly videoRepository: IVideoRepo
     ) {}
 
-    async uploadVideo(
-        userId: string,
-        file: Express.Multer.File,
-        onProgress?: (progress: number) => void
-    ): Promise<{ url: string; filename: string; videoId: string }> {
+    async uploadVideo(userId: string, file: Express.Multer.File, onProgress?: (progress: number) => void): Promise<{ url: string; filename: string; videoId: string }> {
         const filename = v4();
         const key = `videos/${userId}/${filename}`;
 
@@ -33,16 +29,21 @@ export class VideoService implements IVideoService {
         });
 
         if (onProgress) {
+            let lastPercent = 0;
             parallelUpload.on('httpUploadProgress', progress => {
                 if (progress.total) {
-                    const percent = Math.round((progress.loaded! / progress.total!) * 100);
-                    onProgress(percent);
+                    const percent = Math.floor((progress.loaded! / progress.total!) * 100);
+                    if (percent !== lastPercent) {   // вызываем только при изменении процента
+                        lastPercent = percent;
+                        onProgress(percent);
+                    }
                 }
             });
         }
 
         await parallelUpload.done();
-        const url = `${process.env.AWS_BUCKET_URL}/${process.env.AWS_BUCKET_NAME}/${key}`
+
+        const url = `${process.env.AWS_BUCKET_URL}/${process.env.AWS_BUCKET_NAME}/${key}`;
         const cdnUrl = `${process.env.CDN_URL}/${key}`;
 
         const video = await this.videoRepository.create({
