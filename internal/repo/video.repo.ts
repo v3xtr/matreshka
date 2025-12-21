@@ -12,6 +12,7 @@ export class VideoRepo implements IVideoRepo {
         fileName: string
         s3Key: string
         url: string
+        cdnUrl: string,
         size: number
         mimeType: string
         duration?: number
@@ -38,7 +39,7 @@ export class VideoRepo implements IVideoRepo {
                 userId,
                 status: { not: VideoStatus.DELETED }
             },
-            orderBy: { uploadedAt: 'desc' }
+            orderBy: { createdAt: 'desc' }
         })
     }
 

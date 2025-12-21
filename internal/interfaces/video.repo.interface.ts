@@ -7,6 +7,7 @@ export interface IVideoRepo {
         fileName: string
         s3Key: string
         url: string
+        cdnUrl: string,
         size: number
         mimeType: string
         duration?: number

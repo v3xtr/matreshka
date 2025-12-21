@@ -79,12 +79,12 @@ export class VideoController implements IVideoController {
 
     async getVideos(req: Request, res: Response): Promise<Response> {
         try {
-            const userId = (req as any).user?.id
-            if (!userId) {
+            const { id } = req.params
+            if (!id) {
                 return res.status(401).json({ error: 'Не авторизован' })
             }
 
-            const videos = await this.videoService.getUserVideos(userId)
+            const videos = await this.videoService.getUserVideos(id)
 
             return res.json({
                 success: true,

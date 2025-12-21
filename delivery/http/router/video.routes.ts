@@ -86,5 +86,6 @@ const handleUploadWithBusboy = (req: Request, res: Response, next: NextFunction)
 };
 
 router.post("/upload", handleUploadWithBusboy);
+router.get("/user/:id", videoController.getVideos.bind(videoController))
 
 export default router;
