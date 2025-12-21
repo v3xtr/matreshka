@@ -8,19 +8,26 @@ datasource db {
 }
 
 model User {
-  id          String @id
-  email       String @unique
+  id          String  @id @default(cuid())
+  email       String  @unique
   password    String
   phone       String
   name        String
-  description String @default("")
+  description String  @default("")
+  
+  videos      Video[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("users")
 }
 
 model Video {
-  id           String   @id @default(cuid())
+  id           String      @id @default(cuid())
   originalName String
-  fileName     String   @unique
-  s3Key        String   @unique
+  fileName     String      @unique
+  s3Key        String      @unique
   url          String
   thumbnailUrl String?
   size         Int
@@ -28,11 +35,14 @@ model Video {
   mimeType     String
   resolution   String?
   status       VideoStatus @default(UPLOADING)
+  
   userId       String
-  uploadedAt   DateTime @default(now())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  uploadedAt   DateTime    @default(now())
   processedAt  DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   
   @@index([userId])
   @@index([status])

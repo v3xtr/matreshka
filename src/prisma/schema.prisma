@@ -8,12 +8,19 @@ datasource db {
 }
 
 model User {
-  id          String @id
+  id          String @id @default(cuid())
   email       String @unique
   password    String
   phone       String
   name        String
   description String @default("")
+
+  videos Video[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model Video {
@@ -28,11 +35,14 @@ model Video {
   mimeType     String
   resolution   String?
   status       VideoStatus @default(UPLOADING)
-  userId       String
-  uploadedAt   DateTime    @default(now())
-  processedAt  DateTime?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  uploadedAt  DateTime  @default(now())
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([userId])
   @@index([status])
