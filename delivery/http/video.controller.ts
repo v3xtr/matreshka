@@ -14,8 +14,8 @@ export class VideoController implements IVideoController {
                 return res.status(400).json({ message: "Вы не загрузили Видео" })
             }
 
-            console.log('📦 Начало загрузки видео для пользователя:', userId);
-            console.log('📄 Файл:', {
+            logger.info('📦 Начало загрузки видео для пользователя:', userId);
+            logger.info('📄 Файл:', {
                 name: req.file!.originalname,
                 type: req.file!.mimetype,
                 size: req.file!.size
@@ -27,22 +27,18 @@ export class VideoController implements IVideoController {
             );
             
             if (!allowedExtensions.includes(fileExtension)) {
-                return res.status(400).json({ 
-                    error: `Неподдерживаемый формат файла. Разрешены: ${allowedExtensions.join(', ')}`
-                });
+                return res.status(400).json({ error: `Неподдерживаемый формат файла. Разрешены: ${allowedExtensions.join(', ')}` });
             }
 
             const MAX_SIZE = 500 * 1024 * 1024;
             
             if (req.file!.size > MAX_SIZE) {
-                return res.status(400).json({
-                    error: `Файл слишком большой. Максимум: ${MAX_SIZE / 1024 / 1024}MB`
-                });
+                return res.status(400).json({ error: `Файл слишком большой. Максимум: ${MAX_SIZE / 1024 / 1024}MB` });
             }
 
             const result = await this.videoService.uploadVideo(userId, req.file!)
 
-            console.log('✅ Видео успешно загружено для пользователя:', userId);
+            logger.info('✅ Видео успешно загружено для пользователя:', userId);
 
             return res.status(201).json({
                 success: true,
@@ -59,44 +55,35 @@ export class VideoController implements IVideoController {
             })
 
         } catch (error) {
-            console.error('💥 Upload error:', error)
+            logger.error('💥 Upload error:', error)
             
             const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка'
             
             if (errorMessage.includes('большой') || errorMessage.includes('размер')) {
-                return res.status(400).json({
-                    error: errorMessage
-                })
+                return res.status(400).json({ error: errorMessage })
             }
             
             if (errorMessage.includes('S3') || errorMessage.includes('bucket')) {
-                return res.status(500).json({
-                    error: 'Ошибка загрузки в облачное хранилище',
-                    details: errorMessage
-                })
+                return res.status(500).json({ error: 'Ошибка загрузки в облачное хранилище', details: errorMessage })
             }
 
-            return res.status(500).json({
-                error: 'Ошибка загрузки видео',
-                message: errorMessage
-            })
+            return res.status(500).json({ error: 'Ошибка загрузки видео', message: errorMessage})
         }
     }
 
     async getVideos(req: Request, res: Response): Promise<Response> {
         try {
             const { id } = req.params
+            
             if (!id) {
                 return res.status(401).json({ message: 'Не передан id' })
             }
 
             const videos = await this.videoService.getUserVideos(id)
+            
             logger.info("Videos", videos)
-            return res.json({
-                success: true,
-                count: videos?.length,
-                data: videos
-            })
+
+            return res.json({ success: true, count: videos?.length, data: videos })
 
         } catch (error) {
             logger.error('Ошибка при получении видео', error)

@@ -73,11 +73,7 @@ export class VideoService implements IVideoService {
         sizeMB: (file.size / 1024 / 1024).toFixed(2),
       });
 
-      return {
-        url: cdnUrl,
-        filename,
-        videoId: video.id,
-      };
+      return { url: cdnUrl, filename, videoId: video.id };
     } catch (error) {
       logger.error("Ошибка загрузки видео", {
         videoId: video.id,
@@ -110,7 +106,7 @@ export class VideoService implements IVideoService {
     return videos.filter(v => v.status === "READY");
   }
 
-  async deleteVideo(userId: string, videoId: string) {
+  async deleteVideo(userId: string, videoId: string): Promise<void> {
     const video = await this.videoRepository.findById(videoId);
 
     if (!video || video.userId !== userId) {
