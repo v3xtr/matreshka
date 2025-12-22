@@ -1,3 +1,4 @@
+import { logger } from "#internal/adapter/logger/logger.js";
 import { IVideoService } from "#internal/interfaces/video.service.interface.js";
 import { IVideoController } from "./interfaces/video.controller.interface.js";
 import { Request, Response } from 'express'
@@ -86,20 +87,37 @@ export class VideoController implements IVideoController {
         try {
             const { id } = req.params
             if (!id) {
-                return res.status(401).json({ error: 'Не авторизован' })
+                return res.status(401).json({ message: 'Не передан id' })
             }
 
             const videos = await this.videoService.getUserVideos(id)
-
+            logger.info("Videos", videos)
             return res.json({
                 success: true,
-                count: videos.length,
+                count: videos?.length,
                 data: videos
             })
 
         } catch (error) {
-            console.error('Get videos error:', error)
+            logger.error('Ошибка при получении видео', error)
             return res.status(500).json({ error: 'Ошибка получения видео' })
+        }
+    }
+
+    async deleteVideo(req: Request, res: Response): Promise<Response>{
+        try {
+            const { userId, videoId } = req.params
+
+            if(!userId || !videoId){
+                return res.status(401).json({ message: "не передан userId или videoId" })
+            }
+
+            await this.videoService.deleteVideo(userId, videoId)
+
+            return res.json({ message: "Видео было успешно удалено" })
+
+        } catch (error) {
+            return res.status(500).json({ error: "Ошибка удаления видео" })
         }
     }
 }
