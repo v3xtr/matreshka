@@ -61,7 +61,3 @@ export const loggerStream = {
     logger.info(message.trim());
   }
 }
-
-export const logInfo = (message: string, meta?: any) => logger.info(message, meta)
-export const logWarn = (message: string, meta?: any) => logger.warn(message, meta)
-export const logError = (message: string, meta?: any) => logger.error(message, meta)
