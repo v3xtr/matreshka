@@ -33,7 +33,7 @@ export class VideoService implements IVideoService {
             parallelUpload.on('httpUploadProgress', progress => {
                 if (progress.total) {
                     const percent = Math.floor((progress.loaded! / progress.total!) * 100);
-                    if (percent !== lastPercent) {   // вызываем только при изменении процента
+                    if (percent !== lastPercent) {
                         lastPercent = percent;
                         onProgress(percent);
                     }
