@@ -6,13 +6,13 @@ export class ProfileRepo implements IProfileRepo{
     constructor(private readonly prisma: PrismaClient){}
 
     async get(id: string): Promise<User | null>{
-        return this.prisma.user.findFirst({
+        return await this.prisma.user.findFirst({
             where: { id }
         })
     }
 
     async create(data: User): Promise<User>{
-        return this.prisma.user.upsert({
+        return await this.prisma.user.upsert({
             where: { id: data.id },
             update: data,
             create: data
@@ -38,7 +38,7 @@ export class ProfileRepo implements IProfileRepo{
     }
 
     async updateAvatar(id: string, avatarUrl: string): Promise<User>{
-        return this.prisma.user.update({
+        return await this.prisma.user.update({
             where: { id },
             data: { avatarUrl }
         })
