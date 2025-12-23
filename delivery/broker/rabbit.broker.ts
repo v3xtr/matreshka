@@ -33,7 +33,7 @@ export class RabbitConsumer implements IRabbitConsumer {
       arguments: {
         "x-message-ttl": RETRY_TTL,
         "x-dead-letter-exchange": "",
-        "x-dead-letter-routing-key": QUEUE,
+        "x-dead-letter-routing-key": QUEUE
       },
     });
 
@@ -43,7 +43,7 @@ export class RabbitConsumer implements IRabbitConsumer {
 
     await channel.prefetch(1);
 
-    channel.consume(QUEUE, (msg) => this.#handleMessage(channel, msg), { noAck: false });
+    channel.consume(QUEUE, msg => this.#handleMessage(channel, msg), { noAck: false });
 
     logger.info("userService Rabbit consumer started");
   }
@@ -70,7 +70,7 @@ export class RabbitConsumer implements IRabbitConsumer {
       if (retryCount >= RETRY_LIMIT) {
         channel.sendToQueue(DLQ, msg.content, {
           persistent: true,
-          headers: { ...msg.properties.headers, "x-error": error instanceof Error ? error.message : "unknown" },
+          headers: { ...msg.properties.headers, "x-error": error instanceof Error ? error.message : "unknown" }
         });
         channel.ack(msg);
         return;

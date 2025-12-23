@@ -5,7 +5,7 @@ export class UserRepo implements IUserRepo{
     constructor(private readonly prisma: PrismaClient){}
 
     async create(data: User): Promise<User>{
-        return this.prisma.user.upsert({
+        return await this.prisma.user.upsert({
             where: { id: data.id },
             update: data,
             create: data

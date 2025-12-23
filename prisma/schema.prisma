@@ -10,41 +10,39 @@ datasource db {
 model User {
   id          String  @id @default(cuid())
   email       String  @unique
-  password    String
-  phone       String
+  password    String  @default("")
+  phone       String  @default("")
   name        String
   description String  @default("")
 
   videos      Video[]
-  likes       VideoLike[]
-  comments    VideoComment[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("users")
 }
-
 model Video {
   id            String      @id @default(cuid())
   originalName  String
   fileName      String      @unique
   s3Key         String      @unique
+
   url           String
-  cdnUrl        String      @default("")
+  cdnUrl        String
   thumbnailUrl  String?
+
   size          Int
   duration      Int?
   mimeType      String
   resolution    String?
+
   status        VideoStatus @default(UPLOADING)
 
   userId        String
-  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id])
 
   description   String      @default("")
-  likesCount    Int         @default(0)
-  commentsCount Int         @default(0)
 
   publishedAt   DateTime?
   processedAt   DateTime?
@@ -52,56 +50,9 @@ model Video {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
-  likes         VideoLike[]
-  comments      VideoComment[]
-
   @@index([userId])
   @@index([status])
-  @@index([publishedAt])
-  @@index([likesCount])
-  @@index([commentsCount])
   @@map("videos")
-}
-
-model VideoLike {
-  id        String   @id @default(cuid())
-
-  videoId  String
-  userId   String
-
-  video    Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-
-  @@unique([videoId, userId])
-  @@index([videoId])
-  @@index([userId])
-  @@map("video_likes")
-}
-
-model VideoComment {
-  id        String   @id @default(cuid())
-
-  videoId  String
-  userId   String
-
-  parentId String?
-  parent   VideoComment?  @relation("CommentTree", fields: [parentId], references: [id])
-  replies  VideoComment[] @relation("CommentTree")
-
-  text     String
-
-  video    Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([videoId])
-  @@index([userId])
-  @@index([parentId])
-  @@map("video_comments")
 }
 
 enum VideoStatus {

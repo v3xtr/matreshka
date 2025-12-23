@@ -19,7 +19,7 @@ export class VideoRepo implements IVideoRepo {
         resolution?: string
         status?: VideoStatus
     }): Promise<Video> {
-        return this.prisma.video.create({
+        return await this.prisma.video.create({
             data: {
                 ...data,
                 status: data.status || VideoStatus.UPLOADING
@@ -28,13 +28,13 @@ export class VideoRepo implements IVideoRepo {
     }
 
     async findById(id: string): Promise<Video | null> {
-        return this.prisma.video.findUnique({
+        return await this.prisma.video.findUnique({
             where: { id }
         })
     }
 
     async findByUserId(userId: string): Promise<Video[]> {
-        return this.prisma.video.findMany({
+        return await this.prisma.video.findMany({
             where: { 
                 userId,
                 status: { not: VideoStatus.DELETED }
@@ -44,7 +44,7 @@ export class VideoRepo implements IVideoRepo {
     }
 
     async updateStatus(id: string, status: VideoStatus): Promise<Video> {
-        return this.prisma.video.update({
+        return await this.prisma.video.update({
             where: { id },
             data: { 
                 status,
@@ -77,7 +77,7 @@ export class VideoRepo implements IVideoRepo {
     }
 
     async deleteVideo(id: string): Promise<Video> {
-        return this.prisma.video.update({
+        return await this.prisma.video.update({
             where: { id },
             data: { 
                 status: VideoStatus.DELETED

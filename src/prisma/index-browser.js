@@ -146,27 +146,8 @@ exports.Prisma.VideoScalarFieldEnum = {
   status: 'status',
   userId: 'userId',
   description: 'description',
-  likesCount: 'likesCount',
-  commentsCount: 'commentsCount',
   publishedAt: 'publishedAt',
   processedAt: 'processedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.VideoLikeScalarFieldEnum = {
-  id: 'id',
-  videoId: 'videoId',
-  userId: 'userId',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.VideoCommentScalarFieldEnum = {
-  id: 'id',
-  videoId: 'videoId',
-  userId: 'userId',
-  parentId: 'parentId',
-  text: 'text',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -195,9 +176,7 @@ exports.VideoStatus = exports.$Enums.VideoStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Video: 'Video',
-  VideoLike: 'VideoLike',
-  VideoComment: 'VideoComment'
+  Video: 'Video'
 };
 
 /**
