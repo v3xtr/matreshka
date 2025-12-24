@@ -1,44 +1,37 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
-
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
-
-    // Other Outputs
+    "target": "ES2020",
+    "module": "NodeNext",
+    "lib": ["ES2024"],
+    "rootDir": ".",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "allowJs": false,
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    // Recommended Options
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
+    "noImplicitAny": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "#internal/*": ["internal/*"],
+      "#pkg/*": ["pkg/*"],
+      "#cmd/*": ["cmd/*"],
+      "#prisma/*": ["prisma/*"],
+      "#delivery/*": ["delivery/*"]
+    }
+  },
+  "include": [
+    "delivery/**/*",
+    "cmd/**/*",
+    "internal/**/*",
+    "pkg/**/*",
+    "prisma.config.ts",
+    "src"
+, "delivery/http/interfaces"  ],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+    "esm": true
   }
 }

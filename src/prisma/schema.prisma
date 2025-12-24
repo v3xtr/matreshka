@@ -8,27 +8,28 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(cuid())
-  email       String  @unique
-  password    String  @default("")
-  phone       String  @default("")
+  id          String @id @default(cuid())
+  email       String @unique
+  password    String @default("")
+  phone       String @default("")
   name        String
-  description String  @default("")
+  description String @default("")
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
+
 model FeedVideo {
-  id            String   @id
-  userId        String
-  description   String
+  id          String @id
+  userId      String
+  description String
 
-  likesCount    Int      @default(0)
-  commentsCount Int      @default(0)
+  likesCount    Int @default(0)
+  commentsCount Int @default(0)
 
-  createdAt     DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([likesCount])
@@ -37,10 +38,10 @@ model FeedVideo {
 }
 
 model VideoLike {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  videoId  String
-  userId   String
+  videoId String
+  userId  String
 
   createdAt DateTime @default(now())
 
@@ -51,10 +52,10 @@ model VideoLike {
 }
 
 model VideoComment {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  videoId  String
-  userId   String
+  videoId String
+  userId  String
 
   parentId String?
   text     String
