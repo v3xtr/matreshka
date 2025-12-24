@@ -6,8 +6,6 @@ import { logger } from '../../internal/adapter/logger/logger.js'
 import { bootstrap } from '../../bootstrap.js'
 import videoRoutes from '#delivery/http/router/video.routes.js'
 
-dotenv.config()
-
 const app = express()
 
 app.use(cors({
@@ -15,6 +13,8 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(cookieParser())
+
+
 
 app.use("/api/videos", videoRoutes)
 app.use((req, res, next) => {

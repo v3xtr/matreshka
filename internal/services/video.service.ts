@@ -5,11 +5,14 @@ import { S3, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { Video } from "src/prisma/index.js";
 import { v4 as uuid } from "uuid";
+import { VideoEvents } from "./video.events.js";
+import { IVideoEvenets } from "#internal/interfaces/video.events.interface.js";
 
 export class VideoService implements IVideoService {
   constructor(
     private readonly s3: S3,
-    private readonly videoRepository: IVideoRepo
+    private readonly videoRepository: IVideoRepo,
+    private readonly videoEvents: IVideoEvenets
   ) {}
 
   async uploadVideo(userId: string, file: Express.Multer.File, onProgress?: (progress: number) => void): Promise<{ url: string; filename: string; videoId: string }> {
@@ -65,6 +68,8 @@ export class VideoService implements IVideoService {
       await upload.done();
 
       await this.videoRepository.updateStatus(video.id, "READY");
+
+      await this.videoEvents.sendToQueue(video)
 
       logger.info("Видео успешно загружено", {
         videoId: video.id,
