@@ -1,4 +1,3 @@
-// internal/middlewares/auth.middleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../adapter/prisma/prisma.js';

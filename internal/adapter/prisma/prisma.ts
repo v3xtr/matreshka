@@ -8,9 +8,9 @@ if (!process.env.DATABASE_URL) {
 }
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL
 })
 
 export const prisma = new PrismaClient({
-  adapter: new PrismaPg(pool),
+  adapter: new PrismaPg(pool)
 })

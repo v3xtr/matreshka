@@ -11,11 +11,7 @@ export class UserEvents implements IUserEvenets {
   async sendToQueue(user: User): Promise<void> {
     await this.channel.assertExchange(EXCHANGE, "fanout", { durable: true });
 
-    this.channel.publish(
-      EXCHANGE,
-      "",
-      Buffer.from(JSON.stringify(user)),
-      {
+    this.channel.publish(EXCHANGE, "", Buffer.from(JSON.stringify(user)), {
         persistent: true,
         contentType: "application/json",
       }
