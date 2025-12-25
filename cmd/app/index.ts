@@ -5,6 +5,7 @@ import { logger } from '#internal/adapter/logger/logger.js'
 import commentRoutes from '#delivery/http/routes/comment.routes.js'
 import likeRoutes from '#delivery/http/routes/like.routes.js'
 import { bootstrap } from '../../bootstrap.js'
+import feedRoutes from '#delivery/http/routes/feed.routes.js'
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(express.json())
 
 app.use("/api/comments", commentRoutes)
 app.use("/api", likeRoutes)
+app.use("/api/feed", feedRoutes)
 
 bootstrap()
 
