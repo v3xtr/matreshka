@@ -9,4 +9,8 @@ export class VideoService implements IVideoService{
         return this.videoRepo.create(data)
     }
 
+    async addView(videoId: string, userId: string, ip?: string): Promise<boolean>{
+        return this.videoRepo.addView(videoId, userId, ip)
+    }
+
 }

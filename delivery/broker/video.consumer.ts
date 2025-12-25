@@ -65,14 +65,7 @@ export class RabbitVideoConsumer implements IRabbitConsumer {
 
         console.log(`[${receivedAt}] Video: `, data);
 
-        await this.videoService.create({
-            id: data.id,
-            userId: data.userId,
-            description: data.description || "",
-            likesCount: 0,
-            commentsCount: 0,
-            createdAt: data.createdAt ? new Date(data.createdAt) : new Date()
-        });
+        await this.videoService.create(data)
 
         channel.ack(msg);
 

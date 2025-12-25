@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type FeedVideo = $Result.DefaultSelection<Prisma.$FeedVideoPayload>
 /**
+ * Model VideoView
+ * 
+ */
+export type VideoView = $Result.DefaultSelection<Prisma.$VideoViewPayload>
+/**
  * Model VideoLike
  * 
  */
@@ -170,6 +175,16 @@ export class PrismaClient<
     * ```
     */
   get feedVideo(): Prisma.FeedVideoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.videoView`: Exposes CRUD operations for the **VideoView** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VideoViews
+    * const videoViews = await prisma.videoView.findMany()
+    * ```
+    */
+  get videoView(): Prisma.VideoViewDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.videoLike`: Exposes CRUD operations for the **VideoLike** model.
@@ -626,6 +641,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     FeedVideo: 'FeedVideo',
+    VideoView: 'VideoView',
     VideoLike: 'VideoLike',
     VideoComment: 'VideoComment'
   };
@@ -643,7 +659,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "feedVideo" | "videoLike" | "videoComment"
+      modelProps: "user" | "feedVideo" | "videoView" | "videoLike" | "videoComment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -792,6 +808,80 @@ export namespace Prisma {
           count: {
             args: Prisma.FeedVideoCountArgs<ExtArgs>
             result: $Utils.Optional<FeedVideoCountAggregateOutputType> | number
+          }
+        }
+      }
+      VideoView: {
+        payload: Prisma.$VideoViewPayload<ExtArgs>
+        fields: Prisma.VideoViewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VideoViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VideoViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          findFirst: {
+            args: Prisma.VideoViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VideoViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          findMany: {
+            args: Prisma.VideoViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>[]
+          }
+          create: {
+            args: Prisma.VideoViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          createMany: {
+            args: Prisma.VideoViewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VideoViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>[]
+          }
+          delete: {
+            args: Prisma.VideoViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          update: {
+            args: Prisma.VideoViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          deleteMany: {
+            args: Prisma.VideoViewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VideoViewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VideoViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>[]
+          }
+          upsert: {
+            args: Prisma.VideoViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoViewPayload>
+          }
+          aggregate: {
+            args: Prisma.VideoViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVideoView>
+          }
+          groupBy: {
+            args: Prisma.VideoViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VideoViewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VideoViewCountArgs<ExtArgs>
+            result: $Utils.Optional<VideoViewCountAggregateOutputType> | number
           }
         }
       }
@@ -1053,6 +1143,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     feedVideo?: FeedVideoOmit
+    videoView?: VideoViewOmit
     videoLike?: VideoLikeOmit
     videoComment?: VideoCommentOmit
   }
@@ -2184,11 +2275,13 @@ export namespace Prisma {
   export type FeedVideoAvgAggregateOutputType = {
     likesCount: number | null
     commentsCount: number | null
+    viewCount: number | null
   }
 
   export type FeedVideoSumAggregateOutputType = {
     likesCount: number | null
     commentsCount: number | null
+    viewCount: number | null
   }
 
   export type FeedVideoMinAggregateOutputType = {
@@ -2197,6 +2290,7 @@ export namespace Prisma {
     description: string | null
     likesCount: number | null
     commentsCount: number | null
+    viewCount: number | null
     createdAt: Date | null
   }
 
@@ -2206,6 +2300,7 @@ export namespace Prisma {
     description: string | null
     likesCount: number | null
     commentsCount: number | null
+    viewCount: number | null
     createdAt: Date | null
   }
 
@@ -2215,6 +2310,7 @@ export namespace Prisma {
     description: number
     likesCount: number
     commentsCount: number
+    viewCount: number
     createdAt: number
     _all: number
   }
@@ -2223,11 +2319,13 @@ export namespace Prisma {
   export type FeedVideoAvgAggregateInputType = {
     likesCount?: true
     commentsCount?: true
+    viewCount?: true
   }
 
   export type FeedVideoSumAggregateInputType = {
     likesCount?: true
     commentsCount?: true
+    viewCount?: true
   }
 
   export type FeedVideoMinAggregateInputType = {
@@ -2236,6 +2334,7 @@ export namespace Prisma {
     description?: true
     likesCount?: true
     commentsCount?: true
+    viewCount?: true
     createdAt?: true
   }
 
@@ -2245,6 +2344,7 @@ export namespace Prisma {
     description?: true
     likesCount?: true
     commentsCount?: true
+    viewCount?: true
     createdAt?: true
   }
 
@@ -2254,6 +2354,7 @@ export namespace Prisma {
     description?: true
     likesCount?: true
     commentsCount?: true
+    viewCount?: true
     createdAt?: true
     _all?: true
   }
@@ -2350,6 +2451,7 @@ export namespace Prisma {
     description: string
     likesCount: number
     commentsCount: number
+    viewCount: number
     createdAt: Date
     _count: FeedVideoCountAggregateOutputType | null
     _avg: FeedVideoAvgAggregateOutputType | null
@@ -2378,6 +2480,7 @@ export namespace Prisma {
     description?: boolean
     likesCount?: boolean
     commentsCount?: boolean
+    viewCount?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedVideo"]>
 
@@ -2387,6 +2490,7 @@ export namespace Prisma {
     description?: boolean
     likesCount?: boolean
     commentsCount?: boolean
+    viewCount?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedVideo"]>
 
@@ -2396,6 +2500,7 @@ export namespace Prisma {
     description?: boolean
     likesCount?: boolean
     commentsCount?: boolean
+    viewCount?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedVideo"]>
 
@@ -2405,10 +2510,11 @@ export namespace Prisma {
     description?: boolean
     likesCount?: boolean
     commentsCount?: boolean
+    viewCount?: boolean
     createdAt?: boolean
   }
 
-  export type FeedVideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "description" | "likesCount" | "commentsCount" | "createdAt", ExtArgs["result"]["feedVideo"]>
+  export type FeedVideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "description" | "likesCount" | "commentsCount" | "viewCount" | "createdAt", ExtArgs["result"]["feedVideo"]>
 
   export type $FeedVideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FeedVideo"
@@ -2419,6 +2525,7 @@ export namespace Prisma {
       description: string
       likesCount: number
       commentsCount: number
+      viewCount: number
       createdAt: Date
     }, ExtArgs["result"]["feedVideo"]>
     composites: {}
@@ -2848,6 +2955,7 @@ export namespace Prisma {
     readonly description: FieldRef<"FeedVideo", 'String'>
     readonly likesCount: FieldRef<"FeedVideo", 'Int'>
     readonly commentsCount: FieldRef<"FeedVideo", 'Int'>
+    readonly viewCount: FieldRef<"FeedVideo", 'Int'>
     readonly createdAt: FieldRef<"FeedVideo", 'DateTime'>
   }
     
@@ -3212,6 +3320,1001 @@ export namespace Prisma {
      * Omit specific fields from the FeedVideo
      */
     omit?: FeedVideoOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VideoView
+   */
+
+  export type AggregateVideoView = {
+    _count: VideoViewCountAggregateOutputType | null
+    _min: VideoViewMinAggregateOutputType | null
+    _max: VideoViewMaxAggregateOutputType | null
+  }
+
+  export type VideoViewMinAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    userId: string | null
+    ip: string | null
+    createdAt: Date | null
+  }
+
+  export type VideoViewMaxAggregateOutputType = {
+    id: string | null
+    videoId: string | null
+    userId: string | null
+    ip: string | null
+    createdAt: Date | null
+  }
+
+  export type VideoViewCountAggregateOutputType = {
+    id: number
+    videoId: number
+    userId: number
+    ip: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type VideoViewMinAggregateInputType = {
+    id?: true
+    videoId?: true
+    userId?: true
+    ip?: true
+    createdAt?: true
+  }
+
+  export type VideoViewMaxAggregateInputType = {
+    id?: true
+    videoId?: true
+    userId?: true
+    ip?: true
+    createdAt?: true
+  }
+
+  export type VideoViewCountAggregateInputType = {
+    id?: true
+    videoId?: true
+    userId?: true
+    ip?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type VideoViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VideoView to aggregate.
+     */
+    where?: VideoViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoViews to fetch.
+     */
+    orderBy?: VideoViewOrderByWithRelationInput | VideoViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VideoViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VideoViews
+    **/
+    _count?: true | VideoViewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VideoViewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VideoViewMaxAggregateInputType
+  }
+
+  export type GetVideoViewAggregateType<T extends VideoViewAggregateArgs> = {
+        [P in keyof T & keyof AggregateVideoView]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVideoView[P]>
+      : GetScalarType<T[P], AggregateVideoView[P]>
+  }
+
+
+
+
+  export type VideoViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VideoViewWhereInput
+    orderBy?: VideoViewOrderByWithAggregationInput | VideoViewOrderByWithAggregationInput[]
+    by: VideoViewScalarFieldEnum[] | VideoViewScalarFieldEnum
+    having?: VideoViewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VideoViewCountAggregateInputType | true
+    _min?: VideoViewMinAggregateInputType
+    _max?: VideoViewMaxAggregateInputType
+  }
+
+  export type VideoViewGroupByOutputType = {
+    id: string
+    videoId: string
+    userId: string | null
+    ip: string | null
+    createdAt: Date
+    _count: VideoViewCountAggregateOutputType | null
+    _min: VideoViewMinAggregateOutputType | null
+    _max: VideoViewMaxAggregateOutputType | null
+  }
+
+  type GetVideoViewGroupByPayload<T extends VideoViewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VideoViewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VideoViewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VideoViewGroupByOutputType[P]>
+            : GetScalarType<T[P], VideoViewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VideoViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    userId?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["videoView"]>
+
+  export type VideoViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    userId?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["videoView"]>
+
+  export type VideoViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    videoId?: boolean
+    userId?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["videoView"]>
+
+  export type VideoViewSelectScalar = {
+    id?: boolean
+    videoId?: boolean
+    userId?: boolean
+    ip?: boolean
+    createdAt?: boolean
+  }
+
+  export type VideoViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "videoId" | "userId" | "ip" | "createdAt", ExtArgs["result"]["videoView"]>
+
+  export type $VideoViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VideoView"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      videoId: string
+      userId: string | null
+      ip: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["videoView"]>
+    composites: {}
+  }
+
+  type VideoViewGetPayload<S extends boolean | null | undefined | VideoViewDefaultArgs> = $Result.GetResult<Prisma.$VideoViewPayload, S>
+
+  type VideoViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VideoViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VideoViewCountAggregateInputType | true
+    }
+
+  export interface VideoViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VideoView'], meta: { name: 'VideoView' } }
+    /**
+     * Find zero or one VideoView that matches the filter.
+     * @param {VideoViewFindUniqueArgs} args - Arguments to find a VideoView
+     * @example
+     * // Get one VideoView
+     * const videoView = await prisma.videoView.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VideoViewFindUniqueArgs>(args: SelectSubset<T, VideoViewFindUniqueArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VideoView that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VideoViewFindUniqueOrThrowArgs} args - Arguments to find a VideoView
+     * @example
+     * // Get one VideoView
+     * const videoView = await prisma.videoView.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VideoViewFindUniqueOrThrowArgs>(args: SelectSubset<T, VideoViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VideoView that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewFindFirstArgs} args - Arguments to find a VideoView
+     * @example
+     * // Get one VideoView
+     * const videoView = await prisma.videoView.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VideoViewFindFirstArgs>(args?: SelectSubset<T, VideoViewFindFirstArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VideoView that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewFindFirstOrThrowArgs} args - Arguments to find a VideoView
+     * @example
+     * // Get one VideoView
+     * const videoView = await prisma.videoView.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VideoViewFindFirstOrThrowArgs>(args?: SelectSubset<T, VideoViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VideoViews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VideoViews
+     * const videoViews = await prisma.videoView.findMany()
+     * 
+     * // Get first 10 VideoViews
+     * const videoViews = await prisma.videoView.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const videoViewWithIdOnly = await prisma.videoView.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VideoViewFindManyArgs>(args?: SelectSubset<T, VideoViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VideoView.
+     * @param {VideoViewCreateArgs} args - Arguments to create a VideoView.
+     * @example
+     * // Create one VideoView
+     * const VideoView = await prisma.videoView.create({
+     *   data: {
+     *     // ... data to create a VideoView
+     *   }
+     * })
+     * 
+     */
+    create<T extends VideoViewCreateArgs>(args: SelectSubset<T, VideoViewCreateArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VideoViews.
+     * @param {VideoViewCreateManyArgs} args - Arguments to create many VideoViews.
+     * @example
+     * // Create many VideoViews
+     * const videoView = await prisma.videoView.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VideoViewCreateManyArgs>(args?: SelectSubset<T, VideoViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VideoViews and returns the data saved in the database.
+     * @param {VideoViewCreateManyAndReturnArgs} args - Arguments to create many VideoViews.
+     * @example
+     * // Create many VideoViews
+     * const videoView = await prisma.videoView.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VideoViews and only return the `id`
+     * const videoViewWithIdOnly = await prisma.videoView.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VideoViewCreateManyAndReturnArgs>(args?: SelectSubset<T, VideoViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VideoView.
+     * @param {VideoViewDeleteArgs} args - Arguments to delete one VideoView.
+     * @example
+     * // Delete one VideoView
+     * const VideoView = await prisma.videoView.delete({
+     *   where: {
+     *     // ... filter to delete one VideoView
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VideoViewDeleteArgs>(args: SelectSubset<T, VideoViewDeleteArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VideoView.
+     * @param {VideoViewUpdateArgs} args - Arguments to update one VideoView.
+     * @example
+     * // Update one VideoView
+     * const videoView = await prisma.videoView.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VideoViewUpdateArgs>(args: SelectSubset<T, VideoViewUpdateArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VideoViews.
+     * @param {VideoViewDeleteManyArgs} args - Arguments to filter VideoViews to delete.
+     * @example
+     * // Delete a few VideoViews
+     * const { count } = await prisma.videoView.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VideoViewDeleteManyArgs>(args?: SelectSubset<T, VideoViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VideoViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VideoViews
+     * const videoView = await prisma.videoView.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VideoViewUpdateManyArgs>(args: SelectSubset<T, VideoViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VideoViews and returns the data updated in the database.
+     * @param {VideoViewUpdateManyAndReturnArgs} args - Arguments to update many VideoViews.
+     * @example
+     * // Update many VideoViews
+     * const videoView = await prisma.videoView.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VideoViews and only return the `id`
+     * const videoViewWithIdOnly = await prisma.videoView.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VideoViewUpdateManyAndReturnArgs>(args: SelectSubset<T, VideoViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VideoView.
+     * @param {VideoViewUpsertArgs} args - Arguments to update or create a VideoView.
+     * @example
+     * // Update or create a VideoView
+     * const videoView = await prisma.videoView.upsert({
+     *   create: {
+     *     // ... data to create a VideoView
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VideoView we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VideoViewUpsertArgs>(args: SelectSubset<T, VideoViewUpsertArgs<ExtArgs>>): Prisma__VideoViewClient<$Result.GetResult<Prisma.$VideoViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VideoViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewCountArgs} args - Arguments to filter VideoViews to count.
+     * @example
+     * // Count the number of VideoViews
+     * const count = await prisma.videoView.count({
+     *   where: {
+     *     // ... the filter for the VideoViews we want to count
+     *   }
+     * })
+    **/
+    count<T extends VideoViewCountArgs>(
+      args?: Subset<T, VideoViewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VideoViewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VideoView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VideoViewAggregateArgs>(args: Subset<T, VideoViewAggregateArgs>): Prisma.PrismaPromise<GetVideoViewAggregateType<T>>
+
+    /**
+     * Group by VideoView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoViewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VideoViewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VideoViewGroupByArgs['orderBy'] }
+        : { orderBy?: VideoViewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VideoViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VideoView model
+   */
+  readonly fields: VideoViewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VideoView.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VideoViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VideoView model
+   */
+  interface VideoViewFieldRefs {
+    readonly id: FieldRef<"VideoView", 'String'>
+    readonly videoId: FieldRef<"VideoView", 'String'>
+    readonly userId: FieldRef<"VideoView", 'String'>
+    readonly ip: FieldRef<"VideoView", 'String'>
+    readonly createdAt: FieldRef<"VideoView", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VideoView findUnique
+   */
+  export type VideoViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter, which VideoView to fetch.
+     */
+    where: VideoViewWhereUniqueInput
+  }
+
+  /**
+   * VideoView findUniqueOrThrow
+   */
+  export type VideoViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter, which VideoView to fetch.
+     */
+    where: VideoViewWhereUniqueInput
+  }
+
+  /**
+   * VideoView findFirst
+   */
+  export type VideoViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter, which VideoView to fetch.
+     */
+    where?: VideoViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoViews to fetch.
+     */
+    orderBy?: VideoViewOrderByWithRelationInput | VideoViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VideoViews.
+     */
+    cursor?: VideoViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VideoViews.
+     */
+    distinct?: VideoViewScalarFieldEnum | VideoViewScalarFieldEnum[]
+  }
+
+  /**
+   * VideoView findFirstOrThrow
+   */
+  export type VideoViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter, which VideoView to fetch.
+     */
+    where?: VideoViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoViews to fetch.
+     */
+    orderBy?: VideoViewOrderByWithRelationInput | VideoViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VideoViews.
+     */
+    cursor?: VideoViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VideoViews.
+     */
+    distinct?: VideoViewScalarFieldEnum | VideoViewScalarFieldEnum[]
+  }
+
+  /**
+   * VideoView findMany
+   */
+  export type VideoViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter, which VideoViews to fetch.
+     */
+    where?: VideoViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoViews to fetch.
+     */
+    orderBy?: VideoViewOrderByWithRelationInput | VideoViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VideoViews.
+     */
+    cursor?: VideoViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoViews.
+     */
+    skip?: number
+    distinct?: VideoViewScalarFieldEnum | VideoViewScalarFieldEnum[]
+  }
+
+  /**
+   * VideoView create
+   */
+  export type VideoViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * The data needed to create a VideoView.
+     */
+    data: XOR<VideoViewCreateInput, VideoViewUncheckedCreateInput>
+  }
+
+  /**
+   * VideoView createMany
+   */
+  export type VideoViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VideoViews.
+     */
+    data: VideoViewCreateManyInput | VideoViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VideoView createManyAndReturn
+   */
+  export type VideoViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * The data used to create many VideoViews.
+     */
+    data: VideoViewCreateManyInput | VideoViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VideoView update
+   */
+  export type VideoViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * The data needed to update a VideoView.
+     */
+    data: XOR<VideoViewUpdateInput, VideoViewUncheckedUpdateInput>
+    /**
+     * Choose, which VideoView to update.
+     */
+    where: VideoViewWhereUniqueInput
+  }
+
+  /**
+   * VideoView updateMany
+   */
+  export type VideoViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VideoViews.
+     */
+    data: XOR<VideoViewUpdateManyMutationInput, VideoViewUncheckedUpdateManyInput>
+    /**
+     * Filter which VideoViews to update
+     */
+    where?: VideoViewWhereInput
+    /**
+     * Limit how many VideoViews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VideoView updateManyAndReturn
+   */
+  export type VideoViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * The data used to update VideoViews.
+     */
+    data: XOR<VideoViewUpdateManyMutationInput, VideoViewUncheckedUpdateManyInput>
+    /**
+     * Filter which VideoViews to update
+     */
+    where?: VideoViewWhereInput
+    /**
+     * Limit how many VideoViews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VideoView upsert
+   */
+  export type VideoViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * The filter to search for the VideoView to update in case it exists.
+     */
+    where: VideoViewWhereUniqueInput
+    /**
+     * In case the VideoView found by the `where` argument doesn't exist, create a new VideoView with this data.
+     */
+    create: XOR<VideoViewCreateInput, VideoViewUncheckedCreateInput>
+    /**
+     * In case the VideoView was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VideoViewUpdateInput, VideoViewUncheckedUpdateInput>
+  }
+
+  /**
+   * VideoView delete
+   */
+  export type VideoViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
+    /**
+     * Filter which VideoView to delete.
+     */
+    where: VideoViewWhereUniqueInput
+  }
+
+  /**
+   * VideoView deleteMany
+   */
+  export type VideoViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VideoViews to delete
+     */
+    where?: VideoViewWhereInput
+    /**
+     * Limit how many VideoViews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VideoView without action
+   */
+  export type VideoViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoView
+     */
+    select?: VideoViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VideoView
+     */
+    omit?: VideoViewOmit<ExtArgs> | null
   }
 
 
@@ -5252,10 +6355,22 @@ export namespace Prisma {
     description: 'description',
     likesCount: 'likesCount',
     commentsCount: 'commentsCount',
+    viewCount: 'viewCount',
     createdAt: 'createdAt'
   };
 
   export type FeedVideoScalarFieldEnum = (typeof FeedVideoScalarFieldEnum)[keyof typeof FeedVideoScalarFieldEnum]
+
+
+  export const VideoViewScalarFieldEnum: {
+    id: 'id',
+    videoId: 'videoId',
+    userId: 'userId',
+    ip: 'ip',
+    createdAt: 'createdAt'
+  };
+
+  export type VideoViewScalarFieldEnum = (typeof VideoViewScalarFieldEnum)[keyof typeof VideoViewScalarFieldEnum]
 
 
   export const VideoLikeScalarFieldEnum: {
@@ -5445,6 +6560,7 @@ export namespace Prisma {
     description?: StringFilter<"FeedVideo"> | string
     likesCount?: IntFilter<"FeedVideo"> | number
     commentsCount?: IntFilter<"FeedVideo"> | number
+    viewCount?: IntFilter<"FeedVideo"> | number
     createdAt?: DateTimeFilter<"FeedVideo"> | Date | string
   }
 
@@ -5454,6 +6570,7 @@ export namespace Prisma {
     description?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -5466,6 +6583,7 @@ export namespace Prisma {
     description?: StringFilter<"FeedVideo"> | string
     likesCount?: IntFilter<"FeedVideo"> | number
     commentsCount?: IntFilter<"FeedVideo"> | number
+    viewCount?: IntFilter<"FeedVideo"> | number
     createdAt?: DateTimeFilter<"FeedVideo"> | Date | string
   }, "id">
 
@@ -5475,6 +6593,7 @@ export namespace Prisma {
     description?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
     createdAt?: SortOrder
     _count?: FeedVideoCountOrderByAggregateInput
     _avg?: FeedVideoAvgOrderByAggregateInput
@@ -5492,7 +6611,61 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"FeedVideo"> | string
     likesCount?: IntWithAggregatesFilter<"FeedVideo"> | number
     commentsCount?: IntWithAggregatesFilter<"FeedVideo"> | number
+    viewCount?: IntWithAggregatesFilter<"FeedVideo"> | number
     createdAt?: DateTimeWithAggregatesFilter<"FeedVideo"> | Date | string
+  }
+
+  export type VideoViewWhereInput = {
+    AND?: VideoViewWhereInput | VideoViewWhereInput[]
+    OR?: VideoViewWhereInput[]
+    NOT?: VideoViewWhereInput | VideoViewWhereInput[]
+    id?: StringFilter<"VideoView"> | string
+    videoId?: StringFilter<"VideoView"> | string
+    userId?: StringNullableFilter<"VideoView"> | string | null
+    ip?: StringNullableFilter<"VideoView"> | string | null
+    createdAt?: DateTimeFilter<"VideoView"> | Date | string
+  }
+
+  export type VideoViewOrderByWithRelationInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VideoViewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    videoId_userId?: VideoViewVideoIdUserIdCompoundUniqueInput
+    AND?: VideoViewWhereInput | VideoViewWhereInput[]
+    OR?: VideoViewWhereInput[]
+    NOT?: VideoViewWhereInput | VideoViewWhereInput[]
+    videoId?: StringFilter<"VideoView"> | string
+    userId?: StringNullableFilter<"VideoView"> | string | null
+    ip?: StringNullableFilter<"VideoView"> | string | null
+    createdAt?: DateTimeFilter<"VideoView"> | Date | string
+  }, "id" | "videoId_userId">
+
+  export type VideoViewOrderByWithAggregationInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: VideoViewCountOrderByAggregateInput
+    _max?: VideoViewMaxOrderByAggregateInput
+    _min?: VideoViewMinOrderByAggregateInput
+  }
+
+  export type VideoViewScalarWhereWithAggregatesInput = {
+    AND?: VideoViewScalarWhereWithAggregatesInput | VideoViewScalarWhereWithAggregatesInput[]
+    OR?: VideoViewScalarWhereWithAggregatesInput[]
+    NOT?: VideoViewScalarWhereWithAggregatesInput | VideoViewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VideoView"> | string
+    videoId?: StringWithAggregatesFilter<"VideoView"> | string
+    userId?: StringNullableWithAggregatesFilter<"VideoView"> | string | null
+    ip?: StringNullableWithAggregatesFilter<"VideoView"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"VideoView"> | Date | string
   }
 
   export type VideoLikeWhereInput = {
@@ -5688,6 +6861,7 @@ export namespace Prisma {
     description: string
     likesCount?: number
     commentsCount?: number
+    viewCount?: number
     createdAt?: Date | string
   }
 
@@ -5697,6 +6871,7 @@ export namespace Prisma {
     description: string
     likesCount?: number
     commentsCount?: number
+    viewCount?: number
     createdAt?: Date | string
   }
 
@@ -5706,6 +6881,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     likesCount?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
+    viewCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5715,6 +6891,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     likesCount?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
+    viewCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5724,6 +6901,7 @@ export namespace Prisma {
     description: string
     likesCount?: number
     commentsCount?: number
+    viewCount?: number
     createdAt?: Date | string
   }
 
@@ -5733,6 +6911,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     likesCount?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
+    viewCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5742,6 +6921,63 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     likesCount?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
+    viewCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoViewCreateInput = {
+    id?: string
+    videoId: string
+    userId?: string | null
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VideoViewUncheckedCreateInput = {
+    id?: string
+    videoId: string
+    userId?: string | null
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VideoViewUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoViewUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoViewCreateManyInput = {
+    id?: string
+    videoId: string
+    userId?: string | null
+    ip?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VideoViewUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoViewUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    videoId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5972,12 +7208,14 @@ export namespace Prisma {
     description?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
     createdAt?: SortOrder
   }
 
   export type FeedVideoAvgOrderByAggregateInput = {
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type FeedVideoMaxOrderByAggregateInput = {
@@ -5986,6 +7224,7 @@ export namespace Prisma {
     description?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -5995,12 +7234,14 @@ export namespace Prisma {
     description?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
     createdAt?: SortOrder
   }
 
   export type FeedVideoSumOrderByAggregateInput = {
     likesCount?: SortOrder
     commentsCount?: SortOrder
+    viewCount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6017,6 +7258,73 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type VideoViewVideoIdUserIdCompoundUniqueInput = {
+    videoId: string
+    userId: string
+  }
+
+  export type VideoViewCountOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    userId?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VideoViewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    userId?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VideoViewMinOrderByAggregateInput = {
+    id?: SortOrder
+    videoId?: SortOrder
+    userId?: SortOrder
+    ip?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type VideoLikeVideoIdUserIdCompoundUniqueInput = {
@@ -6043,26 +7351,6 @@ export namespace Prisma {
     videoId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type VideoCommentCountOrderByAggregateInput = {
@@ -6093,24 +7381,6 @@ export namespace Prisma {
     text?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {

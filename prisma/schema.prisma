@@ -28,13 +28,30 @@ model FeedVideo {
   likesCount    Int      @default(0)
   commentsCount Int      @default(0)
 
+  viewCount     Int      @default(0)
+
   createdAt     DateTime @default(now())
 
+  @@index([viewCount])
   @@index([userId])
   @@index([likesCount])
   @@index([commentsCount])
   @@map("feed_videos")
 }
+
+model VideoView {
+  id       String   @id @default(cuid())
+  videoId  String
+  userId   String?
+  ip       String?
+  createdAt DateTime @default(now())
+
+  @@index([videoId])
+  @@index([userId])
+  @@unique([videoId, userId])
+  @@map("video_views")
+}
+
 
 model VideoLike {
   id        String   @id @default(cuid())
