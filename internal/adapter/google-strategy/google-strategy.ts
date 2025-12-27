@@ -19,10 +19,10 @@ export class GoogleStrategy {
         },
         async (_: Request, __: string, ___: string, profile: Profile, done: VerifyCallback) => {
           try {
-            const result = await this.googleOAuthService.execute(profile)
+            const result: any = await this.googleOAuthService.execute(profile)
             done(null, result)
-          } catch (err) {
-            done(err as Error)
+          } catch (error) {
+            done(error as Error)
           }
         }
       )

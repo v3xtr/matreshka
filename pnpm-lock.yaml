@@ -96,6 +96,9 @@ importers:
       '@types/pg':
         specifier: ^8.16.0
         version: 8.16.0
+      google-oauth-service:
+        specifier: 'link:'
+        version: 'link:'
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.6.1)

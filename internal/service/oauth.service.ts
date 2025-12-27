@@ -4,26 +4,22 @@ import { generateTokens } from "#pkg/generate.auth.tokens.js";
 import { Profile } from "passport-google-oauth20";
 import { UserEvents } from "./user.events.js";
 import { channel } from "#internal/adapter/rabbit/rabbit.js";
-import { randomBytes } from "crypto";
+import crypto from 'crypto'
 
 export class GoogleOAuthService implements IGoogleOauthService {
   constructor(private readonly repo: IUserRepo) {}
 
   async execute(profile: Profile): Promise<Express.User> {
-    const email = profile.emails?.[0]?.value;
-    if (!email) throw new Error("Google profile has no email");
+    const email = profile.emails?.[0]?.value
 
-    let user = await this.repo.findByEmail(email);
+    if (!email) throw new Error("Google profile has no email")
 
-    let brokerPassword: string | undefined;
+    let user = await this.repo.findByEmail(email)
 
-    console.log("Profile: " + profile.displayName, profile.name, profile.username)
+    let brokerPassword: string | undefined
 
     if (!user) {
-      brokerPassword = randomBytes(16).toString("hex");
-      console.log(profile.name)
-      
-      console.log("Profile: " + profile.displayName, profile.name, profile.username)
+      brokerPassword = crypto.randomBytes(16).toString("hex");      
 
       user = await this.repo.create({ 
         id: profile.id, 
@@ -33,8 +29,7 @@ export class GoogleOAuthService implements IGoogleOauthService {
         phone: "+7782378237878"
       });
 
-      console.log("User profile: ", user.name)
-      await new UserEvents(channel).sendToQueue(user);
+      await new UserEvents(channel).sendToQueue(user)
     }
 
     const { accessToken, refreshToken } = generateTokens(user.id, user.email);
