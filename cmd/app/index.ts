@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import oauthRoutes from '#delivery/http/routes/outh.routes.js'
-import { GoogleStrategy } from '#internal/adapter/passport/google-strategy.js';
+import { GoogleStrategy } from '#internal/adapter/google-strategy/google-strategy.js';
 import { GoogleOAuthService } from '#internal/service/oauth.service.js';
 import { UserRepo } from '#internal/repo/user.repo.js';
 import { prisma } from '#internal/adapter/prisma/prisma.js';
@@ -26,6 +26,20 @@ app.use((req, res, next) => {
   logger.info('Headers:', req.headers);
   next();
 });
+
+app.use((req, res, next) => {
+  console.log('req.user:', req.user);
+  console.log('req.session.passport:', req.session);
+  next();
+});
+
+app.get('/auth/google', 
+  passport.authenticate('google', { 
+    scope: ['email', 'profile'],
+    prompt: 'select_account'
+  })
+);
+
 
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
