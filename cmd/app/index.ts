@@ -81,7 +81,7 @@ app.use((req, res) => {
   });
 });
 
-app.listen(8005, () => {
+app.listen(process.env.PORT, () => {
   logger.info('✅ Auth service started on port 8005');
   logger.info('🌐 http://localhost:8005');
   logger.info('🔗 Google OAuth: http://localhost:8005/auth/google');
