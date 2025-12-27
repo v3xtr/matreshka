@@ -6,7 +6,7 @@ import { GoogleStrategy } from '#internal/adapter/google-strategy/google-strateg
 import { GoogleOAuthService } from '#internal/service/oauth.service.js';
 import { UserRepo } from '#internal/repo/user.repo.js';
 import { prisma } from '#internal/adapter/prisma/prisma.js';
-import { logger } from '#internal/logger/logger.js';
+import { logger } from '#internal/adapter/logger/logger.js';
 
 declare global {
   namespace Express {
