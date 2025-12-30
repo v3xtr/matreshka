@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat Test</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+  <h2>Chat Test</h2>
+
+  <input id="userA" placeholder="Your ID" value="user1" />
+  <input id="userB" placeholder="Other user ID" value="user2" />
+  <button onclick="joinRoom()">Join Room</button>
+
+  <hr />
+
+  <input id="text" placeholder="Type a message" />
+  <button onclick="send()">Send</button>
+
+  <ul id="messages"></ul>
+
+  <script>
+    const socket = io("http://localhost:8007")
+    let currentRoom = null
+    let userA = null
+    let userB = null
+
+    function joinRoom() {
+      userA = document.getElementById("userA").value.trim()
+      userB = document.getElementById("userB").value.trim()
+      if (!userA || !userB) return alert("Enter both user IDs")
+
+      currentRoom = [userA, userB].sort().join(":")
+      socket.emit("joinPrivateRoom", { userA, userB })
+    }
+
+    socket.on("roomMessages", (messages) => {
+      const ul = document.getElementById("messages")
+      ul.innerHTML = ""
+      messages.reverse().forEach(msg => {
+        const li = document.createElement("li")
+        li.textContent = `${msg.userId}: ${msg.text}`
+        ul.appendChild(li)
+      })
+    })
+
+    socket.on("newMessage", (msg) => {
+      const ul = document.getElementById("messages")
+      const li = document.createElement("li")
+      li.textContent = `${msg.userId}: ${msg.text}`
+      ul.appendChild(li)
+    })
+
+    function send() {
+      const text = document.getElementById("text").value.trim()
+      if (!text || !userA || !userB) return
+
+      socket.emit("sendMessage", { fromUserId: userA, toUserId: userB, text })
+      document.getElementById("text").value = ""
+    }
+  </script>
+</body>
+</html>
