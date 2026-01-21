@@ -24,8 +24,7 @@ app.use("/api", chatRoutes)
 
 registerSocketHandlers(io)
 bootstrap()
-const PORT = Number(process.env.PORT) || 8007
 
-server.listen(PORT, () => {
-  logger.info(`🚀 Chat service started on port ${PORT}`)
+server.listen(process.env.PORT, () => {
+  logger.info(`Chat service started on http://localhost:${process.env.PORT}`)
 })

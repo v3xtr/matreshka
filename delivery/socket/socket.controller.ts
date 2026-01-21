@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io"
+import { Server } from "socket.io"
 import { SendMessageService } from "#internal/service/message.service.js"
 import { prisma } from "#internal/adapter/prisma/prisma.js"
 import { redisClient } from "#internal/adapter/redis/redis.js"
@@ -8,11 +8,13 @@ import { logger } from "#internal/adapter/logger/logger.js"
 import { CachedMessageRepo } from "#internal/repo/cahed.message.repo.js"
 import { MessageElasticRepo } from "#internal/repo/message.elastic.repo.js"
 import { MessageRepo } from "#internal/repo/mesage.repo.js"
+import { ReadStatusCache } from "#internal/repo/read.status.cache.repo.js"
 
 const cachedMessageRepo = new CachedMessageRepo(
   new MessageRepo(prisma),
   new MessageCache(redisClient),
-  new MessageElasticRepo()
+  new MessageElasticRepo(),
+  new ReadStatusCache(redisClient)
 )
 
 const sendMessageService = new SendMessageService(
@@ -21,18 +23,25 @@ const sendMessageService = new SendMessageService(
 )
 
 export function registerSocketHandlers(io: Server) {
-  io.on("connection", (socket: Socket) => {
+  io.on("connection", (socket) => {
     logger.info("Client connected:", socket.id)
 
-    socket.on("joinPrivateRoom", async (data: { userA: string; userB: string }) => {
-      const roomId = [data.userA, data.userB].sort().join(":")
-      socket.join(roomId)
+    socket.on("joinPrivateRoom", async (data: { userA: string, userB: string }) => {
+      try {
+        const roomId = [data.userA, data.userB].sort().join(":")
+        socket.join(roomId)
 
-      const messages = await cachedMessageRepo.findByRoom(roomId)
-      socket.emit("roomMessages", messages)
+        const messages = await cachedMessageRepo.findByRoom(roomId)
+        socket.emit("roomMessages", { roomId, messages })
+
+        await cachedMessageRepo.setReadStatus(roomId, data.userA)
+        socket.to(roomId).emit("roomRead", { roomId, userId: data.userA, lastReadAt: new Date().toISOString() })
+      } catch (err) {
+        socket.emit("errorMessage", { message: "Failed to join room" })
+      }
     })
 
-    socket.on("sendMessage", async (data: { fromUserId: string; toUserId: string; text: string }) => {
+    socket.on("sendMessage", async (data: { fromUserId: string, toUserId: string, text: string }) => {
       try {
         const message = await sendMessageService.execute({
           fromUserId: data.fromUserId,
@@ -43,10 +52,12 @@ export function registerSocketHandlers(io: Server) {
         const roomId = [data.fromUserId, data.toUserId].sort().join(":")
         io.to(roomId).emit("newMessage", message)
       } catch (err) {
-        socket.emit("errorMessage", {
-          message: err instanceof Error ? err.message : "Send failed"
-        })
+        socket.emit("errorMessage", { message: err instanceof Error ? err.message : "Send failed" })
       }
+    })
+    
+    socket.on("disconnect", () => {
+      logger.info("Client disconnected:", socket.id)
     })
   })
 }

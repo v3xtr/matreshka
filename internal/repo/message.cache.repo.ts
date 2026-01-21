@@ -1,6 +1,6 @@
 import { IMessageCache } from "#internal/interfaces/message.cache.repo.js"
 import { RedisClientType } from "redis"
-import { Message } from "src/prisma/client.js"
+import { Message, RoomMember } from "src/prisma/client.js"
 
 export class MessageCache implements IMessageCache {
   constructor(private readonly redis: RedisClientType) {}

@@ -1,4 +1,4 @@
-import { Message } from "src/prisma/client.js"
+import { Message, RoomMember } from "src/prisma/client.js"
 
 export interface IMessageRepo{
     create(input: {
@@ -8,4 +8,5 @@ export interface IMessageRepo{
         }): Promise<Message>
 
       findByRoom(roomId: string, limit?: number): Promise<Message[]>
+      setReadStatus(roomId: string, userId: string): Promise<RoomMember>
 }

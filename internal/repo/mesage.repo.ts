@@ -1,5 +1,5 @@
 import { IMessageRepo } from "#internal/interfaces/message.repo.interface.js"
-import { Message, PrismaClient } from "src/prisma/client.js"
+import { Message, PrismaClient, RoomMember } from "src/prisma/client.js"
 
 export class MessageRepo implements IMessageRepo {
   constructor(private readonly prisma: PrismaClient) {}
@@ -23,6 +23,15 @@ export class MessageRepo implements IMessageRepo {
       where: { roomId },
       orderBy: { createdAt: "desc" },
       take: limit,
+    })
+  }
+
+  async setReadStatus(roomId: string, userId: string): Promise<RoomMember>{
+    return this.prisma.roomMember.update({
+      where: { roomId_userId: { roomId, userId } },
+      data: {
+        lastReadAt: new Date()
+      }
     })
   }
 }

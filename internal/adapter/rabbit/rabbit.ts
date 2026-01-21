@@ -5,7 +5,7 @@ export class RabbitConnection{
     private channel!: amqp.Channel
 
     async connect(): Promise<amqp.Channel>{
-        this.connection = await amqp.connect('amqp://localhost')
+        this.connection = await amqp.connect('amqp://chat:chat@localhost:5672')
         this.channel = await this.connection.createConfirmChannel()
         return this.channel
     }

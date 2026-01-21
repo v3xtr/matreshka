@@ -15,18 +15,31 @@ model User {
   phone       String?
   description String? @default("")
 
-  rooms       Room[]    @relation("RoomUsers")
+  rooms       Room[]        @relation("RoomUsers")
+  roomMembers RoomMember[]
   messages    Message[]
 }
 
-
 model Room {
-  id        String    @id
+  id        String   @id
+  createdAt DateTime @default(now())
 
-  users     User[]    @relation("RoomUsers")
-  messages  Message[]
+  users       User[]        @relation("RoomUsers")
+  roomMembers RoomMember[]
+  messages    Message[]
+}
 
-  createdAt DateTime  @default(now())
+model RoomMember {
+  roomId   String
+  userId   String
+
+  lastReadAt DateTime?
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([roomId, userId])
+  @@index([userId])
 }
 
 model Message {

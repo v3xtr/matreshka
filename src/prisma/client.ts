@@ -50,6 +50,11 @@ export type User = Prisma.UserModel
  */
 export type Room = Prisma.RoomModel
 /**
+ * Model RoomMember
+ * 
+ */
+export type RoomMember = Prisma.RoomMemberModel
+/**
  * Model Message
  * 
  */
