@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { GetProfileSchema, UpdateProfileSchema } from '../../internal/validation/profile.validation.js'
-import { IProfileService } from '../../internal/interfaces/profile.service.interface.js'
+import { IProfileService } from '#internal/interfaces/profile/profile.service.interface.js'
 import { logger } from '#internal/adapter/logger/logger.js'
 import { TypeUserWithoutPassword } from '#internal/types/user.type.js'
 import { IProfileController } from './interfaces/profile.controller.interface.js'

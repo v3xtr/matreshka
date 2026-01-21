@@ -131,6 +131,13 @@ exports.Prisma.UserScalarFieldEnum = {
   avatarUrl: 'avatarUrl'
 };
 
+exports.Prisma.MediaScalarFieldEnum = {
+  id: 'id',
+  mediaId: 'mediaId',
+  cdnUrl: 'cdnUrl',
+  mimeType: 'mimeType'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -148,7 +155,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Media: 'Media'
 };
 
 /**

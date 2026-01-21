@@ -1,5 +1,5 @@
-import { IProfileRepo } from "#internal/interfaces/profile.repo.interface.js";
-import { IProfileService } from "#internal/interfaces/profile.service.interface.js";
+import { IProfileRepo } from "#internal/interfaces/profile/profile.repo.interface.js";
+import { IProfileService } from "#internal/interfaces/profile/profile.service.interface.js";
 import { TypeUserWithoutPassword } from "#internal/types/user.type.js";
 import { UpdateProfileRequest } from "#internal/validation/profile.validation.js";
 import { PutObjectCommand, DeleteObjectCommand, S3 } from "@aws-sdk/client-s3";

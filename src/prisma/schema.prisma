@@ -17,3 +17,10 @@ model User {
   description String  @default("")
   avatarUrl   String  @default("")
 }
+
+model Media {
+  id       String @id @default(uuid())
+  mediaId  String
+  cdnUrl   String
+  mimeType String
+}
