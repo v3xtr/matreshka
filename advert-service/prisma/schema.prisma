@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String   @id
+  email       String   @unique
+  password    String?
+  name        String?
+  phone       String?
+  description String?  @default("")
+  adverts     Advert[]
+}
+
+model Advert {
+  id                         String            @id @default(uuid())
+  firstName                  String?
+  lastName                   String?
+  fathersName                String?
+  gender                     String?
+  category                   String
+  subCategory                String?
+  title                      String
+  profession                 String?
+  services                   Services[]
+  sphere                     String?
+  brand                      String?
+  model                      String?
+  yearOfmanufacture          Int?
+  color                      String?
+  isOnTheGo                  Boolean?
+  vehicleBodyType            String?
+  vehicleKpp                 VehicleKpp?
+  ownersPts                  Int?
+  milage                     BigInt?
+  engineCapacity             Int?
+  horsePower                 Int?
+  drive                      Drive?
+  steerinWheel               SteeringWheel?
+  price                      String
+  priceFor                   PriceFor?
+  vesselType                 VesselType?
+  vesselLength               Int?
+  vesselWidth                Int?
+  vesselDraft                Int?
+  maxPassengers              Int?
+  vesselBodyMaterial         String?
+  engineType                 String?
+  cooling                    Cooling?
+  propertyType               PropertyType?
+  totalArea                  Decimal?
+  livingArea                 Decimal?
+  kitchenArea                Decimal?
+  apartmentFloor             Int?
+  floorsInHouse              Int?
+  houseState                 HouseState?
+  hasBalcony                 Boolean?
+  balconyAmount              Int?              @default(0)
+  hasElevator                Boolean?
+  hasParking                 Boolean?
+  stationDistance            Int?
+  cityInfrastructure         Boolean?
+  cityInfrastructureDistance Int?
+  hasSecurity                Boolean?
+  hasVideoSecurity           Boolean?
+  hasChildrenPlayground      Boolean?
+  hasSportPlayground         Boolean?
+  paymentType                PaymentType?
+  hasDocuments               Boolean?
+  description                String
+  workSchedule               WorkPeriod[]
+  workExperience             Decimal?
+  advanteges                 String?
+  employment                 Employment?
+  workFormat                 WorkFormat?
+  petBreed                   String?
+  petName                    String?
+  petColor                   String?
+  transactionScope           TransactionScope?
+  isProfitable               Boolean?
+  businessForm               BusinessForm?
+  offerType                  OfferType?
+  payBackPeriod              String?
+  address                    String
+  contacts                   String
+  userId                     String
+  user                       User              @relation(fields: [userId], references: [id])
+  pictures                   Pictures[]
+  videoId                    String?           @unique
+  video                      Video?
+}
+
+model Pictures {
+  id         String @id @default(uuid())
+  pictureUrl String
+  advert     Advert @relation(fields: [advertId], references: [id])
+  advertId   String
+}
+
+model Services {
+  id       String @id @default(uuid())
+  text     String
+  advertId String
+  advert   Advert @relation(fields: [advertId], references: [id])
+
+  @@index(advertId)
+}
+
+model WorkPeriod {
+  id       String  @id @default(uuid())
+  fromDay  Int
+  toDay    Int
+  fromTime String?
+  toTime   String?
+  is24h    Boolean @default(false)
+  advertId String
+  advert   Advert  @relation(fields: [advertId], references: [id], onDelete: Cascade)
+
+  @@index([advertId])
+}
+
+model Video {
+  id       String  @id @default(uuid())
+  videoUrl String
+  advertId String? @unique
+  advert   Advert? @relation(fields: [advertId], references: [id])
+}
+
+enum VehicleKpp {
+  Variable
+  Automatic
+  Manual
+  Robot
+}
+
+enum PaymentType {
+  Full
+  Trade
+  Mortgage
+  InstallmentPlan
+}
+
+enum HouseState {
+  CosmeticRepairs
+  EuroRepairs
+  RoughFinish
+  NeedRepairs
+}
+
+enum PropertyType {
+  Panel
+  Brick
+  Monolith
+}
+
+enum Cooling {
+  Air
+  Liquid
+}
+
+enum Employment {
+  FullTime
+  PartTime
+  Temporary
+  Internship
+}
+
+enum WorkFormat {
+  Outsource
+  Office
+  Hybride
+}
+
+enum PriceFor {
+  Service
+  Hour
+  Day
+  Week
+  Month
+}
+
+enum Drive {
+  Full
+  Rear
+  Front
+}
+
+enum SteeringWheel {
+  DoesntMatter
+  Left
+  Right
+}
+
+enum VesselType {
+  Boat
+  MotorYacht
+  SailingYacht
+  Vessels
+}
+
+enum TransactionScope {
+  Meet
+  Sell
+  FindPartner
+}
+
+enum BusinessForm {
+  IE
+  LLC
+  JSC
+  Other
+}
+
+enum OfferType {
+  Tour
+  Excursion
+  WeekendTour
+  SignatureTour
+  Transfer
+  HousingRental
+  Travel
+}
