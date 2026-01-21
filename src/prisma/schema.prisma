@@ -21,6 +21,14 @@ model User {
   @@map("users")
 }
 
+model Video {
+  id       String @id @default(uuid())
+  mediaId  String
+  cdnUrl   String
+  mimeType String
+  userId   String
+}
+
 model FeedVideo {
   id          String @id
   userId      String

@@ -131,6 +131,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VideoScalarFieldEnum = {
+  id: 'id',
+  mediaId: 'mediaId',
+  cdnUrl: 'cdnUrl',
+  mimeType: 'mimeType',
+  userId: 'userId'
+};
+
 exports.Prisma.FeedVideoScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -184,6 +192,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Video: 'Video',
   FeedVideo: 'FeedVideo',
   VideoView: 'VideoView',
   VideoLike: 'VideoLike',

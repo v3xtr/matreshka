@@ -3,7 +3,7 @@ import { connectRedis } from './internal/adapter/redis/redis.js'
 import { logger } from './internal/adapter/logger/logger.js'
 import { RabbitConnection } from './internal/adapter/rabbit/rabbit.js'
 import { RabbitUserConsumer } from '#delivery/broker/user.consumer.js'
-import { RabbitVideoConsumer } from '#delivery/broker/video.consumer.js'
+import { RabbitVideoConsumer } from '#delivery/broker/broker.consumer.js'
 
 export async function bootstrap(){
     try {

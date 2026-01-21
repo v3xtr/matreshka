@@ -2,12 +2,13 @@ import 'dotenv/config'
 import { PrismaClient } from '../../../src/prisma/index.js'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { logger } from '../logger/logger.js'
 
 if (!process.env.DATABASE_URL){
     throw new Error("DATABASE_URL is missing")
 }
 
-console.log(process.env.DATABASE_URL)
+logger.info(process.env.DATABASE_URL)
 
 const pool = new Pool({
     user: process.env.DATABASE_USER as string,

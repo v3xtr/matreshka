@@ -1,13 +1,17 @@
 import { redisClient } from "#internal/adapter/redis/redis.js";
 import { IVideoRepo } from "#internal/interfaces/video.repo.interface.js";
-import { FeedVideo, PrismaClient } from "src/prisma/index.js";
+import { FeedVideo, PrismaClient, Video } from "src/prisma/index.js";
 
 const VIEW_TTL = 60 * 60;
 
 export class VideoRepo implements IVideoRepo {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: FeedVideo): Promise<FeedVideo> {
+  async create(data: Video): Promise<Video>{
+    return this.prisma.video.create({ data })
+  }
+
+  async createFeedVideo(data: FeedVideo): Promise<FeedVideo> {
     return this.prisma.feedVideo.create({ data });
   }
 
