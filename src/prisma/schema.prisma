@@ -15,7 +15,7 @@ model User {
   name        String
   description String @default("")
 
-  videos Video[]
+  media Media[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,27 +23,22 @@ model User {
   @@map("users")
 }
 
-model Video {
-  id           String @id @default(cuid())
-  originalName String
-  fileName     String @unique
-  s3Key        String @unique
+model Media {
+  id       String @id @default(cuid())
+  fileName String @unique
+  s3Key    String @unique
 
-  url          String
-  cdnUrl       String
-  thumbnailUrl String?
+  url    String
+  cdnUrl String
 
-  size       Int
-  duration   Int?
-  mimeType   String
-  resolution String?
-
-  status VideoStatus @default(UPLOADING)
+  type     String
+  mimeType String
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  description String @default("")
+  title       String? @default("")
+  description String? @default("")
 
   publishedAt DateTime?
   processedAt DateTime?
@@ -52,14 +47,5 @@ model Video {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-  @@index([status])
-  @@map("videos")
-}
-
-enum VideoStatus {
-  UPLOADING
-  PROCESSING
-  READY
-  FAILED
-  DELETED
+  @@map("media")
 }

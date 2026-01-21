@@ -1,10 +1,10 @@
 import { Channel, ConsumeMessage } from "amqplib";
-import { IRabbitConsumer } from "./interfaces/rabbit.interface.js";
 import { prisma } from "#internal/adapter/prisma/prisma.js";
 import { logger } from "#internal/adapter/logger/logger.js";
 import { UserService } from "#internal/services/user.service.js";
 import { IUserService } from "#internal/interfaces/user.service.interface.js";
 import { UserRepo } from "#internal/repo/user.repo.js";
+import {IBrokerConsumer} from "#delivery/broker/interfaces/delivery.broker.interface.js";
 
 const EXCHANGE = "user.created";
 const QUEUE = "user.video";
@@ -13,7 +13,7 @@ const DLQ = "user.video.dlq";
 const RETRY_LIMIT = 5;
 const RETRY_TTL = 5000;
 
-export class RabbitConsumer implements IRabbitConsumer {
+export class BrokerConsumer implements IBrokerConsumer {
   private userService: IUserService;
 
   constructor() {

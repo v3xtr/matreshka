@@ -1,6 +1,6 @@
 import amqp from 'amqplib'
 
-export class RabbitConnection {
+export class BrokerConnection {
   private connection!: amqp.ChannelModel
   private channel!: amqp.Channel
 
