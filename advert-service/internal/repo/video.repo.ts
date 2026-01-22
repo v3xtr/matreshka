@@ -5,8 +5,6 @@ export class VideoRepo implements IVideoRepo{
     constructor(private readonly prisma: PrismaClient) {}
 
     async create(data: Video): Promise<Video>{
-        return await this.prisma.video.create({
-            data
-        })
+        return this.prisma.video.create({ data })
     }
 }

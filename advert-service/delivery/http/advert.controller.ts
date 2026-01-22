@@ -16,10 +16,7 @@ export class AdvertController implements IAdvertController {
 
     const createdAdvert = await this.advertService.create(result.data)
 
-    return res.json({
-      message: "Объявление создано",
-      advert: createdAdvert
-    })
+    return res.json({ message: "Объявление создано", advert: createdAdvert })
   }
 
   async getAdvert(req: Request, res: Response): Promise<Response> {
@@ -32,18 +29,7 @@ export class AdvertController implements IAdvertController {
 
   async getAdverts(req: Request, res: Response): Promise<Response> {
     try {
-      const {
-        take,
-        cursor,
-        category,
-        subcategory,
-        profession,
-        sphere,
-        employment,
-        userId,
-        priceFrom,
-        priceTo
-      } = req.query
+      const { take, cursor, category, subcategory, profession, sphere, employment, userId, priceFrom, priceTo} = req.query
 
       const adverts = await this.advertService.getAdverts({
         take: take ? Number(take) : 10,

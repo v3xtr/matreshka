@@ -1,9 +1,6 @@
 import { IAdvertRepo } from "#internal/interfaces/repo/advert.repo.interface.js";
 import { IAdvertService } from "#internal/interfaces/service/advert.service.interface.js";
-import {
-    AdvertCreateSchemaType,
-    UpdateAdvertSchemaType
-} from "#internal/validation/advert.validation.js";
+import { AdvertCreateSchemaType, UpdateAdvertSchemaType } from "#internal/validation/advert.validation.js";
 import { generateId } from "#pkg/generate.id.js";
 import { Advert } from "src/prisma/client.js";
 

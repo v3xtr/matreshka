@@ -1,5 +1,5 @@
 import { Channel } from "amqplib";
 
-export interface IRabbitVideoConsumer{
+export interface IBrokerVideoConsumer{
     startConsumer(channel: Channel): Promise<void>
 }
