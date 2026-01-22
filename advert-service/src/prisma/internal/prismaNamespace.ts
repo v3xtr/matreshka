@@ -388,8 +388,8 @@ export const ModelName = {
   Advert: 'Advert',
   Pictures: 'Pictures',
   Services: 'Services',
-  Video: 'Video',
-  WorkPeriod: 'WorkPeriod'
+  WorkPeriod: 'WorkPeriod',
+  Video: 'Video'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "advert" | "pictures" | "services" | "video" | "workPeriod"
+    modelProps: "user" | "advert" | "pictures" | "services" | "workPeriod" | "video"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,80 +705,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Video: {
-      payload: Prisma.$VideoPayload<ExtArgs>
-      fields: Prisma.VideoFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.VideoFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.VideoFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        findFirst: {
-          args: Prisma.VideoFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.VideoFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        findMany: {
-          args: Prisma.VideoFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
-        }
-        create: {
-          args: Prisma.VideoCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        createMany: {
-          args: Prisma.VideoCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.VideoCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
-        }
-        delete: {
-          args: Prisma.VideoDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        update: {
-          args: Prisma.VideoUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        deleteMany: {
-          args: Prisma.VideoDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.VideoUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.VideoUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
-        }
-        upsert: {
-          args: Prisma.VideoUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
-        }
-        aggregate: {
-          args: Prisma.VideoAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVideo>
-        }
-        groupBy: {
-          args: Prisma.VideoGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VideoGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.VideoCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VideoCountAggregateOutputType> | number
-        }
-      }
-    }
     WorkPeriod: {
       payload: Prisma.$WorkPeriodPayload<ExtArgs>
       fields: Prisma.WorkPeriodFieldRefs
@@ -853,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Video: {
+      payload: Prisma.$VideoPayload<ExtArgs>
+      fields: Prisma.VideoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VideoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VideoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        findFirst: {
+          args: Prisma.VideoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VideoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        findMany: {
+          args: Prisma.VideoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
+        }
+        create: {
+          args: Prisma.VideoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        createMany: {
+          args: Prisma.VideoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VideoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
+        }
+        delete: {
+          args: Prisma.VideoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        update: {
+          args: Prisma.VideoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        deleteMany: {
+          args: Prisma.VideoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VideoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VideoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>[]
+        }
+        upsert: {
+          args: Prisma.VideoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideoPayload>
+        }
+        aggregate: {
+          args: Prisma.VideoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVideo>
+        }
+        groupBy: {
+          args: Prisma.VideoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VideoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VideoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VideoCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -906,6 +906,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const AdvertScalarFieldEnum = {
   id: 'id',
+  advertId: 'advertId',
   firstName: 'firstName',
   lastName: 'lastName',
   fathersName: 'fathersName',
@@ -998,15 +999,6 @@ export const ServicesScalarFieldEnum = {
 export type ServicesScalarFieldEnum = (typeof ServicesScalarFieldEnum)[keyof typeof ServicesScalarFieldEnum]
 
 
-export const VideoScalarFieldEnum = {
-  id: 'id',
-  videoUrl: 'videoUrl',
-  advertId: 'advertId'
-} as const
-
-export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
-
-
 export const WorkPeriodScalarFieldEnum = {
   id: 'id',
   fromDay: 'fromDay',
@@ -1018,6 +1010,15 @@ export const WorkPeriodScalarFieldEnum = {
 } as const
 
 export type WorkPeriodScalarFieldEnum = (typeof WorkPeriodScalarFieldEnum)[keyof typeof WorkPeriodScalarFieldEnum]
+
+
+export const VideoScalarFieldEnum = {
+  id: 'id',
+  videoUrl: 'videoUrl',
+  advertId: 'advertId'
+} as const
+
+export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1421,8 +1422,8 @@ export type GlobalOmitConfig = {
   advert?: Prisma.AdvertOmit
   pictures?: Prisma.PicturesOmit
   services?: Prisma.ServicesOmit
-  video?: Prisma.VideoOmit
   workPeriod?: Prisma.WorkPeriodOmit
+  video?: Prisma.VideoOmit
 }
 
 /* Types for Logging */

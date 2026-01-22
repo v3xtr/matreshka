@@ -1,9 +1,8 @@
 import { z } from 'zod';
 
-export const AdvertCreateSchema = z.object({
+const BaseAdvertSchema = z.object({
     category: z.string().min(1, "Категория обязательна"),
     title: z.string().min(5, "Заголовок 5-200 символов").max(200),
-
     price: z.string()
         .min(1, "Укажите цену")
         .refine(price => {
@@ -16,21 +15,16 @@ export const AdvertCreateSchema = z.object({
         }, {
             message: "Укажите число, 'договорная' или 'бесплатно'"
         }),
-
     description: z.string().min(10, "Описание 10-2000 символов").max(2000),
     address: z.string().min(5, "Адрес обязателен"),
     contacts: z.string().min(5, "Контакты обязательны"),
-
     userId: z.string().min(1, "User ID обязателен"),
-
     pictures: z.array(z.object({
         pictureUrl: z.string()
     })).min(1, "Нужно минимум 1 фото").max(10),
-
     services: z.array(z.object({
         text: z.string().min(1, "Текст услуги не может быть пустым")
     })).optional().default([]),
-
     workSchedule: z.array(z.object({
         fromDay: z.number().int().min(0).max(6),
         toDay: z.number().int().min(0).max(6),
@@ -44,11 +38,34 @@ export const AdvertCreateSchema = z.object({
             .nullable(),
         is24h: z.boolean().default(false)
     })).optional().default([]),
-
     videoId: z.string()
         .nullable()
         .optional()
         .default(null),
 });
 
-export type AdvertCreateSchemaType = z.infer<typeof AdvertCreateSchema>
+export const AdvertCreateSchema = BaseAdvertSchema;
+
+export const UpdateAdvertSchema = z.object({
+    id: z.string().min(1, "ID обязателен"),
+})
+    .extend(
+        BaseAdvertSchema
+            .omit({ userId: true })
+            .partial()
+            .extend({
+                pictures: z.array(z.object({
+                    pictureUrl: z.string()
+                })).max(10).optional(),
+            }).shape
+    )
+    .refine(data => {
+        const updateFields = Object.keys(data);
+        return updateFields.length > 1;
+    }, {
+        message: "Должно быть хотя бы одно поле для обновления кроме advertId",
+        path: ["root"]
+    });
+
+export type AdvertCreateSchemaType = z.infer<typeof AdvertCreateSchema>;
+export type UpdateAdvertSchemaType = z.infer<typeof UpdateAdvertSchema>;

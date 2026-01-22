@@ -19,6 +19,7 @@ model User {
 
 model Advert {
   id                         String            @id @default(uuid())
+  advertId                   String            @default(uuid())
   firstName                  String?
   lastName                   String?
   fathersName                String?

@@ -1,14 +1,14 @@
 import { IAdvertController } from "#delivery/interfaces/http/advert.controller.interface.js"
 import { logger } from "#internal/adapter/logger/logger.js"
 import { IAdvertService } from "#internal/interfaces/service/advert.service.interface.js"
-import { advertRequestSchema } from "#internal/validation/advert.validation.js"
+import { AdvertCreateSchema , UpdateAdvertSchema } from "#internal/validation/advert.validation.js"
 import { Request, Response } from "express"
 
 export class AdvertController implements IAdvertController {
   constructor(private readonly advertService: IAdvertService) {}
 
   async create(req: Request, res: Response): Promise<Response> {
-    const result = advertRequestSchema.safeParse(req.body)
+    const result = AdvertCreateSchema.safeParse(req.body)
 
     if (!result.success) {
       return res.status(400).json({ message: "Указаны неверные данные" })
@@ -84,6 +84,24 @@ export class AdvertController implements IAdvertController {
       return res.status(500).json({
         message: "Failed to load adverts"
       })
+    }
+  }
+
+  async update(req: Request, res: Response): Promise<Response>{
+    try {
+      const result = UpdateAdvertSchema.safeParse(req.body)
+
+      if(!result.success) {
+        return res.status(400).json({ message: "Неверные данные", error: result.error})
+      }
+
+      const updatedAdvert = this.advertService.update(result.data)
+
+      return res.json({ updatedAdvert })
+
+    }catch (error){
+      logger.error(`avdert update error: ${error}`)
+      return res.status(500).json({ message: "Внутряняя ошибка сервера" })
     }
   }
 

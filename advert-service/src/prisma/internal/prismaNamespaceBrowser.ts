@@ -55,8 +55,8 @@ export const ModelName = {
   Advert: 'Advert',
   Pictures: 'Pictures',
   Services: 'Services',
-  Video: 'Video',
-  WorkPeriod: 'WorkPeriod'
+  WorkPeriod: 'WorkPeriod',
+  Video: 'Video'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,6 +89,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const AdvertScalarFieldEnum = {
   id: 'id',
+  advertId: 'advertId',
   firstName: 'firstName',
   lastName: 'lastName',
   fathersName: 'fathersName',
@@ -181,15 +182,6 @@ export const ServicesScalarFieldEnum = {
 export type ServicesScalarFieldEnum = (typeof ServicesScalarFieldEnum)[keyof typeof ServicesScalarFieldEnum]
 
 
-export const VideoScalarFieldEnum = {
-  id: 'id',
-  videoUrl: 'videoUrl',
-  advertId: 'advertId'
-} as const
-
-export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
-
-
 export const WorkPeriodScalarFieldEnum = {
   id: 'id',
   fromDay: 'fromDay',
@@ -201,6 +193,15 @@ export const WorkPeriodScalarFieldEnum = {
 } as const
 
 export type WorkPeriodScalarFieldEnum = (typeof WorkPeriodScalarFieldEnum)[keyof typeof WorkPeriodScalarFieldEnum]
+
+
+export const VideoScalarFieldEnum = {
+  id: 'id',
+  videoUrl: 'videoUrl',
+  advertId: 'advertId'
+} as const
+
+export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,5 +1,5 @@
 import { IAdvertRepo } from "#internal/interfaces/repo/advert.repo.interface.js";
-import { AdvertCreateSchemaType } from "#internal/validation/advert.validation.js";
+import {AdvertCreateSchemaType, UpdateAdvertSchemaType} from "#internal/validation/advert.validation.js";
 import { Advert, PrismaClient } from "src/prisma/client.js";
 
 export class AdvertRepo implements IAdvertRepo {
@@ -105,6 +105,20 @@ export class AdvertRepo implements IAdvertRepo {
             },
             include: {
                 pictures: true
+            }
+        });
+    }
+
+    async update(data: UpdateAdvertSchemaType): Promise<Advert> {
+        const { id, ...updateData } = data;
+
+        return this.prisma.advert.update({
+            where: { id },
+            data: {
+                ...updateData,
+                pictures: { deleteMany: {}, create: updateData.pictures },
+                services: { deleteMany: {}, create: updateData.services },
+                workSchedule: { deleteMany: {}, create: updateData.workSchedule }
             }
         });
     }

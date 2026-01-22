@@ -70,6 +70,7 @@ export type AdvertSumAggregateOutputType = {
 
 export type AdvertMinAggregateOutputType = {
   id: string | null
+  advertId: string | null
   firstName: string | null
   lastName: string | null
   fathersName: string | null
@@ -143,6 +144,7 @@ export type AdvertMinAggregateOutputType = {
 
 export type AdvertMaxAggregateOutputType = {
   id: string | null
+  advertId: string | null
   firstName: string | null
   lastName: string | null
   fathersName: string | null
@@ -216,6 +218,7 @@ export type AdvertMaxAggregateOutputType = {
 
 export type AdvertCountAggregateOutputType = {
   id: number
+  advertId: number
   firstName: number
   lastName: number
   fathersName: number
@@ -333,6 +336,7 @@ export type AdvertSumAggregateInputType = {
 
 export type AdvertMinAggregateInputType = {
   id?: true
+  advertId?: true
   firstName?: true
   lastName?: true
   fathersName?: true
@@ -406,6 +410,7 @@ export type AdvertMinAggregateInputType = {
 
 export type AdvertMaxAggregateInputType = {
   id?: true
+  advertId?: true
   firstName?: true
   lastName?: true
   fathersName?: true
@@ -479,6 +484,7 @@ export type AdvertMaxAggregateInputType = {
 
 export type AdvertCountAggregateInputType = {
   id?: true
+  advertId?: true
   firstName?: true
   lastName?: true
   fathersName?: true
@@ -639,6 +645,7 @@ export type AdvertGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type AdvertGroupByOutputType = {
   id: string
+  advertId: string
   firstName: string | null
   lastName: string | null
   fathersName: string | null
@@ -735,6 +742,7 @@ export type AdvertWhereInput = {
   OR?: Prisma.AdvertWhereInput[]
   NOT?: Prisma.AdvertWhereInput | Prisma.AdvertWhereInput[]
   id?: Prisma.StringFilter<"Advert"> | string
+  advertId?: Prisma.StringFilter<"Advert"> | string
   firstName?: Prisma.StringNullableFilter<"Advert"> | string | null
   lastName?: Prisma.StringNullableFilter<"Advert"> | string | null
   fathersName?: Prisma.StringNullableFilter<"Advert"> | string | null
@@ -813,6 +821,7 @@ export type AdvertWhereInput = {
 
 export type AdvertOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  advertId?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   fathersName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -895,6 +904,7 @@ export type AdvertWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AdvertWhereInput | Prisma.AdvertWhereInput[]
   OR?: Prisma.AdvertWhereInput[]
   NOT?: Prisma.AdvertWhereInput | Prisma.AdvertWhereInput[]
+  advertId?: Prisma.StringFilter<"Advert"> | string
   firstName?: Prisma.StringNullableFilter<"Advert"> | string | null
   lastName?: Prisma.StringNullableFilter<"Advert"> | string | null
   fathersName?: Prisma.StringNullableFilter<"Advert"> | string | null
@@ -972,6 +982,7 @@ export type AdvertWhereUniqueInput = Prisma.AtLeast<{
 
 export type AdvertOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  advertId?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   fathersName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1053,6 +1064,7 @@ export type AdvertScalarWhereWithAggregatesInput = {
   OR?: Prisma.AdvertScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AdvertScalarWhereWithAggregatesInput | Prisma.AdvertScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Advert"> | string
+  advertId?: Prisma.StringWithAggregatesFilter<"Advert"> | string
   firstName?: Prisma.StringNullableWithAggregatesFilter<"Advert"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"Advert"> | string | null
   fathersName?: Prisma.StringNullableWithAggregatesFilter<"Advert"> | string | null
@@ -1126,6 +1138,7 @@ export type AdvertScalarWhereWithAggregatesInput = {
 
 export type AdvertCreateInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -1203,6 +1216,7 @@ export type AdvertCreateInput = {
 
 export type AdvertUncheckedCreateInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -1280,6 +1294,7 @@ export type AdvertUncheckedCreateInput = {
 
 export type AdvertUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1357,6 +1372,7 @@ export type AdvertUpdateInput = {
 
 export type AdvertUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1434,6 +1450,7 @@ export type AdvertUncheckedUpdateInput = {
 
 export type AdvertCreateManyInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -1507,6 +1524,7 @@ export type AdvertCreateManyInput = {
 
 export type AdvertUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1579,6 +1597,7 @@ export type AdvertUpdateManyMutationInput = {
 
 export type AdvertUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1662,6 +1681,7 @@ export type AdvertOrderByRelationAggregateInput = {
 
 export type AdvertCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  advertId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   fathersName?: Prisma.SortOrder
@@ -1756,6 +1776,7 @@ export type AdvertAvgOrderByAggregateInput = {
 
 export type AdvertMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  advertId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   fathersName?: Prisma.SortOrder
@@ -1829,6 +1850,7 @@ export type AdvertMaxOrderByAggregateInput = {
 
 export type AdvertMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  advertId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   fathersName?: Prisma.SortOrder
@@ -2085,6 +2107,20 @@ export type AdvertUpdateOneRequiredWithoutServicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdvertUpdateToOneWithWhereWithoutServicesInput, Prisma.AdvertUpdateWithoutServicesInput>, Prisma.AdvertUncheckedUpdateWithoutServicesInput>
 }
 
+export type AdvertCreateNestedOneWithoutWorkScheduleInput = {
+  create?: Prisma.XOR<Prisma.AdvertCreateWithoutWorkScheduleInput, Prisma.AdvertUncheckedCreateWithoutWorkScheduleInput>
+  connectOrCreate?: Prisma.AdvertCreateOrConnectWithoutWorkScheduleInput
+  connect?: Prisma.AdvertWhereUniqueInput
+}
+
+export type AdvertUpdateOneRequiredWithoutWorkScheduleNestedInput = {
+  create?: Prisma.XOR<Prisma.AdvertCreateWithoutWorkScheduleInput, Prisma.AdvertUncheckedCreateWithoutWorkScheduleInput>
+  connectOrCreate?: Prisma.AdvertCreateOrConnectWithoutWorkScheduleInput
+  upsert?: Prisma.AdvertUpsertWithoutWorkScheduleInput
+  connect?: Prisma.AdvertWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdvertUpdateToOneWithWhereWithoutWorkScheduleInput, Prisma.AdvertUpdateWithoutWorkScheduleInput>, Prisma.AdvertUncheckedUpdateWithoutWorkScheduleInput>
+}
+
 export type AdvertCreateNestedOneWithoutVideoInput = {
   create?: Prisma.XOR<Prisma.AdvertCreateWithoutVideoInput, Prisma.AdvertUncheckedCreateWithoutVideoInput>
   connectOrCreate?: Prisma.AdvertCreateOrConnectWithoutVideoInput
@@ -2101,22 +2137,9 @@ export type AdvertUpdateOneWithoutVideoNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdvertUpdateToOneWithWhereWithoutVideoInput, Prisma.AdvertUpdateWithoutVideoInput>, Prisma.AdvertUncheckedUpdateWithoutVideoInput>
 }
 
-export type AdvertCreateNestedOneWithoutWorkScheduleInput = {
-  create?: Prisma.XOR<Prisma.AdvertCreateWithoutWorkScheduleInput, Prisma.AdvertUncheckedCreateWithoutWorkScheduleInput>
-  connectOrCreate?: Prisma.AdvertCreateOrConnectWithoutWorkScheduleInput
-  connect?: Prisma.AdvertWhereUniqueInput
-}
-
-export type AdvertUpdateOneRequiredWithoutWorkScheduleNestedInput = {
-  create?: Prisma.XOR<Prisma.AdvertCreateWithoutWorkScheduleInput, Prisma.AdvertUncheckedCreateWithoutWorkScheduleInput>
-  connectOrCreate?: Prisma.AdvertCreateOrConnectWithoutWorkScheduleInput
-  upsert?: Prisma.AdvertUpsertWithoutWorkScheduleInput
-  connect?: Prisma.AdvertWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AdvertUpdateToOneWithWhereWithoutWorkScheduleInput, Prisma.AdvertUpdateWithoutWorkScheduleInput>, Prisma.AdvertUncheckedUpdateWithoutWorkScheduleInput>
-}
-
 export type AdvertCreateWithoutUserInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2193,6 +2216,7 @@ export type AdvertCreateWithoutUserInput = {
 
 export type AdvertUncheckedCreateWithoutUserInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2298,6 +2322,7 @@ export type AdvertScalarWhereInput = {
   OR?: Prisma.AdvertScalarWhereInput[]
   NOT?: Prisma.AdvertScalarWhereInput | Prisma.AdvertScalarWhereInput[]
   id?: Prisma.StringFilter<"Advert"> | string
+  advertId?: Prisma.StringFilter<"Advert"> | string
   firstName?: Prisma.StringNullableFilter<"Advert"> | string | null
   lastName?: Prisma.StringNullableFilter<"Advert"> | string | null
   fathersName?: Prisma.StringNullableFilter<"Advert"> | string | null
@@ -2371,6 +2396,7 @@ export type AdvertScalarWhereInput = {
 
 export type AdvertCreateWithoutPicturesInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2447,6 +2473,7 @@ export type AdvertCreateWithoutPicturesInput = {
 
 export type AdvertUncheckedCreateWithoutPicturesInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2539,6 +2566,7 @@ export type AdvertUpdateToOneWithWhereWithoutPicturesInput = {
 
 export type AdvertUpdateWithoutPicturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2615,6 +2643,7 @@ export type AdvertUpdateWithoutPicturesInput = {
 
 export type AdvertUncheckedUpdateWithoutPicturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2691,6 +2720,7 @@ export type AdvertUncheckedUpdateWithoutPicturesInput = {
 
 export type AdvertCreateWithoutServicesInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2767,6 +2797,7 @@ export type AdvertCreateWithoutServicesInput = {
 
 export type AdvertUncheckedCreateWithoutServicesInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -2859,6 +2890,7 @@ export type AdvertUpdateToOneWithWhereWithoutServicesInput = {
 
 export type AdvertUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2935,6 +2967,7 @@ export type AdvertUpdateWithoutServicesInput = {
 
 export type AdvertUncheckedUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3009,328 +3042,9 @@ export type AdvertUncheckedUpdateWithoutServicesInput = {
   video?: Prisma.VideoUncheckedUpdateOneWithoutAdvertNestedInput
 }
 
-export type AdvertCreateWithoutVideoInput = {
-  id?: string
-  firstName?: string | null
-  lastName?: string | null
-  fathersName?: string | null
-  gender?: string | null
-  category: string
-  subCategory?: string | null
-  title: string
-  profession?: string | null
-  sphere?: string | null
-  brand?: string | null
-  model?: string | null
-  yearOfmanufacture?: number | null
-  color?: string | null
-  isOnTheGo?: boolean | null
-  vehicleBodyType?: string | null
-  vehicleKpp?: $Enums.VehicleKpp | null
-  ownersPts?: number | null
-  milage?: bigint | number | null
-  engineCapacity?: number | null
-  horsePower?: number | null
-  drive?: $Enums.Drive | null
-  steerinWheel?: $Enums.SteeringWheel | null
-  price: string
-  priceFor?: $Enums.PriceFor | null
-  vesselType?: $Enums.VesselType | null
-  vesselLength?: number | null
-  vesselWidth?: number | null
-  vesselDraft?: number | null
-  maxPassengers?: number | null
-  vesselBodyMaterial?: string | null
-  engineType?: string | null
-  cooling?: $Enums.Cooling | null
-  propertyType?: $Enums.PropertyType | null
-  totalArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  livingArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  kitchenArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  apartmentFloor?: number | null
-  floorsInHouse?: number | null
-  houseState?: $Enums.HouseState | null
-  hasBalcony?: boolean | null
-  balconyAmount?: number | null
-  hasElevator?: boolean | null
-  hasParking?: boolean | null
-  stationDistance?: number | null
-  cityInfrastructure?: boolean | null
-  cityInfrastructureDistance?: number | null
-  hasSecurity?: boolean | null
-  hasVideoSecurity?: boolean | null
-  hasChildrenPlayground?: boolean | null
-  hasSportPlayground?: boolean | null
-  paymentType?: $Enums.PaymentType | null
-  hasDocuments?: boolean | null
-  description: string
-  workExperience?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  advanteges?: string | null
-  employment?: $Enums.Employment | null
-  workFormat?: $Enums.WorkFormat | null
-  petBreed?: string | null
-  petName?: string | null
-  petColor?: string | null
-  transactionScope?: $Enums.TransactionScope | null
-  isProfitable?: boolean | null
-  businessForm?: $Enums.BusinessForm | null
-  offerType?: $Enums.OfferType | null
-  payBackPeriod?: string | null
-  address: string
-  contacts: string
-  videoId?: string | null
-  services?: Prisma.ServicesCreateNestedManyWithoutAdvertInput
-  workSchedule?: Prisma.WorkPeriodCreateNestedManyWithoutAdvertInput
-  user: Prisma.UserCreateNestedOneWithoutAdvertsInput
-  pictures?: Prisma.PicturesCreateNestedManyWithoutAdvertInput
-}
-
-export type AdvertUncheckedCreateWithoutVideoInput = {
-  id?: string
-  firstName?: string | null
-  lastName?: string | null
-  fathersName?: string | null
-  gender?: string | null
-  category: string
-  subCategory?: string | null
-  title: string
-  profession?: string | null
-  sphere?: string | null
-  brand?: string | null
-  model?: string | null
-  yearOfmanufacture?: number | null
-  color?: string | null
-  isOnTheGo?: boolean | null
-  vehicleBodyType?: string | null
-  vehicleKpp?: $Enums.VehicleKpp | null
-  ownersPts?: number | null
-  milage?: bigint | number | null
-  engineCapacity?: number | null
-  horsePower?: number | null
-  drive?: $Enums.Drive | null
-  steerinWheel?: $Enums.SteeringWheel | null
-  price: string
-  priceFor?: $Enums.PriceFor | null
-  vesselType?: $Enums.VesselType | null
-  vesselLength?: number | null
-  vesselWidth?: number | null
-  vesselDraft?: number | null
-  maxPassengers?: number | null
-  vesselBodyMaterial?: string | null
-  engineType?: string | null
-  cooling?: $Enums.Cooling | null
-  propertyType?: $Enums.PropertyType | null
-  totalArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  livingArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  kitchenArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  apartmentFloor?: number | null
-  floorsInHouse?: number | null
-  houseState?: $Enums.HouseState | null
-  hasBalcony?: boolean | null
-  balconyAmount?: number | null
-  hasElevator?: boolean | null
-  hasParking?: boolean | null
-  stationDistance?: number | null
-  cityInfrastructure?: boolean | null
-  cityInfrastructureDistance?: number | null
-  hasSecurity?: boolean | null
-  hasVideoSecurity?: boolean | null
-  hasChildrenPlayground?: boolean | null
-  hasSportPlayground?: boolean | null
-  paymentType?: $Enums.PaymentType | null
-  hasDocuments?: boolean | null
-  description: string
-  workExperience?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  advanteges?: string | null
-  employment?: $Enums.Employment | null
-  workFormat?: $Enums.WorkFormat | null
-  petBreed?: string | null
-  petName?: string | null
-  petColor?: string | null
-  transactionScope?: $Enums.TransactionScope | null
-  isProfitable?: boolean | null
-  businessForm?: $Enums.BusinessForm | null
-  offerType?: $Enums.OfferType | null
-  payBackPeriod?: string | null
-  address: string
-  contacts: string
-  userId: string
-  videoId?: string | null
-  services?: Prisma.ServicesUncheckedCreateNestedManyWithoutAdvertInput
-  workSchedule?: Prisma.WorkPeriodUncheckedCreateNestedManyWithoutAdvertInput
-  pictures?: Prisma.PicturesUncheckedCreateNestedManyWithoutAdvertInput
-}
-
-export type AdvertCreateOrConnectWithoutVideoInput = {
-  where: Prisma.AdvertWhereUniqueInput
-  create: Prisma.XOR<Prisma.AdvertCreateWithoutVideoInput, Prisma.AdvertUncheckedCreateWithoutVideoInput>
-}
-
-export type AdvertUpsertWithoutVideoInput = {
-  update: Prisma.XOR<Prisma.AdvertUpdateWithoutVideoInput, Prisma.AdvertUncheckedUpdateWithoutVideoInput>
-  create: Prisma.XOR<Prisma.AdvertCreateWithoutVideoInput, Prisma.AdvertUncheckedCreateWithoutVideoInput>
-  where?: Prisma.AdvertWhereInput
-}
-
-export type AdvertUpdateToOneWithWhereWithoutVideoInput = {
-  where?: Prisma.AdvertWhereInput
-  data: Prisma.XOR<Prisma.AdvertUpdateWithoutVideoInput, Prisma.AdvertUncheckedUpdateWithoutVideoInput>
-}
-
-export type AdvertUpdateWithoutVideoInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sphere?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  yearOfmanufacture?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isOnTheGo?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  vehicleBodyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleKpp?: Prisma.NullableEnumVehicleKppFieldUpdateOperationsInput | $Enums.VehicleKpp | null
-  ownersPts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  milage?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  engineCapacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  horsePower?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  drive?: Prisma.NullableEnumDriveFieldUpdateOperationsInput | $Enums.Drive | null
-  steerinWheel?: Prisma.NullableEnumSteeringWheelFieldUpdateOperationsInput | $Enums.SteeringWheel | null
-  price?: Prisma.StringFieldUpdateOperationsInput | string
-  priceFor?: Prisma.NullableEnumPriceForFieldUpdateOperationsInput | $Enums.PriceFor | null
-  vesselType?: Prisma.NullableEnumVesselTypeFieldUpdateOperationsInput | $Enums.VesselType | null
-  vesselLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselWidth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselDraft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxPassengers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselBodyMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  engineType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cooling?: Prisma.NullableEnumCoolingFieldUpdateOperationsInput | $Enums.Cooling | null
-  propertyType?: Prisma.NullableEnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType | null
-  totalArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  livingArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  kitchenArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  apartmentFloor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  floorsInHouse?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  houseState?: Prisma.NullableEnumHouseStateFieldUpdateOperationsInput | $Enums.HouseState | null
-  hasBalcony?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  balconyAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  hasElevator?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasParking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  stationDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cityInfrastructure?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  cityInfrastructureDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  hasSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasVideoSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasChildrenPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasSportPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  paymentType?: Prisma.NullableEnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType | null
-  hasDocuments?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  workExperience?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  advanteges?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employment?: Prisma.NullableEnumEmploymentFieldUpdateOperationsInput | $Enums.Employment | null
-  workFormat?: Prisma.NullableEnumWorkFormatFieldUpdateOperationsInput | $Enums.WorkFormat | null
-  petBreed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  petName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  petColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionScope?: Prisma.NullableEnumTransactionScopeFieldUpdateOperationsInput | $Enums.TransactionScope | null
-  isProfitable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  businessForm?: Prisma.NullableEnumBusinessFormFieldUpdateOperationsInput | $Enums.BusinessForm | null
-  offerType?: Prisma.NullableEnumOfferTypeFieldUpdateOperationsInput | $Enums.OfferType | null
-  payBackPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  contacts?: Prisma.StringFieldUpdateOperationsInput | string
-  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.ServicesUpdateManyWithoutAdvertNestedInput
-  workSchedule?: Prisma.WorkPeriodUpdateManyWithoutAdvertNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutAdvertsNestedInput
-  pictures?: Prisma.PicturesUpdateManyWithoutAdvertNestedInput
-}
-
-export type AdvertUncheckedUpdateWithoutVideoInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sphere?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  yearOfmanufacture?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isOnTheGo?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  vehicleBodyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleKpp?: Prisma.NullableEnumVehicleKppFieldUpdateOperationsInput | $Enums.VehicleKpp | null
-  ownersPts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  milage?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  engineCapacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  horsePower?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  drive?: Prisma.NullableEnumDriveFieldUpdateOperationsInput | $Enums.Drive | null
-  steerinWheel?: Prisma.NullableEnumSteeringWheelFieldUpdateOperationsInput | $Enums.SteeringWheel | null
-  price?: Prisma.StringFieldUpdateOperationsInput | string
-  priceFor?: Prisma.NullableEnumPriceForFieldUpdateOperationsInput | $Enums.PriceFor | null
-  vesselType?: Prisma.NullableEnumVesselTypeFieldUpdateOperationsInput | $Enums.VesselType | null
-  vesselLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselWidth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselDraft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxPassengers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  vesselBodyMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  engineType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cooling?: Prisma.NullableEnumCoolingFieldUpdateOperationsInput | $Enums.Cooling | null
-  propertyType?: Prisma.NullableEnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType | null
-  totalArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  livingArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  kitchenArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  apartmentFloor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  floorsInHouse?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  houseState?: Prisma.NullableEnumHouseStateFieldUpdateOperationsInput | $Enums.HouseState | null
-  hasBalcony?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  balconyAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  hasElevator?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasParking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  stationDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cityInfrastructure?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  cityInfrastructureDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  hasSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasVideoSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasChildrenPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  hasSportPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  paymentType?: Prisma.NullableEnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType | null
-  hasDocuments?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  workExperience?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  advanteges?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employment?: Prisma.NullableEnumEmploymentFieldUpdateOperationsInput | $Enums.Employment | null
-  workFormat?: Prisma.NullableEnumWorkFormatFieldUpdateOperationsInput | $Enums.WorkFormat | null
-  petBreed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  petName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  petColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionScope?: Prisma.NullableEnumTransactionScopeFieldUpdateOperationsInput | $Enums.TransactionScope | null
-  isProfitable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  businessForm?: Prisma.NullableEnumBusinessFormFieldUpdateOperationsInput | $Enums.BusinessForm | null
-  offerType?: Prisma.NullableEnumOfferTypeFieldUpdateOperationsInput | $Enums.OfferType | null
-  payBackPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  contacts?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.ServicesUncheckedUpdateManyWithoutAdvertNestedInput
-  workSchedule?: Prisma.WorkPeriodUncheckedUpdateManyWithoutAdvertNestedInput
-  pictures?: Prisma.PicturesUncheckedUpdateManyWithoutAdvertNestedInput
-}
-
 export type AdvertCreateWithoutWorkScheduleInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -3407,6 +3121,7 @@ export type AdvertCreateWithoutWorkScheduleInput = {
 
 export type AdvertUncheckedCreateWithoutWorkScheduleInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -3499,6 +3214,7 @@ export type AdvertUpdateToOneWithWhereWithoutWorkScheduleInput = {
 
 export type AdvertUpdateWithoutWorkScheduleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3575,6 +3291,7 @@ export type AdvertUpdateWithoutWorkScheduleInput = {
 
 export type AdvertUncheckedUpdateWithoutWorkScheduleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3649,8 +3366,333 @@ export type AdvertUncheckedUpdateWithoutWorkScheduleInput = {
   video?: Prisma.VideoUncheckedUpdateOneWithoutAdvertNestedInput
 }
 
+export type AdvertCreateWithoutVideoInput = {
+  id?: string
+  advertId?: string
+  firstName?: string | null
+  lastName?: string | null
+  fathersName?: string | null
+  gender?: string | null
+  category: string
+  subCategory?: string | null
+  title: string
+  profession?: string | null
+  sphere?: string | null
+  brand?: string | null
+  model?: string | null
+  yearOfmanufacture?: number | null
+  color?: string | null
+  isOnTheGo?: boolean | null
+  vehicleBodyType?: string | null
+  vehicleKpp?: $Enums.VehicleKpp | null
+  ownersPts?: number | null
+  milage?: bigint | number | null
+  engineCapacity?: number | null
+  horsePower?: number | null
+  drive?: $Enums.Drive | null
+  steerinWheel?: $Enums.SteeringWheel | null
+  price: string
+  priceFor?: $Enums.PriceFor | null
+  vesselType?: $Enums.VesselType | null
+  vesselLength?: number | null
+  vesselWidth?: number | null
+  vesselDraft?: number | null
+  maxPassengers?: number | null
+  vesselBodyMaterial?: string | null
+  engineType?: string | null
+  cooling?: $Enums.Cooling | null
+  propertyType?: $Enums.PropertyType | null
+  totalArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  livingArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  kitchenArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apartmentFloor?: number | null
+  floorsInHouse?: number | null
+  houseState?: $Enums.HouseState | null
+  hasBalcony?: boolean | null
+  balconyAmount?: number | null
+  hasElevator?: boolean | null
+  hasParking?: boolean | null
+  stationDistance?: number | null
+  cityInfrastructure?: boolean | null
+  cityInfrastructureDistance?: number | null
+  hasSecurity?: boolean | null
+  hasVideoSecurity?: boolean | null
+  hasChildrenPlayground?: boolean | null
+  hasSportPlayground?: boolean | null
+  paymentType?: $Enums.PaymentType | null
+  hasDocuments?: boolean | null
+  description: string
+  workExperience?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  advanteges?: string | null
+  employment?: $Enums.Employment | null
+  workFormat?: $Enums.WorkFormat | null
+  petBreed?: string | null
+  petName?: string | null
+  petColor?: string | null
+  transactionScope?: $Enums.TransactionScope | null
+  isProfitable?: boolean | null
+  businessForm?: $Enums.BusinessForm | null
+  offerType?: $Enums.OfferType | null
+  payBackPeriod?: string | null
+  address: string
+  contacts: string
+  videoId?: string | null
+  services?: Prisma.ServicesCreateNestedManyWithoutAdvertInput
+  workSchedule?: Prisma.WorkPeriodCreateNestedManyWithoutAdvertInput
+  user: Prisma.UserCreateNestedOneWithoutAdvertsInput
+  pictures?: Prisma.PicturesCreateNestedManyWithoutAdvertInput
+}
+
+export type AdvertUncheckedCreateWithoutVideoInput = {
+  id?: string
+  advertId?: string
+  firstName?: string | null
+  lastName?: string | null
+  fathersName?: string | null
+  gender?: string | null
+  category: string
+  subCategory?: string | null
+  title: string
+  profession?: string | null
+  sphere?: string | null
+  brand?: string | null
+  model?: string | null
+  yearOfmanufacture?: number | null
+  color?: string | null
+  isOnTheGo?: boolean | null
+  vehicleBodyType?: string | null
+  vehicleKpp?: $Enums.VehicleKpp | null
+  ownersPts?: number | null
+  milage?: bigint | number | null
+  engineCapacity?: number | null
+  horsePower?: number | null
+  drive?: $Enums.Drive | null
+  steerinWheel?: $Enums.SteeringWheel | null
+  price: string
+  priceFor?: $Enums.PriceFor | null
+  vesselType?: $Enums.VesselType | null
+  vesselLength?: number | null
+  vesselWidth?: number | null
+  vesselDraft?: number | null
+  maxPassengers?: number | null
+  vesselBodyMaterial?: string | null
+  engineType?: string | null
+  cooling?: $Enums.Cooling | null
+  propertyType?: $Enums.PropertyType | null
+  totalArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  livingArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  kitchenArea?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apartmentFloor?: number | null
+  floorsInHouse?: number | null
+  houseState?: $Enums.HouseState | null
+  hasBalcony?: boolean | null
+  balconyAmount?: number | null
+  hasElevator?: boolean | null
+  hasParking?: boolean | null
+  stationDistance?: number | null
+  cityInfrastructure?: boolean | null
+  cityInfrastructureDistance?: number | null
+  hasSecurity?: boolean | null
+  hasVideoSecurity?: boolean | null
+  hasChildrenPlayground?: boolean | null
+  hasSportPlayground?: boolean | null
+  paymentType?: $Enums.PaymentType | null
+  hasDocuments?: boolean | null
+  description: string
+  workExperience?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  advanteges?: string | null
+  employment?: $Enums.Employment | null
+  workFormat?: $Enums.WorkFormat | null
+  petBreed?: string | null
+  petName?: string | null
+  petColor?: string | null
+  transactionScope?: $Enums.TransactionScope | null
+  isProfitable?: boolean | null
+  businessForm?: $Enums.BusinessForm | null
+  offerType?: $Enums.OfferType | null
+  payBackPeriod?: string | null
+  address: string
+  contacts: string
+  userId: string
+  videoId?: string | null
+  services?: Prisma.ServicesUncheckedCreateNestedManyWithoutAdvertInput
+  workSchedule?: Prisma.WorkPeriodUncheckedCreateNestedManyWithoutAdvertInput
+  pictures?: Prisma.PicturesUncheckedCreateNestedManyWithoutAdvertInput
+}
+
+export type AdvertCreateOrConnectWithoutVideoInput = {
+  where: Prisma.AdvertWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdvertCreateWithoutVideoInput, Prisma.AdvertUncheckedCreateWithoutVideoInput>
+}
+
+export type AdvertUpsertWithoutVideoInput = {
+  update: Prisma.XOR<Prisma.AdvertUpdateWithoutVideoInput, Prisma.AdvertUncheckedUpdateWithoutVideoInput>
+  create: Prisma.XOR<Prisma.AdvertCreateWithoutVideoInput, Prisma.AdvertUncheckedCreateWithoutVideoInput>
+  where?: Prisma.AdvertWhereInput
+}
+
+export type AdvertUpdateToOneWithWhereWithoutVideoInput = {
+  where?: Prisma.AdvertWhereInput
+  data: Prisma.XOR<Prisma.AdvertUpdateWithoutVideoInput, Prisma.AdvertUncheckedUpdateWithoutVideoInput>
+}
+
+export type AdvertUpdateWithoutVideoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sphere?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yearOfmanufacture?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnTheGo?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  vehicleBodyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleKpp?: Prisma.NullableEnumVehicleKppFieldUpdateOperationsInput | $Enums.VehicleKpp | null
+  ownersPts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  milage?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  engineCapacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  horsePower?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drive?: Prisma.NullableEnumDriveFieldUpdateOperationsInput | $Enums.Drive | null
+  steerinWheel?: Prisma.NullableEnumSteeringWheelFieldUpdateOperationsInput | $Enums.SteeringWheel | null
+  price?: Prisma.StringFieldUpdateOperationsInput | string
+  priceFor?: Prisma.NullableEnumPriceForFieldUpdateOperationsInput | $Enums.PriceFor | null
+  vesselType?: Prisma.NullableEnumVesselTypeFieldUpdateOperationsInput | $Enums.VesselType | null
+  vesselLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselWidth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselDraft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxPassengers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselBodyMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  engineType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cooling?: Prisma.NullableEnumCoolingFieldUpdateOperationsInput | $Enums.Cooling | null
+  propertyType?: Prisma.NullableEnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType | null
+  totalArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  livingArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  kitchenArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apartmentFloor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  floorsInHouse?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  houseState?: Prisma.NullableEnumHouseStateFieldUpdateOperationsInput | $Enums.HouseState | null
+  hasBalcony?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  balconyAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasElevator?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasParking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  stationDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cityInfrastructure?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cityInfrastructureDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasVideoSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasChildrenPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasSportPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  paymentType?: Prisma.NullableEnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType | null
+  hasDocuments?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  workExperience?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  advanteges?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employment?: Prisma.NullableEnumEmploymentFieldUpdateOperationsInput | $Enums.Employment | null
+  workFormat?: Prisma.NullableEnumWorkFormatFieldUpdateOperationsInput | $Enums.WorkFormat | null
+  petBreed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  petName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  petColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionScope?: Prisma.NullableEnumTransactionScopeFieldUpdateOperationsInput | $Enums.TransactionScope | null
+  isProfitable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  businessForm?: Prisma.NullableEnumBusinessFormFieldUpdateOperationsInput | $Enums.BusinessForm | null
+  offerType?: Prisma.NullableEnumOfferTypeFieldUpdateOperationsInput | $Enums.OfferType | null
+  payBackPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  contacts?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  services?: Prisma.ServicesUpdateManyWithoutAdvertNestedInput
+  workSchedule?: Prisma.WorkPeriodUpdateManyWithoutAdvertNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAdvertsNestedInput
+  pictures?: Prisma.PicturesUpdateManyWithoutAdvertNestedInput
+}
+
+export type AdvertUncheckedUpdateWithoutVideoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  subCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sphere?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yearOfmanufacture?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnTheGo?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  vehicleBodyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleKpp?: Prisma.NullableEnumVehicleKppFieldUpdateOperationsInput | $Enums.VehicleKpp | null
+  ownersPts?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  milage?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  engineCapacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  horsePower?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drive?: Prisma.NullableEnumDriveFieldUpdateOperationsInput | $Enums.Drive | null
+  steerinWheel?: Prisma.NullableEnumSteeringWheelFieldUpdateOperationsInput | $Enums.SteeringWheel | null
+  price?: Prisma.StringFieldUpdateOperationsInput | string
+  priceFor?: Prisma.NullableEnumPriceForFieldUpdateOperationsInput | $Enums.PriceFor | null
+  vesselType?: Prisma.NullableEnumVesselTypeFieldUpdateOperationsInput | $Enums.VesselType | null
+  vesselLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselWidth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselDraft?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxPassengers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vesselBodyMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  engineType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cooling?: Prisma.NullableEnumCoolingFieldUpdateOperationsInput | $Enums.Cooling | null
+  propertyType?: Prisma.NullableEnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType | null
+  totalArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  livingArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  kitchenArea?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apartmentFloor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  floorsInHouse?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  houseState?: Prisma.NullableEnumHouseStateFieldUpdateOperationsInput | $Enums.HouseState | null
+  hasBalcony?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  balconyAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasElevator?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasParking?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  stationDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cityInfrastructure?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  cityInfrastructureDistance?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  hasSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasVideoSecurity?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasChildrenPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasSportPlayground?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  paymentType?: Prisma.NullableEnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType | null
+  hasDocuments?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  workExperience?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  advanteges?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employment?: Prisma.NullableEnumEmploymentFieldUpdateOperationsInput | $Enums.Employment | null
+  workFormat?: Prisma.NullableEnumWorkFormatFieldUpdateOperationsInput | $Enums.WorkFormat | null
+  petBreed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  petName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  petColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionScope?: Prisma.NullableEnumTransactionScopeFieldUpdateOperationsInput | $Enums.TransactionScope | null
+  isProfitable?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  businessForm?: Prisma.NullableEnumBusinessFormFieldUpdateOperationsInput | $Enums.BusinessForm | null
+  offerType?: Prisma.NullableEnumOfferTypeFieldUpdateOperationsInput | $Enums.OfferType | null
+  payBackPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  contacts?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  services?: Prisma.ServicesUncheckedUpdateManyWithoutAdvertNestedInput
+  workSchedule?: Prisma.WorkPeriodUncheckedUpdateManyWithoutAdvertNestedInput
+  pictures?: Prisma.PicturesUncheckedUpdateManyWithoutAdvertNestedInput
+}
+
 export type AdvertCreateManyUserInput = {
   id?: string
+  advertId?: string
   firstName?: string | null
   lastName?: string | null
   fathersName?: string | null
@@ -3723,6 +3765,7 @@ export type AdvertCreateManyUserInput = {
 
 export type AdvertUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3799,6 +3842,7 @@ export type AdvertUpdateWithoutUserInput = {
 
 export type AdvertUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3875,6 +3919,7 @@ export type AdvertUncheckedUpdateWithoutUserInput = {
 
 export type AdvertUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  advertId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fathersName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3996,6 +4041,7 @@ export type AdvertCountOutputTypeCountPicturesArgs<ExtArgs extends runtime.Types
 
 export type AdvertSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  advertId?: boolean
   firstName?: boolean
   lastName?: boolean
   fathersName?: boolean
@@ -4075,6 +4121,7 @@ export type AdvertSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type AdvertSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  advertId?: boolean
   firstName?: boolean
   lastName?: boolean
   fathersName?: boolean
@@ -4149,6 +4196,7 @@ export type AdvertSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type AdvertSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  advertId?: boolean
   firstName?: boolean
   lastName?: boolean
   fathersName?: boolean
@@ -4223,6 +4271,7 @@ export type AdvertSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type AdvertSelectScalar = {
   id?: boolean
+  advertId?: boolean
   firstName?: boolean
   lastName?: boolean
   fathersName?: boolean
@@ -4294,7 +4343,7 @@ export type AdvertSelectScalar = {
   videoId?: boolean
 }
 
-export type AdvertOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "fathersName" | "gender" | "category" | "subCategory" | "title" | "profession" | "sphere" | "brand" | "model" | "yearOfmanufacture" | "color" | "isOnTheGo" | "vehicleBodyType" | "vehicleKpp" | "ownersPts" | "milage" | "engineCapacity" | "horsePower" | "drive" | "steerinWheel" | "price" | "priceFor" | "vesselType" | "vesselLength" | "vesselWidth" | "vesselDraft" | "maxPassengers" | "vesselBodyMaterial" | "engineType" | "cooling" | "propertyType" | "totalArea" | "livingArea" | "kitchenArea" | "apartmentFloor" | "floorsInHouse" | "houseState" | "hasBalcony" | "balconyAmount" | "hasElevator" | "hasParking" | "stationDistance" | "cityInfrastructure" | "cityInfrastructureDistance" | "hasSecurity" | "hasVideoSecurity" | "hasChildrenPlayground" | "hasSportPlayground" | "paymentType" | "hasDocuments" | "description" | "workExperience" | "advanteges" | "employment" | "workFormat" | "petBreed" | "petName" | "petColor" | "transactionScope" | "isProfitable" | "businessForm" | "offerType" | "payBackPeriod" | "address" | "contacts" | "userId" | "videoId", ExtArgs["result"]["advert"]>
+export type AdvertOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "advertId" | "firstName" | "lastName" | "fathersName" | "gender" | "category" | "subCategory" | "title" | "profession" | "sphere" | "brand" | "model" | "yearOfmanufacture" | "color" | "isOnTheGo" | "vehicleBodyType" | "vehicleKpp" | "ownersPts" | "milage" | "engineCapacity" | "horsePower" | "drive" | "steerinWheel" | "price" | "priceFor" | "vesselType" | "vesselLength" | "vesselWidth" | "vesselDraft" | "maxPassengers" | "vesselBodyMaterial" | "engineType" | "cooling" | "propertyType" | "totalArea" | "livingArea" | "kitchenArea" | "apartmentFloor" | "floorsInHouse" | "houseState" | "hasBalcony" | "balconyAmount" | "hasElevator" | "hasParking" | "stationDistance" | "cityInfrastructure" | "cityInfrastructureDistance" | "hasSecurity" | "hasVideoSecurity" | "hasChildrenPlayground" | "hasSportPlayground" | "paymentType" | "hasDocuments" | "description" | "workExperience" | "advanteges" | "employment" | "workFormat" | "petBreed" | "petName" | "petColor" | "transactionScope" | "isProfitable" | "businessForm" | "offerType" | "payBackPeriod" | "address" | "contacts" | "userId" | "videoId", ExtArgs["result"]["advert"]>
 export type AdvertInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   services?: boolean | Prisma.Advert$servicesArgs<ExtArgs>
   workSchedule?: boolean | Prisma.Advert$workScheduleArgs<ExtArgs>
@@ -4321,6 +4370,7 @@ export type $AdvertPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    advertId: string
     firstName: string | null
     lastName: string | null
     fathersName: string | null
@@ -4819,6 +4869,7 @@ export interface Prisma__AdvertClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface AdvertFieldRefs {
   readonly id: Prisma.FieldRef<"Advert", 'String'>
+  readonly advertId: Prisma.FieldRef<"Advert", 'String'>
   readonly firstName: Prisma.FieldRef<"Advert", 'String'>
   readonly lastName: Prisma.FieldRef<"Advert", 'String'>
   readonly fathersName: Prisma.FieldRef<"Advert", 'String'>

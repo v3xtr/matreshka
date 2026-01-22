@@ -38,12 +38,12 @@ export type Pictures = Prisma.PicturesModel
  */
 export type Services = Prisma.ServicesModel
 /**
- * Model Video
- * 
- */
-export type Video = Prisma.VideoModel
-/**
  * Model WorkPeriod
  * 
  */
 export type WorkPeriod = Prisma.WorkPeriodModel
+/**
+ * Model Video
+ * 
+ */
+export type Video = Prisma.VideoModel
