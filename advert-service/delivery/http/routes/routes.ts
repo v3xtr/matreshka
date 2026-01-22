@@ -11,6 +11,7 @@ const advertController = new AdvertController(advertService)
 router.post("/", advertController.create.bind(advertController))
 router.get("/", advertController.getAdvert.bind(advertController))
 router.get("/adverts", advertController.getAdverts.bind(advertController))
+router.put("/", advertController.update.bind(advertController))
 router.delete("/", advertController.delete.bind(advertController))
 
 export default router
