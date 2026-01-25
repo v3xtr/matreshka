@@ -6,4 +6,5 @@ export interface IAuthController{
     checkCode(req: Request, res: Response): Promise<Response>
     register(req: Request, res: Response): Promise<Response>
     sendSms(req: Request, res: Response): Promise<Response>
+    sendSms(req: Request, res: Response): Promise<Response>
 }
