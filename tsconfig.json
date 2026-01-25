@@ -19,7 +19,8 @@
       "#pkg/*": ["pkg/*"],
       "#cmd/*": ["cmd/*"],
       "#services/*": ["services/*"],
-      "#prisma/*": ["prisma/*"]
+      "#prisma/*": ["prisma/*"],
+      "#delivery/*": ["delivery/*"]
     }
   },
   "include": [
@@ -27,6 +28,7 @@
     "internal/**/*",
     "pkg/**/*",
     "services/**/*",
+    "delivery/**/*",
     "prisma.config.ts"
 , "delivery/http/interfaces/auth.controller.interface.ts"  ],
   "exclude": ["node_modules", "dist"],

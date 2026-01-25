@@ -1,23 +1,30 @@
-import { generateTokens } from "../../pkg/jwt.js";
-import { comparePasswords, hashPassword } from "../../pkg/hash.password.js";
-import { generateNumericId } from '../../pkg/id_generator.js'
+import { generateTokens } from "#pkg/jwt.js";
+import { comparePasswords, hashPassword } from "#pkg/hash.password.js";
+import { generateNumericId } from '#pkg/id.generator.js'
 import { LoginSchemaRequest, RegisterSchemaRequest } from "internal/validation/auth.validation.js";
 import { logger } from '../adapter/logger/logger.js'
-import { User } from '../../src/prisma/index.js'
-import { ApiError } from '../../pkg/api.error.js'
+import { User } from 'src/prisma/index.js'
+import { ApiError } from '#pkg/api.error.js'
 import { UserEvents } from "./user.events.js";
-import { channel } from "#internal/adapter/rabbit/rabbit.js";
 import { RegisterResponseDTO } from "#internal/dto/auth/register.auth.dto.js";
 import { LoginResponseDTO } from "#internal/dto/auth/login.auth.dto.js";
 import { IAuthService } from "#internal/interfaces/auth.service.interface.js";
 import { IAuthRepo } from "#internal/interfaces/auth.repo.interface.js";
+import { Channel } from "amqplib";
+import { IVerificationService } from "#internal/interfaces/notification.service.interface.js";
+import { generateCode } from "#pkg/code.generator.js";
+import { IAuthCacheRepo } from "#internal/interfaces/verification.cache.repo.js";
 
 export class AuthService implements IAuthService{
     constructor(
-        private readonly authRepo: IAuthRepo){}
+        private readonly authRepo: IAuthRepo,
+        private readonly authCacheRepo: IAuthCacheRepo,
+        private readonly channel: Channel,
+        private readonly verificationService: IVerificationService
+    ){}
 
     async register(data: RegisterSchemaRequest): Promise<RegisterResponseDTO> {
-        const userExists: User | null = await this.authRepo.getUserByLogin(data.email);
+        const userExists: User | null = await this.authRepo.getUserByLogin(data.phone);
 
         if (userExists) {
             logger.error("Пользователь уже существует")
@@ -39,7 +46,8 @@ export class AuthService implements IAuthService{
 
         const { accessToken, refreshToken } = await generateTokens(user.id);
 
-        await new UserEvents(channel).sendToQueue(user)
+        await new UserEvents(this.channel).sendToQueue(user)
+
         const { password, ...safeUser } = user
         return { user: safeUser, accessToken, refreshToken };
     }
@@ -67,6 +75,32 @@ export class AuthService implements IAuthService{
         return { user: safeUser, accessToken, refreshToken };
     }
 
+    async sendEmailCode(userId: string, email: string): Promise<number>{
+        const code: string = generateCode()
 
+        await this.verificationService.sendMail(email, code)
+
+        return await this.authCacheRepo.storeCode(userId, code)
+
+    }
+
+    async sendSmsCode(userId: string, phone: string): Promise<number>{
+        const code: string = generateCode()
+
+        await this.verificationService.sendSms(phone, code)
+
+        return await this.authCacheRepo.storeCode(userId, phone)
+    }
+
+
+    async checkCode(userId: string, code: string): Promise<boolean>{
+        const userCode: string | null = await this.authCacheRepo.getCode(userId)
+
+        if(!userCode) {
+            throw new ApiError("Код Истек", 404)
+        }
+
+        return userCode === code;
+    }
 }
 

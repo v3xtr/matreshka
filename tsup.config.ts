@@ -7,6 +7,7 @@ export default defineConfig({
     "internal/**/*.{ts,js}",
     "pkg/**/*.{ts,js}",
     "services/**/*.{ts,js}",
+    "delivery/**/*.{ts,js}",
     "prisma.config.ts"
   ],
   outDir: "dist",
