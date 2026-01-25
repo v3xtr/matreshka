@@ -7,7 +7,6 @@ import { logger } from "#internal/adapter/logger/logger.js";
 export class AuthController implements IAuthController{
     constructor(private readonly authService: IAuthService){}
 
-
     async register(req: Request, res: Response): Promise<Response>{
         const result = await RegisterSchema.safeParseAsync(req.body)
 
