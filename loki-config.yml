@@ -1,0 +1,20 @@
+loki:
+  config:
+    limits_config:
+      ingestion_rate_mb: 50
+      ingestion_burst_size_mb: 100
+      max_entries_limit_per_query: 5000
+      retention_period: 720h
+  
+  persistence:
+    enabled: true
+    size: 200Gi
+    storageClassName: fast-ssd
+  
+  resources:
+    requests:
+      memory: 4Gi
+      cpu: 2
+    limits:
+      memory: 8Gi
+      cpu: 4

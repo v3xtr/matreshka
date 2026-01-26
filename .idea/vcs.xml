@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/auth-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/chat-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/feed-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/google-oauth-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/media-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/profile-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vk-oauth-service" vcs="Git" />
+  </component>
+</project>
