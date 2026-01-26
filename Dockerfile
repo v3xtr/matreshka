@@ -1,29 +1,26 @@
-FROM node:20-alpine AS builder
+FROM node:25-alpine
 
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN npm install -g pnpm \
-    && pnpm install --frozen-lockfile
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
-COPY . .
+# Копируем Prisma схему
+COPY prisma/schema.prisma ./prisma/
 
-RUN pnpm run build
-
+# Генерируем Prisma Client сразу
 RUN npx prisma generate
 
-FROM node:20-alpine
+# Фиксим Prisma для ESM
+RUN echo '{"type": "module"}' > node_modules/@prisma/client/package.json
 
-WORKDIR /app
+# Копируем остальной код
+COPY . .
 
-COPY package.json pnpm-lock.yaml ./
+# Собираем
+RUN pnpm run build
 
-RUN npm install -g pnpm \
-    && pnpm install --frozen-lockfile --prod
+EXPOSE 3000
 
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
-
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/cmd/app/index.mjs"]
+CMD ["node", "dist/cmd/app/index.js"]

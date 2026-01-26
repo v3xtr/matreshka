@@ -1,4 +1,4 @@
-import { logger } from "#internal/adapter/logger/logger.js";
+import { logger } from "../logger/logger.js";
 import { createClient, RedisClientType } from "redis";
 
 export const redisClient: RedisClientType = createClient({

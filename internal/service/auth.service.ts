@@ -1,19 +1,19 @@
-import { generateTokens } from "#pkg/jwt.js";
-import { comparePasswords, hashPassword } from "#pkg/hash.password.js";
-import { generateNumericId } from '#pkg/id.generator.js'
-import { LoginSchemaRequest, RegisterSchemaRequest } from "internal/validation/auth.validation.js";
+import { generateTokens } from "../../pkg/jwt.js";
+import { comparePasswords, hashPassword } from "../../pkg/hash.password.js";
+import { generateNumericId } from '../../pkg/id.generator.js'
+import { LoginSchemaRequest, RegisterSchemaRequest } from "../validation/auth.validation.js";
 import { logger } from '../adapter/logger/logger.js'
-import { User } from 'src/prisma/index.js'
-import { ApiError } from '#pkg/api.error.js'
+import { User } from '../../src/prisma/index.js'
+import { ApiError } from '../../pkg/api.error.js'
 import { UserEvents } from "./user.events.js";
-import { RegisterResponseDTO } from "#internal/dto/auth/register.auth.dto.js";
-import { LoginResponseDTO } from "#internal/dto/auth/login.auth.dto.js";
-import { IAuthService } from "#internal/interfaces/auth.service.interface.js";
-import { IAuthRepo } from "#internal/interfaces/auth.repo.interface.js";
+import { RegisterResponseDTO } from "../dto/auth/register.auth.dto.js";
+import { LoginResponseDTO } from "../dto/auth/login.auth.dto.js";
+import { IAuthService } from "../interfaces/auth.service.interface.js";
+import { IAuthRepo } from "../interfaces/auth.repo.interface.js";
 import { Channel } from "amqplib";
-import { IVerificationService } from "#internal/interfaces/notification.service.interface.js";
-import { generateCode } from "#pkg/code.generator.js";
-import { IAuthCacheRepo } from "#internal/interfaces/verification.cache.repo.js";
+import { IVerificationService } from "../interfaces/notification.service.interface.js";
+import { generateCode } from "../../pkg/code.generator.js";
+import { IAuthCacheRepo } from "../interfaces/verification.cache.repo.js";
 
 export class AuthService implements IAuthService{
     constructor(

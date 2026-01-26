@@ -1,7 +1,7 @@
-import { logger } from "#internal/adapter/logger/logger.js";
-import { IUserEvenets } from "#internal/interfaces/user.evenets.interface.js";
+import { logger } from "../adapter/logger/logger.js";
+import { IUserEvenets } from "../interfaces/user.evenets.interface.js";
 import { Channel } from "amqplib";
-import { User } from "src/prisma/index.js";
+import { User } from "../../src/prisma/index.js";
 
 const EXCHANGE = "user.created";
 

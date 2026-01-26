@@ -1,8 +1,8 @@
 import { Transporter } from "nodemailer";
-import { IVerificationService } from "#internal/interfaces/notification.service.interface.js";
+import { IVerificationService } from "../interfaces/notification.service.interface.js";
 import SMTPTransport from "nodemailer/lib/smtp-transport/index.js";
 import axios from 'axios'
-import { logger } from "#internal/adapter/logger/logger.js";
+import { logger } from "../adapter/logger/logger.js";
 
 export class VerificationService implements IVerificationService {
     constructor(private readonly transporter: Transporter<SMTPTransport.SentMessageInfo, SMTPTransport.Options>) {  }

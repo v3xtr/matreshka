@@ -8,7 +8,7 @@ export default defineConfig({
     "pkg/**/*.{ts,js}",
     "services/**/*.{ts,js}",
     "delivery/**/*.{ts,js}",
-    "prisma.config.ts"
+    "prisma.config.ts",
   ],
   outDir: "dist",
   format: ["esm"],
@@ -18,7 +18,7 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   dts: false,
-  bundle: true,
+  bundle: false,
   minify: false,
   tsconfig: "tsconfig.json",
   shims: false,
@@ -27,6 +27,6 @@ export default defineConfig({
     NODE_ENV: "production",
   },
   outExtension() {
-    return { js: ".mjs" };
+    return { js: ".js" };
   },
 });

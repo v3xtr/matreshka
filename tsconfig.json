@@ -20,17 +20,10 @@
       "#cmd/*": ["cmd/*"],
       "#services/*": ["services/*"],
       "#prisma/*": ["prisma/*"],
-      "#delivery/*": ["delivery/*"]
+      "#delivery/*": ["delivery/*"],
+      "#src/*": ["src/*"]
     }
   },
-  "include": [
-    "cmd/**/*",
-    "internal/**/*",
-    "pkg/**/*",
-    "services/**/*",
-    "delivery/**/*",
-    "prisma.config.ts"
-, "delivery/http/interfaces/auth.controller.interface.ts"  ],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
     "esm": true

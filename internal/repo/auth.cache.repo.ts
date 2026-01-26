@@ -1,4 +1,4 @@
-import { IAuthCacheRepo } from "#internal/interfaces/verification.cache.repo.js";
+import { IAuthCacheRepo } from "../interfaces/verification.cache.repo.js";
 import { RedisClientType } from "redis";
 
 export class AuthCacheRepo implements IAuthCacheRepo{

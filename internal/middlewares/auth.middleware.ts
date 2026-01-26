@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../adapter/prisma/prisma.js';
 import { AuthRepo } from '../repo/auth.repo.js';
-import { logger } from '#internal/adapter/logger/logger.js';
+import { logger } from '../adapter/logger/logger.js';
 
 declare global {
   namespace Express {

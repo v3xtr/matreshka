@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { LoginSchema, RegisterSchema } from '#internal/validation/auth.validation.js'
+import { LoginSchema, RegisterSchema } from '../../internal/validation/auth.validation.js'
 import { IAuthController } from './interfaces/auth.controller.interface.js'
-import { IAuthService } from '#internal/interfaces/auth.service.interface.js'
-import { logger } from "#internal/adapter/logger/logger.js";
+import { IAuthService } from '../../internal/interfaces/auth.service.interface.js'
+import { logger } from "../../internal/adapter/logger/logger.js";
 
 export class AuthController implements IAuthController{
     constructor(private readonly authService: IAuthService){}
