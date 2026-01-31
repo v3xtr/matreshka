@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: your-registry/auth-service:latest
+          image: proudsss/auth-service:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 8000
           env:
             - name: PORT
-              value: "3000"
+              value: "8000"
             - name: SERVICE_NAME
               value: "auth-service"
             - name: NODE_ENV
@@ -27,12 +27,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
-              port: 3000
+              port: 8000
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /health
-              port: 3000
+              port: 8000
             initialDelaySeconds: 5
             periodSeconds: 5

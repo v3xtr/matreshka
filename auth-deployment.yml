@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: auth-service:latest   # <-- без localhost/
-          imagePullPolicy: Never
+          image: proudsss/auth-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
