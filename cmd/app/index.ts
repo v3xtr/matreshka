@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/auth/google', 
+app.get('/oauth/google',
   passport.authenticate('google', { 
     scope: ['email', 'profile'],
     prompt: 'select_account'
