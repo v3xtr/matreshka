@@ -1,4 +1,4 @@
-import { IUserEvenets } from "#delivery/interfaces/user.events.interface.js";
+import { IUserEvenets } from "#internal/interfaces/user.events.interface.js";
 import { logger } from "#internal/adapter/logger/logger.js";
 import { Channel } from "amqplib";
 import { User } from "src/prisma/client.js";

@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/auth/vk', 
+app.get('/api/auth/vk',
   passport.authenticate('vkontakte', { 
     scope: ['email', 'profile'],
     prompt: 'select_account'
