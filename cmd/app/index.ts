@@ -22,6 +22,6 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 await bootstrap()
 
-app.use("/api", profileRoutes)
+app.use("/api/profile", profileRoutes)
 
 app.listen(process.env.PORT, () => logger.info(`Server started on localhost:8001`))
