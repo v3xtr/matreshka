@@ -1,0 +1,81 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+ext {
+	set('springCloudVersion', "2023.0.3")
+}
+
+group = 'com.matreshka'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// 1. Core Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// 2. Database & Migration
+	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// 3. Spring Cloud Stream (RabbitMQ)
+	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+
+	// 4. OpenAPI / Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+	// 5. AWS S3 SDK
+	implementation 'software.amazon.awssdk:s3:2.25.27'
+	implementation 'software.amazon.awssdk:netty-nio-client:2.25.27'
+
+	// 6. Logging
+	implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
+	implementation 'com.internetitem:logback-elasticsearch-appender:1.6'
+
+	// 7. JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+	// 8. Mapping & Utils (ПОРЯДОК ВАЖЕН)
+	compileOnly 'org.projectlombok:lombok:1.18.34'
+	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	// Этот binding — мост, чтобы MapStruct видел поля, созданные Lombok
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+	// 9. Tests
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

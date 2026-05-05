@@ -1,0 +1,63 @@
+package com.matreshka.media_service.internal.infrastructure.persistence;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+@Table(name = "media")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class MediaEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(name = "file_name", unique = true, nullable = false)
+    private String fileName;
+
+    @Column(name = "s3_key", unique = true, nullable = false)
+    private String s3Key;
+
+    @Column(nullable = false)
+    private String url;
+
+    @Column(name = "cdn_url")
+    private String cdnUrl;
+
+    @Column(nullable = false)
+    private String type;
+
+    @Column(name = "mime_type", nullable = false)
+    private String mimeType;
+
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private UUID userId;
+
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
+    @Column(name = "published_at")
+    private LocalDateTime publishedAt;
+
+    @Column(name = "processed_at")
+    private LocalDateTime processedAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+}
