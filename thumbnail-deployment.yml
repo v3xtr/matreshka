@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thumbnail-service
+  labels:
+    app: thumbnail-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thumbnail-service
+  template:
+    metadata:
+      labels:
+        app: thumbnail-service
+    spec:
+      containers:
+        - name: thumbnail-service
+          image: proudsss/thumbnail-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8011
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://85.198.69.217:5432/media_service?schema=public"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "kdfjfvhdkiojd83"
+
+            # Настройки RabbitMQ
+            - name: SPRING_RABBITMQ_HOST
+              value: "85.198.69.217"
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              value: "admin"
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: "admin"
+
+            - name: AWS_S3_ACCESS_KEY
+              value: "LM2JCURZW9HBM3IR6F8V"
+            - name: AWS_S3_SECRET_KEY
+              value: "x7cxbCcPWRV2rwjgnPyxmD566Qfe6cqbMZ69gj0F"
+            - name: AWS_S3_BUCKET_NAME
+              value: "9cdb3a15dcd8-divine-roux"
+            - name: AWS_S3_REGION
+              value: "ru-central-1"
+            - name: AWS_S3_ENDPOINT
+              value: "https://s3.ru1.storage.beget.cloud"
+
+            - name: FFMPEG_PATH
+              value: "/usr/bin/ffmpeg"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thumbnail-service
+spec:
+  selector:
+    app: thumbnail-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
