@@ -1,5 +1,6 @@
 package com.matreshka.media_service.delivery.broker;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matreshka.media_service.application.port.IMediaService;
 import com.matreshka.media_service.application.port.IUserService;
 import com.matreshka.media_service.delivery.broker.dto.MediaEvent;
@@ -10,24 +11,41 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BrokerConsumer implements IBrokerConsumer {
+public class BrokerConsumer implements IBrokerConsumer{
+
     private final IUserService userService;
     private final IMediaService mediaService;
 
     @Bean
-    public Consumer<UserRegisteredEvent> consumeUser(){
+    public Consumer<String> consumeUser() {
         return userService::processUser;
     }
 
     @Bean
-    public Consumer<MediaEvent> consumeMedia(){
-        return event -> {
-            mediaService.updateMediaThumbnail(event.mediaId(), event.thumbnailUrl());
+    public Consumer<byte[]> consumeUserCreated(ObjectMapper objectMapper) {
+        return bytes -> {
+            try {
+                String raw = new String(bytes, StandardCharsets.UTF_8);
+                log.info("Raw message: {}", raw);
+                UserRegisteredEvent event = objectMapper.readValue(bytes, UserRegisteredEvent.class);
+                userService.processUser(event.id());
+            } catch (Exception e) {
+                log.error("Failed to deserialize UserRegisteredEvent: {}", e.getMessage(), e);
+            }
         };
+    }
+
+    @Bean
+    public Consumer<MediaEvent> consumeMedia() {
+        return event -> mediaService.updateMediaThumbnail(
+                event.mediaId(),
+                event.thumbnailUrl()
+        );
     }
 }

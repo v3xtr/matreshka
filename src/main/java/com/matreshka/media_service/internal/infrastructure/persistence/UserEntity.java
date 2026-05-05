@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UserEntity{
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private String id;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MediaEntity> media;

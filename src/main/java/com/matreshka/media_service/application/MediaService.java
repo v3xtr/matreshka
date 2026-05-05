@@ -24,6 +24,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -75,6 +76,12 @@ public class MediaService implements IMediaService {
                     .map(mediaMapper::toEntity)
                     .toList();
 
+            log.info(
+                    "Creating media entities for user: {}",
+                    mediaEntities.stream()
+                            .map(MediaEntity::getFileName)
+                            .collect(Collectors.joining(", "))
+            );
             List<MediaEntity> savedEntities = mediaRepo.saveAll(mediaEntities);
 
             return savedEntities.stream()
