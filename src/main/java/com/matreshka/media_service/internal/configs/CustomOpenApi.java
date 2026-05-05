@@ -2,6 +2,7 @@ package com.matreshka.media_service.internal.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ public class CustomOpenApi {
                             ⚠️ Важно:
                             Все запросы должны выполняться с `withCredentials: true`,
                             чтобы передавались cookies (например, refresh/access токены).
-                        """));
+                        """)).addServersItem(new Server().url("/"));
     }
 
     @Bean
