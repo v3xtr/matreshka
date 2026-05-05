@@ -58,25 +58,21 @@ public class ThumbnailService implements IThumbnailService {
     }
 
     public Path downloadVideo(String s3Key) throws IOException {
-        String fileName = "video_" + System.currentTimeMillis() + "_" + s3Key.replace("/", "_");
-        Path tempFile = Paths.get(System.getProperty("java.io.tmpdir"), fileName);
+        Path tempFile = Files.createTempFile("video_", ".tmp");
 
         try {
-            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            GetObjectRequest request = GetObjectRequest.builder()
                     .bucket(bucketName)
                     .key(s3Key)
                     .build();
 
-            s3Client.getObject(getObjectRequest, ResponseTransformer.toFile(tempFile));
+            s3Client.getObject(request, ResponseTransformer.toFile(tempFile));
 
-            log.info("Файл скачан во временную директорию: {}", tempFile.toAbsolutePath());
             return tempFile;
 
         } catch (Exception e) {
-            if (Files.exists(tempFile)) {
-                Files.delete(tempFile);
-            }
-            log.error("Ошибка при скачивании файла из S3: {}", e.getMessage());
+            Files.deleteIfExists(tempFile);
+            log.error("Ошибка при скачивании файла из S3", e);
             throw e;
         }
     }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -28,9 +27,8 @@ public class BrokerConsumer {
     public Consumer<MediaMessage> consumeMedia() {
         return event -> {
             log.info("Начало обработки видео: {}", event.s3Key());
-            log.info("MediaMessage: {}", event);
 
-            if(event.mediaId() == null){
+            if (event.mediaId() == null) {
                 log.error("MEDIA NULL нужно проверить JSON");
                 return;
             }
@@ -41,27 +39,31 @@ public class BrokerConsumer {
             try {
                 videoPath = thumbnailService.downloadVideo(event.s3Key());
 
-                thumbPath = Paths.get(System.getProperty("java.io.tmpdir"), event.mediaId() + ".jpg");
+                thumbPath = Files.createTempFile("thumb_" + event.mediaId() + "_", ".jpg");
 
-                thumbnailService.generateThumbnail(videoPath.toString(), thumbPath.toString());
+                thumbnailService.generateThumbnail(
+                        videoPath.toString(),
+                        thumbPath.toString()
+                );
 
                 String thumbS3Key = "thumbnails/" + UUID.randomUUID() + ".jpg";
                 thumbnailService.uploadFile(thumbS3Key, thumbPath);
 
-                ThumbnailResult result = new ThumbnailResult(event.mediaId(), thumbS3Key);
-
-                log.info("ThumbResult: {}", result);
+                ThumbnailResult result =
+                        new ThumbnailResult(event.mediaId(), thumbS3Key);
 
                 streamBridge.send("publishMedia-out-0", result);
 
             } catch (Exception e) {
-                log.error("Критическая ошибка воркера: ", e);
+                log.error("Критическая ошибка воркера. mediaId={}, s3Key={}",
+                        event.mediaId(), event.s3Key(), e);
+                throw new RuntimeException(e);
             } finally {
                 try {
                     if (videoPath != null) Files.deleteIfExists(videoPath);
                     if (thumbPath != null) Files.deleteIfExists(thumbPath);
                 } catch (IOException e) {
-                    log.error("Не удалось удалить временные файлы");
+                    log.error("Не удалось удалить временные файлы", e);
                 }
             }
         };
