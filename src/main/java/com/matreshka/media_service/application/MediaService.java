@@ -1,7 +1,6 @@
 package com.matreshka.media_service.application;
 
-import
-        com.matreshka.media_service.application.port.IMediaService;
+import com.matreshka.media_service.application.port.IMediaService;
 import com.matreshka.media_service.delivery.http.dto.MediaCreateRequestDTO;
 import com.matreshka.media_service.delivery.http.dto.MediaResponseDTO;
 import com.matreshka.media_service.delivery.http.dto.PresignedUrlRequestDTO;
