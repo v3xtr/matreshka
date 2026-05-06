@@ -38,7 +38,7 @@ public class MediaEntity {
     private String mimeType;
 
     @Column(name = "user_id", insertable = false, updatable = false)
-    private UUID userId;
+    private String userId;
 
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;

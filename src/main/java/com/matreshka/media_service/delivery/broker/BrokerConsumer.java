@@ -44,7 +44,7 @@ public class BrokerConsumer implements IBrokerConsumer{
     @Bean
     public Consumer<MediaEvent> consumeMedia() {
         return event -> mediaService.updateMediaThumbnail(
-                event.mediaId(),
+                event.mediaId().toString(),
                 event.thumbnailUrl()
         );
     }

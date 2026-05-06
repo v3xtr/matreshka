@@ -1,6 +1,7 @@
 package com.matreshka.media_service.application;
 
-import com.matreshka.media_service.application.port.IMediaService;
+import
+        com.matreshka.media_service.application.port.IMediaService;
 import com.matreshka.media_service.delivery.http.dto.MediaCreateRequestDTO;
 import com.matreshka.media_service.delivery.http.dto.MediaResponseDTO;
 import com.matreshka.media_service.delivery.http.dto.PresignedUrlRequestDTO;
@@ -97,7 +98,7 @@ public class MediaService implements IMediaService {
     @Override
     @Transactional
     public List<MediaResponseDTO> getUserVideos(String userId, String type){
-        List<MediaEntity> userMedias =  mediaRepo.findAllByTypeAndUserId(type, UUID.fromString(userId));
+        List<MediaEntity> userMedias =  mediaRepo.findAllByTypeAndUserId(type, userId);
 
         return userMedias.stream()
                 .map(mediaMapper::toResponseDTO)
@@ -106,7 +107,7 @@ public class MediaService implements IMediaService {
 
     @Transactional
     @Override
-    public void updateMediaThumbnail(UUID id, String url) {
+    public void updateMediaThumbnail(String id, String url) {
         mediaRepo.updateThumbnailById(id, url);
     }
 

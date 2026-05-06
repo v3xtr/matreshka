@@ -12,6 +12,6 @@ public interface IMediaService {
     PresignedUrlResponseDTO generatePresignedUrl(String userId, PresignedUrlRequestDTO dto);
     List<MediaResponseDTO> create(List<MediaCreateRequestDTO> dtos);
     List<MediaResponseDTO> getUserVideos(String userId, String type);
-    void updateMediaThumbnail(UUID id, String url);
+    void updateMediaThumbnail(String id, String url);
     void delete(String s3Key);
 }
