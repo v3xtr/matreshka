@@ -4,13 +4,13 @@ import com.matreshka.media_service.internal.infrastructure.security.port.IJwtPro
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @Slf4j
@@ -25,6 +25,7 @@ public class JwtProvider implements IJwtProvider {
             parseClaims(token);
             return true;
         } catch (Exception e) {
+            log.error("[JwtProvider] Token validation failed: {}", e.getMessage());
             return false;
         }
     }
@@ -32,7 +33,8 @@ public class JwtProvider implements IJwtProvider {
     @Override
     public String extractUserId(String token) {
         try {
-            return parseClaims(token).getSubject();
+            Claims claims = parseClaims(token);
+            return claims.get("userId", String.class);
         } catch (JwtException e) {
             log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;
@@ -48,7 +50,7 @@ public class JwtProvider implements IJwtProvider {
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(accessTokenSecret);
+        byte[] keyBytes = accessTokenSecret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
