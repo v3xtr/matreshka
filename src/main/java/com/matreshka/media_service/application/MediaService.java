@@ -24,7 +24,6 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,18 +40,19 @@ public class MediaService implements IMediaService {
 
     @Override
     public PresignedUrlResponseDTO generatePresignedUrl(String userId, PresignedUrlRequestDTO dto) {
-        String fileExtension = dto.contentType().contains("/")
-                ? dto.contentType().split("/")[1]
+        String contentType = dto.contentType();
+        String fileExtension = (contentType != null && contentType.contains("/"))
+                ? contentType.split("/")[1]
                 : "bin";
 
-        String folder = dto.contentType().startsWith("video") ? "videos" : "photos";
+        String folder = (contentType != null && contentType.startsWith("video")) ? "videos" : "photos";
 
         String s3Key = String.format("%s/%s/%s.%s", userId, folder, UUID.randomUUID(), fileExtension);
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(s3Key)
-                .contentType(dto.contentType())
+                .contentType(contentType)
                 .build();
 
         PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
@@ -63,7 +63,7 @@ public class MediaService implements IMediaService {
         PresignedPutObjectRequest presignedRequest = s3Presigner.presignPutObject(presignRequest);
         String url = presignedRequest.url().toString();
 
-        log.info("Generated Presigned URL for user {}. Key: {}", userId, s3Key);
+        log.info("Generated Presigned URL for user {}. Bucket: {}, Key: {}", userId, bucketName, s3Key);
 
         return new PresignedUrlResponseDTO(url, s3Key);
     }
@@ -76,12 +76,8 @@ public class MediaService implements IMediaService {
                     .map(mediaMapper::toEntity)
                     .toList();
 
-            log.info(
-                    "Creating media entities for user: {}",
-                    mediaEntities.stream()
-                            .map(MediaEntity::getFileName)
-                            .collect(Collectors.joining(", "))
-            );
+            log.info("Saving {} media entities to database", mediaEntities.size());
+
             List<MediaEntity> savedEntities = mediaRepo.saveAll(mediaEntities);
 
             return savedEntities.stream()
@@ -89,23 +85,21 @@ public class MediaService implements IMediaService {
                     .toList();
 
         } catch (Exception e) {
-            log.error("Failed to create media: {}", e.getMessage());
-            throw new RuntimeException("Ошибка при сохранении медиа в базу данных");
+            log.error("Failed to save media to DB: {}", e.getMessage());
+            throw new RuntimeException("Ошибка при сохранении медиа в базу данных", e);
         }
     }
 
     @Override
     @Transactional
-    public List<MediaResponseDTO> getUserVideos(String userId, String type){
-        List<MediaEntity> userMedias =  mediaRepo.findAllByTypeAndUserId(type, userId);
-
-        return userMedias.stream()
+    public List<MediaResponseDTO> getUserVideos(String userId, String type) {
+        return mediaRepo.findAllByTypeAndUserId(type, userId).stream()
                 .map(mediaMapper::toResponseDTO)
                 .toList();
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void updateMediaThumbnail(String id, String url) {
         mediaRepo.updateThumbnailById(id, url);
     }
@@ -120,12 +114,13 @@ public class MediaService implements IMediaService {
                     .build();
 
             s3Client.deleteObject(deleteObjectRequest);
-            log.info("Successfully deleted object from S3: {}", s3Key);
+            log.info("Deleted from S3: {}", s3Key);
+
             mediaRepo.deleteByS3Key(s3Key);
-            log.info("Объект {}, был успешно удален", s3Key);
+            log.info("Deleted from DB: {}", s3Key);
         } catch (S3Exception e) {
-            log.error("Ошибка при удалении объекта из s3: {}", e.awsErrorDetails().errorMessage());
-            throw new RuntimeException("");
+            log.error("S3 Delete Error: {}", e.awsErrorDetails().errorMessage());
+            throw new RuntimeException("S3 Storage Error", e);
         }
     }
 }
