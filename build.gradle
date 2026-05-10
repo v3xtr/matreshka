@@ -4,10 +4,6 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
-ext {
-	set('springCloudVersion', "2023.0.3")
-}
-
 group = 'com.matreshka'
 version = '0.0.1-SNAPSHOT'
 
@@ -19,6 +15,11 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "2023.0.3")
+	set('awsSdkVersion', "2.25.27")
 }
 
 dependencies {
@@ -42,8 +43,8 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
 	// 5. AWS S3 SDK
-	implementation 'software.amazon.awssdk:s3:2.25.27'
-	implementation 'software.amazon.awssdk:netty-nio-client:2.25.27'
+	implementation 'software.amazon.awssdk:s3'
+	implementation 'software.amazon.awssdk:netty-nio-client'
 
 	// 6. Logging
 	implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
@@ -54,15 +55,14 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
-	// 8. Mapping & Utils (ПОРЯДОК ВАЖЕН)
+	// 8. Mapping & Utils
 	compileOnly 'org.projectlombok:lombok:1.18.34'
 	annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-	// Этот binding — мост, чтобы MapStruct видел поля, созданные Lombok
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
 	// 9. Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -73,6 +73,7 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "software.amazon.awssdk:bom:${awsSdkVersion}"
 	}
 }
 

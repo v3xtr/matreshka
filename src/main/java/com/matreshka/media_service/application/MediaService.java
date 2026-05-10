@@ -45,7 +45,7 @@ public class MediaService implements IMediaService {
                 ? contentType.split("/")[1]
                 : "bin";
 
-        String folder = (contentType != null && contentType.startsWith("video")) ? "videos" : "photos";
+        String folder = (contentType != null && contentType.equals("video")) ? "videos" : "photos";
 
         String s3Key = String.format("%s/%s/%s.%s", userId, folder, UUID.randomUUID(), fileExtension);
 
