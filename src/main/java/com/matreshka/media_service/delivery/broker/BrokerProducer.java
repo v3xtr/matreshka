@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BrokerProducer implements IBrokerProducer {
+
     private final StreamBridge streamBridge;
 
     @Value("${media.producer.queue}")

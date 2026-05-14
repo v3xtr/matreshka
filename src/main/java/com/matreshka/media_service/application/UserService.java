@@ -4,14 +4,15 @@ import com.matreshka.media_service.application.port.IUserService;
 import com.matreshka.media_service.internal.infrastructure.persistence.UserEntity;
 import com.matreshka.media_service.internal.repo.IUserRepo;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class UserService implements IUserService {
+
     private final IUserRepo userRepo;
 
     @Transactional
