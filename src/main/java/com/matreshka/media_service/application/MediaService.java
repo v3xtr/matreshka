@@ -52,7 +52,6 @@ public class MediaService implements IMediaService {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(s3Key)
-                .contentType(contentType)
                 .build();
 
         PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
@@ -63,7 +62,8 @@ public class MediaService implements IMediaService {
         PresignedPutObjectRequest presignedRequest = s3Presigner.presignPutObject(presignRequest);
         String url = presignedRequest.url().toString();
 
-        log.info("Generated Presigned URL for user {}. Bucket: {}, Key: {}", userId, bucketName, s3Key);
+        log.info("Generated Presigned URL for user {}. Bucket: {}, Key: {}, Content-Type (excluded from signature): {}",
+                userId, bucketName, s3Key, contentType);
 
         return new PresignedUrlResponseDTO(url, s3Key);
     }
