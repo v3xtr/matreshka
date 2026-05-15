@@ -6,14 +6,13 @@ import com.matreshka.media_service.application.port.IUserService;
 import com.matreshka.media_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.media_service.delivery.broker.dto.UserRegisteredEvent;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
-@Service
+@Configuration
 @AllArgsConstructor
 @Slf4j
 public class BrokerConsumer {
