@@ -11,7 +11,6 @@ import java.util.UUID;
 @Table(name = "media")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MediaEntity {
@@ -19,16 +18,16 @@ public class MediaEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "file_name", unique = true, nullable = false)
+    @Column(name = "file_name", unique = true, nullable = false, length = 512)
     private String fileName;
 
-    @Column(name = "s3_key", unique = true, nullable = false)
+    @Column(name = "s3_key", unique = true, nullable = false, length = 512)
     private String s3Key;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2048)
     private String url;
 
-    @Column(name = "cdn_url")
+    @Column(name = "cdn_url", length = 2048)
     private String cdnUrl;
 
     @Column(nullable = false)
@@ -37,14 +36,14 @@ public class MediaEntity {
     @Column(name = "mime_type", nullable = false)
     private String mimeType;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
-    private String userId;
-
-    @Column(name = "thumbnail_url")
+    @Column(name = "thumbnail_url", length = 2048)
     private String thumbnailUrl;
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
+
+    @Column(name = "file_extension")
+    private String fileExtension;
 
     @Column(name = "processed_at")
     private LocalDateTime processedAt;

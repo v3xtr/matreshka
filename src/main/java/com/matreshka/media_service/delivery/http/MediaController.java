@@ -33,8 +33,11 @@ public class MediaController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<List<MediaResponseDTO>> createMedia(@RequestBody List<MediaCreateRequestDTO> mediaCreateRequestDTO) {
-        List<MediaResponseDTO> medias = mediaService.create(mediaCreateRequestDTO);
+    public ResponseEntity<List<MediaResponseDTO>> createMedia(
+            @RequestBody List<MediaCreateRequestDTO> mediaCreateRequestDTO,
+            @AuthenticationPrincipal String userId
+    ) {
+        List<MediaResponseDTO> medias = mediaService.create(mediaCreateRequestDTO, userId);
         brokerProducer.publishMedia(medias);
         return ResponseEntity.status(HttpStatus.CREATED).body(medias);
     }
@@ -45,7 +48,6 @@ public class MediaController {
             @AuthenticationPrincipal String userId
     ){
         List<MediaResponseDTO> userMedias = mediaService.getUserVideos(userId, type);
-
         return ResponseEntity.status(HttpStatus.OK).body(userMedias);
     }
 

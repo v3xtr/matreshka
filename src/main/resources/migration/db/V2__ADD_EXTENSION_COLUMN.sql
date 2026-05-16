@@ -1,0 +1,1 @@
+ALTER TABLE media ADD COLUMN file_extension TYPE VARCHAR(2048);

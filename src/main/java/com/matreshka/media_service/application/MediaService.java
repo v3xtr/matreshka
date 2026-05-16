@@ -70,23 +70,27 @@ public class MediaService implements IMediaService {
 
     @Override
     @Transactional
-    public List<MediaResponseDTO> create(List<MediaCreateRequestDTO> dtos) {
+    public List<MediaResponseDTO> create(List<MediaCreateRequestDTO> dtos, String userId) {
         try {
             List<MediaEntity> mediaEntities = dtos.stream()
-                    .map(mediaMapper::toEntity)
+                    .map(dto -> {
+                        MediaEntity entity = mediaMapper.toEntity(dto);
+                        entity.setFileName(UUID.randomUUID().toString());
+                        return entity;
+                    })
                     .toList();
 
-            log.info("Saving {} media entities to database", mediaEntities.size());
+            log.info("Saving {} media entities for user {}", mediaEntities.size(), userId);
 
-            List<MediaEntity> savedEntities = mediaRepo.saveAll(mediaEntities);
+            List<MediaEntity> saved = mediaRepo.saveAll(mediaEntities);
 
-            return savedEntities.stream()
+            return saved.stream()
                     .map(mediaMapper::toResponseDTO)
                     .toList();
 
         } catch (Exception e) {
-            log.error("Failed to save media to DB: {}", e.getMessage());
-            throw new RuntimeException("Ошибка при сохранении медиа в базу данных", e);
+            log.error("DB Error during media creation: {}", e.getMessage());
+            throw new RuntimeException("Внутряняя Ошибка Сервера");
         }
     }
 

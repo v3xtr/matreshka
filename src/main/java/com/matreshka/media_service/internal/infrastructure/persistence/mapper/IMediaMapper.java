@@ -8,18 +8,18 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface IMediaMapper {
-
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "fileName", ignore = true)
+    @Mapping(target = "user", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "publishedAt", ignore = true)
     @Mapping(target = "processedAt", ignore = true)
     @Mapping(target = "thumbnailUrl", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(source = "filename", target = "fileName")
+    @Mapping(target = "fileExtension", ignore = true)
     @Mapping(source = "url", target = "cdnUrl")
     MediaEntity toEntity(MediaCreateRequestDTO dto);
 
+    @Mapping(source = "user.id", target = "userId")
     MediaResponseDTO toResponseDTO(MediaEntity entity);
 }
