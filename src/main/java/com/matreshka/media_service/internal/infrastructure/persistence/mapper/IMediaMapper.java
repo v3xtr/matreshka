@@ -21,5 +21,6 @@ public interface IMediaMapper {
     MediaEntity toEntity(MediaCreateRequestDTO dto);
 
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "s3Key", target = "s3Key")
     MediaResponseDTO toResponseDTO(MediaEntity entity);
 }

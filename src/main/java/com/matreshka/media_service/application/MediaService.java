@@ -6,8 +6,10 @@ import com.matreshka.media_service.delivery.http.dto.MediaResponseDTO;
 import com.matreshka.media_service.delivery.http.dto.PresignedUrlRequestDTO;
 import com.matreshka.media_service.delivery.http.dto.PresignedUrlResponseDTO;
 import com.matreshka.media_service.internal.infrastructure.persistence.MediaEntity;
+import com.matreshka.media_service.internal.infrastructure.persistence.UserEntity;
 import com.matreshka.media_service.internal.infrastructure.persistence.mapper.IMediaMapper;
 import com.matreshka.media_service.internal.repo.IMediaRepo;
+import com.matreshka.media_service.internal.repo.IUserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,7 @@ public class MediaService implements IMediaService {
     private final S3Client s3Client;
     private final IMediaRepo mediaRepo;
     private final IMediaMapper mediaMapper;
+    private final IUserRepo userRepo;
 
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
@@ -72,32 +75,35 @@ public class MediaService implements IMediaService {
     @Transactional
     public List<MediaResponseDTO> create(List<MediaCreateRequestDTO> dtos, String userId) {
         try {
+            UserEntity user = userRepo.findById(userId)
+                    .orElseGet(() -> userRepo.save(new UserEntity(userId, null)));
+
             List<MediaEntity> mediaEntities = dtos.stream()
                     .map(dto -> {
                         MediaEntity entity = mediaMapper.toEntity(dto);
+
+                        entity.setId(null);
+
                         entity.setFileName(UUID.randomUUID().toString());
+                        entity.setUser(user);
                         return entity;
                     })
                     .toList();
 
-            log.info("Saving {} media entities for user {}", mediaEntities.size(), userId);
+            log.info("Final check: first entity id is {}", mediaEntities.get(0).getId()); // Должно быть null
 
             List<MediaEntity> saved = mediaRepo.saveAll(mediaEntities);
-
-            return saved.stream()
-                    .map(mediaMapper::toResponseDTO)
-                    .toList();
-
+            return saved.stream().map(mediaMapper::toResponseDTO).toList();
         } catch (Exception e) {
-            log.error("DB Error during media creation: {}", e.getMessage());
-            throw new RuntimeException("Внутряняя Ошибка Сервера");
+            log.error("DB Error: {}", e.getMessage(), e); // Добавил вывод всего стека ошибки (e)
+            throw new RuntimeException("Internal Server Error");
         }
     }
 
     @Override
     @Transactional
     public List<MediaResponseDTO> getUserVideos(String userId, String type) {
-        return mediaRepo.findAllByTypeAndUserId(type, userId).stream()
+        return mediaRepo.findAllByParams(type, userId).stream()
                 .map(mediaMapper::toResponseDTO)
                 .toList();
     }
@@ -105,7 +111,12 @@ public class MediaService implements IMediaService {
     @Override
     @Transactional
     public void updateMediaThumbnail(String id, String url) {
-        mediaRepo.updateThumbnailById(id, url);
+        try {
+            UUID mediaUuid = UUID.fromString(id);
+            mediaRepo.updateThumbnailById(mediaUuid, url);
+        } catch (IllegalArgumentException e) {
+            log.error("Критическая ошибка: Пришел невалидный UUID медиа-файла: {}", id);
+        }
     }
 
     @Override

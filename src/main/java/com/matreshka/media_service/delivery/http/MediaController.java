@@ -38,7 +38,11 @@ public class MediaController {
             @AuthenticationPrincipal String userId
     ) {
         List<MediaResponseDTO> medias = mediaService.create(mediaCreateRequestDTO, userId);
-        brokerProducer.publishMedia(medias);
+        for(MediaResponseDTO media : medias) {
+            if(media.type().equals("video")){
+                brokerProducer.publishMedia(medias);
+            }
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(medias);
     }
 

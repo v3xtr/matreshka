@@ -41,9 +41,12 @@ public class BrokerConsumer {
 
     @Bean
     public Consumer<MediaEvent> consumeMedia() {
-        return event -> mediaService.updateMediaThumbnail(
-                event.mediaId().toString(),
-                event.thumbnailUrl()
-        );
+        return event -> {
+            mediaService.updateMediaThumbnail(
+                    event.mediaId(),
+                    event.thumbnailUrl()
+            );
+            log.info("Media thumbnail updated: {}", event);
+        };
     }
 }
