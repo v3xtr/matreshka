@@ -90,12 +90,12 @@ public class MediaService implements IMediaService {
                     })
                     .toList();
 
-            log.info("Final check: first entity id is {}", mediaEntities.get(0).getId()); // Должно быть null
+            log.info("Final check: first entity id is {}", mediaEntities.get(0).getId());
 
             List<MediaEntity> saved = mediaRepo.saveAll(mediaEntities);
             return saved.stream().map(mediaMapper::toResponseDTO).toList();
         } catch (Exception e) {
-            log.error("DB Error: {}", e.getMessage(), e); // Добавил вывод всего стека ошибки (e)
+            log.error("DB Error: {}", e.getMessage(), e);
             throw new RuntimeException("Internal Server Error");
         }
     }
