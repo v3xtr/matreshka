@@ -6,6 +6,7 @@ public record MediaMessage(
     @JsonProperty("id")
     String mediaId,
 
+    String thumbnailUrl,
     String s3Key,
     String type
 ) {

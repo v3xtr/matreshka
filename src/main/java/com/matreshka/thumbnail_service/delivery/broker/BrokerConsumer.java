@@ -49,8 +49,9 @@ public class BrokerConsumer {
                 String thumbS3Key = "thumbnails/" + UUID.randomUUID() + ".jpg";
                 thumbnailService.uploadFile(thumbS3Key, thumbPath);
 
-                ThumbnailResult result =
-                        new ThumbnailResult(event.mediaId(), thumbS3Key);
+                ThumbnailResult result = new ThumbnailResult(event.mediaId(), thumbS3Key);
+
+                log.info("Thumbnail Result: {}", result);
 
                 streamBridge.send("publishMedia-out-0", result);
 

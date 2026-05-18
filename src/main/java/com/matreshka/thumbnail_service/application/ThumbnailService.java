@@ -1,14 +1,12 @@
 package com.matreshka.thumbnail_service.application;
 
 import com.matreshka.thumbnail_service.application.port.IThumbnailService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.sync.ResponseTransformer;
@@ -19,7 +17,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -50,9 +47,9 @@ public class ThumbnailService implements IThumbnailService {
             FFmpegExecutor executor = new FFmpegExecutor(ffmpeg);
             executor.createJob(builder).run();
 
-            log.info("Thumbnail создан: " + outputPath);
+            log.info("Thumbnail создан: {}", outputPath);
         } catch (Exception e) {
-            log.error("Ошибка FFmpeg: " + e.getMessage());
+            log.error("Ошибка FFmpeg: {}", e.getMessage());
             throw new RuntimeException("Ошибка при генерации превью", e);
         }
     }

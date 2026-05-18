@@ -1,19 +1,4 @@
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
-
-COPY . .
-
-RUN chmod +x gradlew
-
-RUN ./gradlew bootJar --no-daemon
-
-FROM eclipse-temurin:21-jre-alpine
-RUN apk add --no-cache ffmpeg
-
-WORKDIR /app
-
-COPY --from=build /app/build/libs/*.jar app.jar
-
-EXPOSE 8011
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
