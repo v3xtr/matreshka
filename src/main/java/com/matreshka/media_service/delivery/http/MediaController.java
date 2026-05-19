@@ -29,7 +29,7 @@ public class MediaController {
             @RequestBody PresignedUrlRequestDTO requestDTO
     ) {
         PresignedUrlResponseDTO response = mediaService.generatePresignedUrl(userId, requestDTO);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/create")
@@ -58,6 +58,6 @@ public class MediaController {
     @DeleteMapping("/{s3Key}")
     public ResponseEntity<String> delete(@PathVariable String s3Key){
         mediaService.delete(s3Key);
-        return ResponseEntity.ok("Вы успешно удалил Медиа");
+        return ResponseEntity.status(HttpStatus.OK).("Вы успешно удалил Медиа");
     }
 }
