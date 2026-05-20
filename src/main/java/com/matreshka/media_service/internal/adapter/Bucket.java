@@ -28,7 +28,7 @@ public class Bucket {
     private String endpoint;
 
     @Bean
-    public S3Client s3Client(){
+    public S3Client s3Client() {
         return S3Client.builder()
                 .region(Region.of(region))
                 .endpointOverride(URI.create(endpoint))

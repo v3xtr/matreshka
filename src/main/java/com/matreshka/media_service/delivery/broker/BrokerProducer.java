@@ -15,8 +15,8 @@ public class BrokerProducer implements IBrokerProducer {
 
     private final StreamBridge streamBridge;
 
-    public void publishMedia(@NotNull List<MediaResponseDTO> event){
-        for(MediaResponseDTO media : event){
+    public void publishMedia(@NotNull List<MediaResponseDTO> event) {
+        for (MediaResponseDTO media : event) {
             streamBridge.send("media-created-out-0", media);
         }
     }

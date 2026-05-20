@@ -3,12 +3,14 @@ package com.matreshka.media_service.delivery.broker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matreshka.media_service.application.port.IMediaService;
 import com.matreshka.media_service.application.port.IUserService;
+import com.matreshka.media_service.delivery.broker.dto.MediaDeleteEvent;
 import com.matreshka.media_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.media_service.delivery.broker.dto.UserRegisteredEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
@@ -48,5 +50,10 @@ public class BrokerConsumer {
             );
             log.info("Media thumbnail updated: {}", event);
         };
+    }
+
+    @Bean
+    public Consumer<MediaDeleteEvent> consumeDeleteMedia() {
+        return event -> mediaService.delete(event.id());
     }
 }

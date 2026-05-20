@@ -11,4 +11,5 @@ public record MediaEvent(
         String thumbnailUrl,
         String mimeType,
         LocalDateTime timestamp
-) {}
+) {
+}

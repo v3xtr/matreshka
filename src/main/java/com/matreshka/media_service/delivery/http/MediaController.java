@@ -38,8 +38,8 @@ public class MediaController {
             @AuthenticationPrincipal String userId
     ) {
         List<MediaResponseDTO> medias = mediaService.create(mediaCreateRequestDTO, userId);
-        for(MediaResponseDTO media : medias) {
-            if(media.type().equals("video")){
+        for (MediaResponseDTO media : medias) {
+            if (media.type().equals("video")) {
                 brokerProducer.publishMedia(medias);
             }
         }
@@ -50,13 +50,13 @@ public class MediaController {
     public ResponseEntity<List<MediaResponseDTO>> getUserMedia(
             @PathVariable String type,
             @AuthenticationPrincipal String userId
-    ){
+    ) {
         List<MediaResponseDTO> userMedias = mediaService.getUserVideos(userId, type);
         return ResponseEntity.status(HttpStatus.OK).body(userMedias);
     }
 
     @DeleteMapping("/{s3Key}")
-    public ResponseEntity<String> delete(@PathVariable String s3Key){
+    public ResponseEntity<String> delete(@PathVariable String s3Key) {
         mediaService.delete(s3Key);
         return ResponseEntity.status(HttpStatus.OK).body("Вы успешно удалил Медиа");
     }

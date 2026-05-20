@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class MediaControllerAdvice {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleInternalServerError(){
+    public ResponseEntity<String> handleInternalServerError() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутряняя ошибка сервера");
     }
 }

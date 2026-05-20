@@ -16,12 +16,12 @@ public class CustomOpenApi {
                         .title("Media Service API")
                         .version("1.0")
                         .description("""
-                            Сервис для работы с медиа.
-    
-                            ⚠️ Важно:
-                            Все запросы должны выполняться с `withCredentials: true`,
-                            чтобы передавались cookies (например, refresh/access токены).
-                        """)).addServersItem(new Server().url("/"));
+                                    Сервис для работы с медиа.
+                                
+                                    ⚠️ Важно:
+                                    Все запросы должны выполняться с `withCredentials: true`,
+                                    чтобы передавались cookies (например, refresh/access токены).
+                                """)).addServersItem(new Server().url("/"));
     }
 
     @Bean

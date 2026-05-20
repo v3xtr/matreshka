@@ -42,7 +42,7 @@ public class SecurityConfig {
                 ).build();
     }
 
-    private CorsConfigurationSource corsConfigurationSource(){
+    private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         corsConfiguration.setAllowedOriginPatterns(List.of(
