@@ -90,7 +90,7 @@ public class MediaService implements IMediaService {
                     })
                     .toList();
 
-            log.info("Final check: first entity id is {}", mediaEntities.get(0).getId());
+            log.info("Final check: first entity id is {}", mediaEntities.getFirst());
 
             List<MediaEntity> saved = mediaRepo.saveAll(mediaEntities);
             return saved.stream().map(mediaMapper::toResponseDTO).toList();
