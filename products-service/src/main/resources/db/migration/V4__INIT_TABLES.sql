@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS users
+(
+    id VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id)
+);
