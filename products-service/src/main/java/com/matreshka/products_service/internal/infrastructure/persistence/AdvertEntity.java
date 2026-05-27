@@ -241,6 +241,10 @@ public class AdvertEntity {
     @Column(name = "contacts", nullable = false)
     private String contacts;
 
+    @Column(name = "is_in_elastic", nullable = false)
+    @Builder.Default
+    private Boolean isInElastic = false;
+
     @Column(name = "user_id", nullable = false)
     private String userId;
 

@@ -17,6 +17,7 @@ import com.matreshka.products_service.internal.repo.IAdvertSearchRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class ProductsService implements IProductsService {
         return advertEntityMapper.toUpdateRequestDTO(advert);
     }
 
-    public List<AdvertDocument> search(AdvertSearchRequestDTO dto) throws IOException {
+    public List<AdvertDocument> search(@NotNull AdvertSearchRequestDTO dto) throws IOException {
         try{
             List<Query> filters = Stream.of(
                     term("category", dto.category()),
