@@ -1,6 +1,6 @@
 package com.matreshka.products_service.delivery.broker;
 
-import com.matreshka.products_service.delivery.broker.dto.IBrokerProducer;
+import com.matreshka.products_service.delivery.broker.port.IBrokerProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;

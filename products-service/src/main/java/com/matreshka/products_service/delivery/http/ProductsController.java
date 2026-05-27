@@ -1,7 +1,7 @@
 package com.matreshka.products_service.delivery.http;
 
 import com.matreshka.products_service.application.port.IProductsService;
-import com.matreshka.products_service.delivery.broker.dto.IBrokerProducer;
+import com.matreshka.products_service.delivery.broker.port.IBrokerProducer;
 import com.matreshka.products_service.delivery.http.dto.*;
 import com.matreshka.products_service.internal.domain.AdvertDocument;
 import jakarta.validation.Valid;
