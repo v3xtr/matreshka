@@ -17,7 +17,7 @@ public interface IMediaRepo extends JpaRepository<MediaEntity, UUID> {
     List<MediaEntity> findAllByParams(@Param("type") String type, @Param("userId") String userId);
 
     @Modifying
-    @Query("update MediaEntity m set m.thumbnailUrl = ?2 where m.id = ?1")
+    @Query("UPDATE MediaEntity m SET m.thumbnailUrl = ?2 WHERE m.id = ?1")
     void updateThumbnailById(UUID id, String thumbnailUrl);
 
     void deleteByS3Key(String s3Key);
