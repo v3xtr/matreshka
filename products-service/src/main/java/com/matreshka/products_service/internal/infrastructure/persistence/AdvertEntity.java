@@ -258,7 +258,7 @@ public class AdvertEntity {
     private List<PictureEntity> pictures;
 
     @OneToOne(mappedBy = "advert", cascade = CascadeType.ALL, orphanRemoval = true)
-    private VideoEntity video;
+    private MediaEntity video;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

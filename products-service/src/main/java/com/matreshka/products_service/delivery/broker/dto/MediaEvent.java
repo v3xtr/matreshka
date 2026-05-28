@@ -2,7 +2,7 @@ package com.matreshka.products_service.delivery.broker.dto;
 
 import java.time.LocalDateTime;
 
-public record VideoEvent(
+public record MediaEvent(
         String id,
         String fileName,
         String s3Key,

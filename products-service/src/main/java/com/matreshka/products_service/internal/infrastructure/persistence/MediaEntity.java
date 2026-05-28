@@ -6,13 +6,13 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "videos")
+@Table(name = "media")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class VideoEntity {
+public class MediaEntity {
     @Id
     private String id;
 

@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: products-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8005"
     spec:
       containers:
         - name: products-service
@@ -19,27 +23,22 @@ spec:
           ports:
             - containerPort: 8005
           env:
-
-            # ✅ Swagger + base path
+            - name: SERVER_PORT
+              value: "8005"
             - name: SERVER_SERVLET_CONTEXT_PATH
-              value: /
-
-            - name: SPRINGDOC_API_DOCS_PATH
-              value: "/v3/api-docs"
-
-            # важно для работы за ingress
+              value: "/"
             - name: SERVER_FORWARD_HEADERS_STRATEGY
               value: "framework"
-
-            # app config
+            - name: SPRINGDOC_API_DOCS_PATH
+              value: "/v3/api-docs"
+            - name: SPRINGDOC_SWAGGER_UI_CONFIG_URL
+              value: "/api-docs/advert/v3/api-docs/swagger-config"
+            - name: SPRINGDOC_SWAGGER_UI_URL
+              value: "/api-docs/advert/v3/api-docs"
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
             - name: SPRING_JPA_OPEN_IN_VIEW
               value: "false"
-            - name: SERVER_PORT
-              value: "8005"
-
-            # DB
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://85.198.69.217:5432/products_service"
             - name: SPRING_DATASOURCE_USERNAME
@@ -48,16 +47,12 @@ spec:
               value: "kdfjfvhdkiojd83"
             - name: SPRING_JPA_HIBERNATE_DDL_AUTO
               value: "update"
-
-            # Redis
             - name: SPRING_DATA_REDIS_HOST
               value: "85.198.69.217"
             - name: SPRING_DATA_REDIS_PORT
               value: "6379"
             - name: SPRING_DATA_REDIS_PASSWORD
               value: "kdfdfjkdfjkR632u"
-
-            # RabbitMQ
             - name: RABBIT_HOST
               value: "rabbitmq.default.svc.cluster.local"
             - name: RABBIT_PORT
@@ -66,8 +61,6 @@ spec:
               value: "admin"
             - name: RABBIT_PASSWORD
               value: "admin"
-
-            # S3 / AWS
             - name: AWS_S3_ENDPOINT
               value: "https://s3.ru1.storage.beget.cloud"
             - name: AWS_S3_ACCESS_KEY
@@ -78,12 +71,14 @@ spec:
               value: "9cdb3a15dcd8-divine-roux"
             - name: AWS_S3_REGION
               value: "ru-central-1"
-
-            - name: "SPRING_ELASTICSEARCH_URIS"
-              value: elasticsearch.default.svc.cluster.local
+            - name: SPRING_ELASTICSEARCH_URIS
+              value: "http://elasticsearch.default.svc.cluster.local:9200"
             - name: JWT_ACCESS_TOKEN_SECRET
               value: "bDrK+1TuYdVNN5jBKEDQgPXyf6A/74MqHMGkiEp5+i4="
-
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,prometheus,metrics"
+            - name: MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED
+              value: "true"
 ---
 apiVersion: v1
 kind: Service

@@ -30,7 +30,7 @@ public class AuthFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        log.info("[AuthFilter] DEBUG PATH: {}", path); // Посмотри это в логах!
+        log.info("[AuthFilter] DEBUG PATH: {}", path);
 
         if (path.contains("/api-docs") ||
                 path.contains("/v3/api-docs") ||
@@ -39,7 +39,8 @@ public class AuthFilter extends OncePerRequestFilter {
                 path.equals("/favicon.ico") ||
                 path.contains("api-docs") ||
                 path.contains("swagger") ||
-                path.contains("webjars")
+                path.contains("webjars") ||
+                path.contains("/actuator")
         ) {
             log.debug("[AuthFilter] Skipping auth for swagger/docs path: {}", path);
             filterChain.doFilter(request, response);

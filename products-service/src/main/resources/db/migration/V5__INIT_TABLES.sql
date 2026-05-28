@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS videos
+CREATE TABLE IF NOT EXISTS media
 (
     id           VARCHAR(255) NOT NULL,
     cdn_url      VARCHAR(255),
@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS videos
     CONSTRAINT pk_videos PRIMARY KEY (id)
 );
 
-ALTER TABLE videos
-    ADD CONSTRAINT uc_videos_advert UNIQUE (advert_id);
+ALTER TABLE media
+    ADD CONSTRAINT uc_video_advert UNIQUE (advert_id);
 
-ALTER TABLE videos
+ALTER TABLE media
     ADD CONSTRAINT FK_VIDEOS_ON_ADVERT FOREIGN KEY (advert_id) REFERENCES adverts (id);
 
-ALTER TABLE videos
+ALTER TABLE media
     ADD CONSTRAINT FK_VIDEOS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);

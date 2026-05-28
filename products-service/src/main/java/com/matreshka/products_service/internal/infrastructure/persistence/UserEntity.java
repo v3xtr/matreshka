@@ -19,5 +19,5 @@ public class UserEntity {
     private String id;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<VideoEntity> videos;
+    private List<MediaEntity> videos;
 }

@@ -66,6 +66,10 @@ dependencies {
 	implementation 'co.elastic.clients:elasticsearch-java:9.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
+	//10. Prometheus
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
 	// 10. Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2'
