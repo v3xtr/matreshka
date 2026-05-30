@@ -47,7 +47,7 @@ public class ProductsService implements IProductsService {
         return advertEntityMapper.toDocumentResponseDTO(advertDocument);
     }
 
-    public Optional<AdvertCreateResponseDTO> getOne(String id){
+    public Optional<AdvertCreateResponseDTO> getOne(String id) {
         Optional<AdvertEntity> advertEntity = advertRepo.findById(id);
         return Optional.of(advertEntityMapper.toResponseDTO(advertEntity));
     }
@@ -62,52 +62,52 @@ public class ProductsService implements IProductsService {
     }
 
     public List<AdvertDocument> search(@NotNull AdvertSearchRequestDTO dto) throws IOException {
-        try{
+        try {
             List<Query> filters = Stream.of(
-                    term("category", dto.category()),
-                    term("subCategory", dto.subCategory()),
-                    term("employment", dto.employment()),
-                    term("workFormat", dto.workFormat()),
-                    term("userId", dto.userId()),
-                    term("hasParking", dto.hasParking()),
-                    term("hasElevator", dto.hasElevator()),
-                    term("hasBalcony", dto.hasBalcony()),
-                    term("propertyType", dto.propertyType()),
-                    term("vehicleKpp", dto.vehicleKpp()),
-                    range("yearOfManufacture", dto.yearOfManufactureFrom(), dto.yearOfManufactureTo()),
-                    range("engineCapacity", dto.engineCapacityFrom(), dto.engineCapacityTo()),
-                    range("horsePower", dto.horsePowerFrom(), dto.horsePowerTo()),
-                    range("totalArea", dto.totalAreaFrom(), dto.totalAreaTo())
-            )
-            .filter(Objects::nonNull)
-            .toList();
+                            term("category", dto.category()),
+                            term("subCategory", dto.subCategory()),
+                            term("employment", dto.employment()),
+                            term("workFormat", dto.workFormat()),
+                            term("userId", dto.userId()),
+                            term("hasParking", dto.hasParking()),
+                            term("hasElevator", dto.hasElevator()),
+                            term("hasBalcony", dto.hasBalcony()),
+                            term("propertyType", dto.propertyType()),
+                            term("vehicleKpp", dto.vehicleKpp()),
+                            range("yearOfManufacture", dto.yearOfManufactureFrom(), dto.yearOfManufactureTo()),
+                            range("engineCapacity", dto.engineCapacityFrom(), dto.engineCapacityTo()),
+                            range("horsePower", dto.horsePowerFrom(), dto.horsePowerTo()),
+                            range("totalArea", dto.totalAreaFrom(), dto.totalAreaTo())
+                    )
+                    .filter(Objects::nonNull)
+                    .toList();
 
             SearchResponse<AdvertDocument> response = elasticsearchClient.search(s -> s
-                    .index("adverts")
-                    .size(dto.take() > 0 ? dto.take() : 10)
-                    .query(q -> q.bool(b -> {
-                        if (dto.query() != null) {
-                            b.must(m -> m.multiMatch(mm -> mm
-                                    .query(dto.query())
-                                    .fields("title", "description")
-                            ));
-                        }
-                        return b.filter(filters);
-                    })),
-            AdvertDocument.class
+                            .index("adverts")
+                            .size(dto.take() > 0 ? dto.take() : 10)
+                            .query(q -> q.bool(b -> {
+                                if (dto.query() != null) {
+                                    b.must(m -> m.multiMatch(mm -> mm
+                                            .query(dto.query())
+                                            .fields("title", "description")
+                                    ));
+                                }
+                                return b.filter(filters);
+                            })),
+                    AdvertDocument.class
             );
 
             return response.hits().hits().stream()
                     .map(Hit::source)
                     .toList();
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new IOException("Неверные Данные");
         }
     }
 
     public void delete(String id, String s3Key) throws IOException {
-        try{
+        try {
             elasticsearchClient.delete(d -> d
                     .index("adverts")
                     .id(id)
@@ -116,7 +116,7 @@ public class ProductsService implements IProductsService {
 
             advertRepo.deleteById(id);
             advertSearchRepo.deleteById(id);
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new IOException("Не удалось удалить объявление попробуйте снова");
         }

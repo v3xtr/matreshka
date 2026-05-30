@@ -12,7 +12,7 @@ import java.io.IOException;
 @Slf4j
 public class ProductsControllerAdvice {
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<String> handleIOException(IOException e){
+    public ResponseEntity<String> handleIOException(IOException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутряняя ошибка сервера");
     }

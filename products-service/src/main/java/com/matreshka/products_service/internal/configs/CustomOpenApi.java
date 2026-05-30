@@ -16,12 +16,12 @@ public class CustomOpenApi {
                         .title("Products Service API")
                         .version("1.0")
                         .description("""
-                            Сервис для работы с объявлениями (Products).
-    
-                            ⚠️ Важно:
-                            Все запросы должны выполняться с `withCredentials: true`,
-                            чтобы передавались cookies.
-                        """))
+                                    Сервис для работы с объявлениями (Products).
+                                
+                                    ⚠️ Важно:
+                                    Все запросы должны выполняться с `withCredentials: true`,
+                                    чтобы передавались cookies.
+                                """))
                 .addServersItem(new Server().url("/"));
     }
 

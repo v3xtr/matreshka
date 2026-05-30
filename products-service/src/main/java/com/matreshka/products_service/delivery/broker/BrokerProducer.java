@@ -11,7 +11,7 @@ public class BrokerProducer implements IBrokerProducer {
 
     private final StreamBridge streamBridge;
 
-    public void publishDeleteAdvertEvent(String s3Key){
+    public void publishDeleteAdvertEvent(String s3Key) {
         streamBridge.send("mediaDelete-out-0", s3Key);
     }
 }

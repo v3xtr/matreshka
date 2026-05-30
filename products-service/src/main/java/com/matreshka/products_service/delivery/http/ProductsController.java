@@ -31,7 +31,7 @@ public class ProductsController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<AdvertUpdateRequestDTO> update(@Valid @RequestBody AdvertUpdateRequestDTO advertUpdateRequestDTO){
+    public ResponseEntity<AdvertUpdateRequestDTO> update(@Valid @RequestBody AdvertUpdateRequestDTO advertUpdateRequestDTO) {
         AdvertUpdateRequestDTO advert = productsService.update(advertUpdateRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(advert);
     }

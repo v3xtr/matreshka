@@ -1,6 +1,6 @@
 package com.matreshka.products_service.delivery.http.dto;
 
-import com.matreshka.products_service.internal.infrastructure.persistence.enums.*;
+import  com.matreshka.products_service.internal.infrastructure.persistence.enums.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;

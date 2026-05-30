@@ -12,8 +12,12 @@ import java.util.Optional;
 
 public interface IProductsService {
     AdvertCreateResponseDTO create(AdvertCreateRequestDTO advertRequestDTO);
+
     List<AdvertDocument> search(AdvertSearchRequestDTO dto) throws IOException;
+
     Optional<AdvertCreateResponseDTO> getOne(String id);
+
     AdvertUpdateRequestDTO update(AdvertUpdateRequestDTO advertRequestDTO);
+
     void delete(String id, String s3Key) throws IOException;
 }
