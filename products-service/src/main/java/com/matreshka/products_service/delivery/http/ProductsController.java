@@ -49,7 +49,7 @@ public class ProductsController {
         return ResponseEntity.status(HttpStatus.OK).body("Объявление было успешно удалено");
     }
 
-    @GetMapping("/one/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<AdvertCreateResponseDTO>> getOne(@Valid @PathVariable String id) {
         Optional<AdvertCreateResponseDTO> advertEntity = productsService.getOne(id);
         return ResponseEntity.status(HttpStatus.OK).body(advertEntity);
