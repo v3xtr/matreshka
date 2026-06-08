@@ -1,5 +1,5 @@
 CREATE TABLE users (
-                       id VARCHAR(255) PRIMARY KEY
+    id VARCHAR(255) PRIMARY KEY
 );
 
 CREATE TABLE videos (
