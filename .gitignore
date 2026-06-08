@@ -26,6 +26,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 /src/main/resources/application.properties
+/feed-deployment.yml.yaml
 
 ### NetBeans ###
 /nbproject/private/
