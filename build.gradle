@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.6'
+	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -18,27 +18,54 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2025.1.1")
+	set('springCloudVersion', "2024.0.0")
+	set('awsSdkVersion', "2.25.27")
 }
 
+
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-flyway'
+	// Spring Boot Starter-ы
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'     // Один раз!
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'   // Один раз!
+
+	// Spring Cloud Stream + КРИТИЧЕСКИЙ БИНДЕР ДЛЯ RABBITMQ
 	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit' // <-- ДОБАВИЛИ СЮДА!
+
+	// Servlet API (compileOnly)
+	compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+	// Lombok (Один раз, без дублирования версий, так как версию подтянет Spring Boot)
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	compileOnly 'org.projectlombok:lombok:1.18.34'
-	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	// MapStruct
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
+	// Database & Flyway
+	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// Swagger UI / OpenApi
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+	// Тесты
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Общий стартер для тестов
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
 	testCompileOnly 'org.projectlombok:lombok'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {

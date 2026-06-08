@@ -27,10 +27,10 @@ public class VideoEntity {
     @Column(name = "mime_type")
     private String mimeType;
 
-    private long likes;
+    @Builder.Default
+    private long likes = 0;
 
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
     private List<CommentEntity> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)

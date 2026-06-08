@@ -1,4 +1,18 @@
 package com.matreshka.feed_service.delivery.broker.dto;
 
-public record MediaEvent() {
+import java.time.LocalDateTime;
+
+public record MediaEvent(
+        String id,
+        String fileName,
+        String s3Key,
+        String url,
+        String cdnUrl,
+        String thumbnailUrl,
+        String type,
+        String mimeType,
+        String userId,
+        LocalDateTime publishedAt,
+        LocalDateTime createdAt
+) {
 }

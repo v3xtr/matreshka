@@ -1,15 +1,16 @@
 package com.matreshka.feed_service.delivery.http;
 
 import com.matreshka.feed_service.application.port.IVideoService;
-import com.matreshka.feed_service.delivery.http.dto.UserResponseDTO;
-import com.matreshka.feed_service.delivery.http.dto.VideoDetailResponseDTO;
-import com.matreshka.feed_service.delivery.http.dto.VideoRequestDTO;
+import com.matreshka.feed_service.delivery.http.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/feed/video")
@@ -35,5 +36,35 @@ public class VideoController {
     public ResponseEntity<VideoDetailResponseDTO> getVideo(@Valid @RequestParam String videoId){
         VideoDetailResponseDTO video = videoService.getVideo(videoId);
         return ResponseEntity.status(HttpStatus.OK).body(video);
+    }
+
+    @GetMapping("welcome-feed")
+    public ResponseEntity<List<VideoShortResponseDTO>> getWelcomeFeed(@Valid @RequestParam VideoShortRequestDTO videoShortRequestDTO){
+        List<VideoShortResponseDTO> videosWithoutInfo = videoService.getVideosWelcome(videoShortRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(videosWithoutInfo);
+    }
+
+    @PostMapping("/mark-as-favorite")
+    public ResponseEntity<String> markAsFavorite(
+            @Valid @RequestBody String videoId,
+            @AuthenticationPrincipal String userId
+    ){
+        videoService.markAsFavorite(userId, videoId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/unmark-as-favorite")
+    public ResponseEntity<String> unmarkAsFavorite(
+            @Valid @RequestBody String videoId,
+            @AuthenticationPrincipal String userId
+    ){
+        videoService.unmarkAsFavorite(userId, videoId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@PathVariable String id){
+        List<UserWithVideosResponseDTO> videos = videoService.getFavoriteVideos(id);
+        return ResponseEntity.status(HttpStatus.OK).body(videos);
     }
 }

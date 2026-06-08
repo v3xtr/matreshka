@@ -18,12 +18,6 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "video_id")
-    private UUID videoId;
-
-    @Column(name = "user_id")
-    private UUID userId;
-
     private String text;
 
     @Column(name = "parent_id", nullable = true)
@@ -33,10 +27,10 @@ public class CommentEntity {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", nullable = false)
     private VideoEntity video;
 }

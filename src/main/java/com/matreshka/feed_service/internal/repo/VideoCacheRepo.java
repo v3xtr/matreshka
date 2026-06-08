@@ -12,7 +12,7 @@ public class VideoCacheRepo implements IVideoCacheRepo {
     private final RedisTemplate<String, String> redisTemplate;
 
     public void like(String videoId) {
-        String key = "likes:post"+videoId;
+        String key = "likes:post:"+videoId;
         redisTemplate.opsForValue().increment(key);
     }
 

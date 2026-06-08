@@ -1,7 +1,7 @@
 package com.matreshka.feed_service.application;
 
 import com.matreshka.feed_service.application.port.IUserService;
-import com.matreshka.feed_service.delivery.broker.UserRegisteredEvent;
+import com.matreshka.feed_service.delivery.broker.dto.UserRegisteredEvent;
 import com.matreshka.feed_service.internal.infrastructure.mapper.IUserMapper;
 import com.matreshka.feed_service.internal.infrastructure.persistence.UserEntity;
 import com.matreshka.feed_service.internal.repo.IUserRepo;

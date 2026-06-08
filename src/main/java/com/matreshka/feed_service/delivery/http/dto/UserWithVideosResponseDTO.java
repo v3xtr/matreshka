@@ -1,4 +1,11 @@
 package com.matreshka.feed_service.delivery.http.dto;
 
-public class UserWithVideosResponseDTO {
+import java.util.List;
+import java.util.UUID;
+
+public record UserWithVideosResponseDTO (
+        UUID id,
+        List<String> favoriteVideos
+
+){
 }

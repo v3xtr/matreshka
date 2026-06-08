@@ -40,7 +40,7 @@ public class Scheduler {
             if (delta != 0L) {
                 try {
                     UUID videoId = UUID.fromString(videoIdStr);
-                    videoRepo.incrementLikes(videoId, delta);
+                    videoRepo.increment(videoId, delta);
                 } catch (IllegalArgumentException e) {
                     log.error("Invalid UUID in Redis key: {}", videoIdStr);
                 } catch (Exception e) {

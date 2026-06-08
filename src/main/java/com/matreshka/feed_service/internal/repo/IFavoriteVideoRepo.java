@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface FavoriteVideoRepo extends JpaRepository<FavoriteVideo, String> {
+public interface IFavoriteVideoRepo extends JpaRepository<FavoriteVideo, String> {
     Optional<FavoriteVideo> findByUserIdAndVideoId(String userId, UUID videoId);
     void deleteByUserIdAndVideoId(String userId, UUID videoId);
 }

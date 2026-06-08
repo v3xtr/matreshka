@@ -6,5 +6,5 @@ import java.util.List;
 @Builder
 public record UserResponseDTO(
         String id,
-        List<VideoResponseDTO> videos
+        List<VideoDetailResponseDTO> videos
 ) {}

@@ -21,4 +21,7 @@ public class UserEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<CommentEntity> comments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<FavoriteVideo> favoriteVideos;
 }
