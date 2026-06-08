@@ -4,13 +4,11 @@ import com.matreshka.feed_service.delivery.http.dto.UserResponseDTO;
 import com.matreshka.feed_service.delivery.http.dto.UserWithVideosResponseDTO;
 import com.matreshka.feed_service.internal.infrastructure.persistence.FavoriteVideo;
 import com.matreshka.feed_service.internal.infrastructure.persistence.UserEntity;
-import com.matreshka.feed_service.internal.infrastructure.persistence.VideoEntity;
 import com.matreshka.feed_service.internal.repo.IVideoRepo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

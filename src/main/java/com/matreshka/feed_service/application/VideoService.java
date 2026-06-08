@@ -11,7 +11,7 @@ import com.matreshka.feed_service.internal.infrastructure.persistence.VideoEntit
 import com.matreshka.feed_service.internal.repo.IFavoriteVideoRepo;
 import com.matreshka.feed_service.internal.repo.IUserRepo;
 import com.matreshka.feed_service.internal.repo.IVideoRepo;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,10 +42,12 @@ public class VideoService implements IVideoService {
         videoRepo.save(videoEntity);
     }
 
-    @Transactional
-    public UserResponseDTO getUserViews(String userId){
-        Optional<UserEntity> userWithVideos = userRepo.findByIdWithVideos(userId);
-        return userMapper.toResponseDTO(userWithVideos);
+    @Transactional(readOnly = true)
+    public UserResponseDTO getUserViews(String userId) {
+        UserEntity user = userRepo.findByIdWithVideos(userId)
+                .orElseThrow(() -> new RuntimeException("Внутренняя ошибка сервера"));
+
+        return userMapper.toResponseDTO(Optional.of(user));
     }
 
     @Transactional
@@ -70,6 +72,7 @@ public class VideoService implements IVideoService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<UserWithVideosResponseDTO> getFavoriteVideos(String userId){
        UserEntity user = userRepo.findWithFavoritesById(userId);
 
