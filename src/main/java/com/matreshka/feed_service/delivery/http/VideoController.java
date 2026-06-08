@@ -20,7 +20,7 @@ public class VideoController {
 
     private final IVideoService videoService;
 
-    @PostMapping("/like")
+    @PostMapping("/addView")
     public ResponseEntity<String> addView(@Valid @RequestBody VideoRequestDTO videoRequestDTO){
         videoService.addView(videoRequestDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
