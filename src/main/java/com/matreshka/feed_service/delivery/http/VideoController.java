@@ -62,9 +62,9 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@PathVariable String id){
-        List<UserWithVideosResponseDTO> videos = videoService.getFavoriteVideos(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@PathVariable String userId){
+        List<UserWithVideosResponseDTO> videos = videoService.getFavoriteVideos(userId);
         return ResponseEntity.status(HttpStatus.OK).body(videos);
     }
 }

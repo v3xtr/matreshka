@@ -70,8 +70,8 @@ public class VideoService implements IVideoService {
         }
     }
 
-    public List<UserWithVideosResponseDTO> getFavoriteVideos(String id){
-       UserEntity user = userRepo.findWithFavoritesById(id);
+    public List<UserWithVideosResponseDTO> getFavoriteVideos(String userId){
+       UserEntity user = userRepo.findWithFavoritesById(userId);
 
        return Collections.singletonList(userMapper.toDtoWithFavorites(user));
     }

@@ -12,6 +12,6 @@ public interface IVideoService {
     List<VideoShortResponseDTO> getVideosWelcome(VideoShortRequestDTO videoShortRequestDTO);
     void markAsFavorite(String userId, String videoId);
     void unmarkAsFavorite(String userId, String videoId);
-    List<UserWithVideosResponseDTO> getFavoriteVideos(String id);
+    List<UserWithVideosResponseDTO> getFavoriteVideos(String userId);
     void processMedia(MediaEvent mediaEvent);
 }
