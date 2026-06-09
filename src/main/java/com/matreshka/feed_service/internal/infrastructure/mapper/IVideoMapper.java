@@ -21,6 +21,7 @@ public interface IVideoMapper {
     @Mapping(target = "username", ignore = true)
     UserShortInfoDTO toAuthorDTO(UserEntity userEntity);
 
+    @Mapping(target = "views", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "mimeType", ignore = true)
     @Mapping(target = "mediaId", ignore = true)
@@ -30,6 +31,8 @@ public interface IVideoMapper {
     @Mapping(target = "comments", ignore = true)
     VideoEntity toEntity(VideoRequestDTO videoRequestDTO);
 
+    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "ip",  ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "mediaId", ignore = true)
     @Mapping(target = "likes", ignore = true)

@@ -9,5 +9,6 @@ public record VideoDetailResponseDTO(
         String mimeType,
         long likes,
         long commentsCount,
+        long views,
         UserShortInfoDTO author
 ) {}
