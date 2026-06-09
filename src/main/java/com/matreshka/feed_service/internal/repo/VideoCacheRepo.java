@@ -17,8 +17,13 @@ public class VideoCacheRepo implements IVideoCacheRepo {
     }
 
     public void unlike(String videoId){
-        String key = "likes:post"+videoId;
+        String key = "likes:post:"+videoId;
         redisTemplate.opsForValue().decrement(key);
+    }
+
+    public void addView(String videoId, String ip){
+        String key = "views:post:" + videoId + ":" + ip;
+        redisTemplate.opsForValue().increment(key);
     }
 
     public long getDelta(String videoId){

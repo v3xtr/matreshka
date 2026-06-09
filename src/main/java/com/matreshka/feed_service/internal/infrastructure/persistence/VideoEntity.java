@@ -33,6 +33,11 @@ public class VideoEntity {
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
     private List<CommentEntity> comments;
 
+    @Builder.Default
+    private long views = 0;
+
+    private String ip;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
