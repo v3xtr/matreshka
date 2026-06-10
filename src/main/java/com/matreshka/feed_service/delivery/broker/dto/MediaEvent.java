@@ -9,6 +9,7 @@ public record MediaEvent(
         String url,
         String cdnUrl,
         String thumbnailUrl,
+        String description,
         String type,
         String mimeType,
         String userId,

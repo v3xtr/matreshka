@@ -32,8 +32,8 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.OK).body(views);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<VideoDetailResponseDTO> getVideo(@Valid @RequestParam String videoId){
+    @GetMapping("/{videoId}")
+    public ResponseEntity<VideoDetailResponseDTO> getVideo(@Valid @PathVariable String videoId){
         VideoDetailResponseDTO video = videoService.getVideo(videoId);
         return ResponseEntity.status(HttpStatus.OK).body(video);
     }

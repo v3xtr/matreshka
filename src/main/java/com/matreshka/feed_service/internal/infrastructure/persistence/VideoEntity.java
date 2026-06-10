@@ -42,6 +42,8 @@ public class VideoEntity {
 
     private String ip;
 
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;

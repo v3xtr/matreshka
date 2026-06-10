@@ -11,7 +11,7 @@ import com.matreshka.feed_service.internal.infrastructure.persistence.VideoEntit
 import com.matreshka.feed_service.internal.repo.IFavoriteVideoRepo;
 import com.matreshka.feed_service.internal.repo.IUserRepo;
 import com.matreshka.feed_service.internal.repo.IVideoRepo;
-import com.matreshka.feed_service.internal.repo.VideoCacheRepo;
+import com.matreshka.feed_service.internal.repo.port.IVideoCacheRepo;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class VideoService implements IVideoService {
     private final IUserMapper userMapper;
     private final IUserRepo userRepo;
     private final IFavoriteVideoRepo favoriteVideoRepo;
-    private final VideoCacheRepo videoCacheRepo;
+    private final IVideoCacheRepo videoCacheRepo;
 
     public void processMedia(MediaEvent mediaEvent){
         VideoEntity video = videoMapper.toEntity(mediaEvent);
