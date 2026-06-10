@@ -3,6 +3,7 @@ package com.matreshka.feed_service.internal.infrastructure.persistence;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,9 +37,13 @@ public class VideoEntity {
     @Builder.Default
     private long views = 0;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     private String ip;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
 }

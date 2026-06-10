@@ -1,9 +1,12 @@
 package com.matreshka.feed_service.delivery.http.dto;
 
+import java.time.LocalDateTime;
+
 public record VideoShortRequestDTO(
         Integer page,
         Integer size,
-        Double seed
+        Double seed,
+        LocalDateTime createdAt
 ) {
     public VideoShortRequestDTO {
         if (page == null) page = 0;
