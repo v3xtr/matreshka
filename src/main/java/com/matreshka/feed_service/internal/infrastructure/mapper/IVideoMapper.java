@@ -21,6 +21,8 @@ public interface IVideoMapper {
     @Mapping(target = "username", ignore = true)
     UserShortInfoDTO toAuthorDTO(UserEntity userEntity);
 
+    @Mapping(target = "description", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "views", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "mimeType", ignore = true)
