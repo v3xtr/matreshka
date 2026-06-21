@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService implements IUserService {
+
     private final IUserRepo userRepo;
     private final IUserMapper userMapper;
 
