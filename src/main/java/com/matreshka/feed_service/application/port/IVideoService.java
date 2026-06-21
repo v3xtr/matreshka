@@ -4,14 +4,15 @@ import com.matreshka.feed_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.feed_service.delivery.http.dto.*;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IVideoService {
     void addView(VideoRequestDTO videoRequestDTO);
     UserResponseDTO getUserViews(String userId);
-    VideoDetailResponseDTO getVideo(String videoId);
     List<VideoShortResponseDTO> getVideosWelcome(VideoShortRequestDTO videoShortRequestDTO);
-    void markAsFavorite(String userId, String videoId);
-    void unmarkAsFavorite(String userId, String videoId);
     List<UserWithVideosResponseDTO> getFavoriteVideos(String userId);
     void processMedia(MediaEvent mediaEvent);
+    void markAsFavorite(String userId, UUID videoId);
+    void unmarkAsFavorite(String userId, UUID videoId);
+    VideoDetailResponseDTO getVideo(UUID videoId);
 }

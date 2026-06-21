@@ -17,6 +17,7 @@ public class UserService implements IUserService {
     private final IUserRepo userRepo;
     private final IUserMapper userMapper;
 
+    @Override
     @Transactional
     public void processUser(UserRegisteredEvent event){
         UserEntity user = userMapper.toEntity(event);

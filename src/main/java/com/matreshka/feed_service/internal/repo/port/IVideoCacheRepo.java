@@ -7,5 +7,5 @@ public interface IVideoCacheRepo {
 
     long getDelta(String videoId);
 
-    void addView(String videoId, String ip);
+    void addView(String videoId);
 }

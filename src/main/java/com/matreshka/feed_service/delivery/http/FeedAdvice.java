@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class FeedAdvice {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<String> handleException(RuntimeException e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Внутряняя Ошибка сервера");
     }
 }

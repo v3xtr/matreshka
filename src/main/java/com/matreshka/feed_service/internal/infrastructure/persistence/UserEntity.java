@@ -16,6 +16,8 @@ public class UserEntity {
     @Id
     private String id;
 
+    private String name;
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<VideoEntity> videos;
 

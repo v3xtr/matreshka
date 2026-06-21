@@ -33,91 +33,92 @@ public class VideoService implements IVideoService {
     private final IFavoriteVideoRepo favoriteVideoRepo;
     private final IVideoCacheRepo videoCacheRepo;
 
-    public void processMedia(MediaEvent mediaEvent){
+    @Override
+    @Transactional
+    public void processMedia(MediaEvent mediaEvent) {
+        UUID mediaId = UUID.fromString(mediaEvent.id());
+
+        if (videoRepo.existsById(mediaId)) {
+            log.info("[VideoService] Video {} already exists, skipping", mediaId);
+            return;
+        }
+
+        UserEntity user = userRepo.findById(mediaEvent.userId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + mediaEvent.userId()));
+
         VideoEntity video = videoMapper.toEntity(mediaEvent);
+
+        video.setUser(user);
+
         videoRepo.save(video);
     }
 
+    @Override
     public void addView(VideoRequestDTO videoRequestDTO){
-        VideoEntity videoEntity = videoMapper.toEntity(videoRequestDTO);
-
-        videoCacheRepo.addView(videoEntity.getId().toString(), videoEntity.getIp());
+        videoCacheRepo.addView(videoRequestDTO.id());
     }
 
+    @Override
     @Transactional(readOnly = true)
     public UserResponseDTO getUserViews(String userId) {
         UserEntity user = userRepo.findByIdWithVideos(userId)
-                .orElseThrow(() -> new RuntimeException("Внутренняя ошибка сервера"));
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден: " + userId));
 
         return userMapper.toResponseDTO(Optional.of(user));
     }
 
-    @Transactional
-    public VideoDetailResponseDTO getVideo(String videoId) {
-        try{
-            VideoEntity video = videoRepo.getVideoWithLikesAndComments(UUID.fromString(videoId));
-            return videoMapper.toDetailResponseDTO(video);
-        }catch (Exception e){
-            log.error("[VideoService getVideo]: {}", e.getMessage());
-            throw new RuntimeException("Внутряняя ошибка сервера");
+    @Override
+    @Transactional(readOnly = true)
+    public VideoDetailResponseDTO getVideo(UUID videoId) {
+        VideoEntity video = videoRepo.getVideoWithLikesAndComments(videoId);
+        if (video == null) {
+            throw new IllegalArgumentException("Видео не найдено: " + videoId);
         }
+        return videoMapper.toDetailResponseDTO(video);
     }
 
+    @Override
+    @Transactional(readOnly = true)
     public List<VideoShortResponseDTO> getVideosWelcome(VideoShortRequestDTO videoShortRequestDTO){
-        try{
-            List<VideoEntity> videos = videoRepo.findRandomWithSeed(videoShortRequestDTO.seed(), videoShortRequestDTO.size(),
-                    videoShortRequestDTO.page());
-            return videoMapper.toShortResponseDTO(videos);
-        }catch (Exception e){
-            log.error("[VideoService getVideosWelcome]: {}", e.getMessage());
-            throw new RuntimeException("Внутряняя ошибка сервера");
-        }
+        List<VideoEntity> videos = videoRepo.findRandomWithSeed(
+                videoShortRequestDTO.seed(),
+                videoShortRequestDTO.size(),
+                videoShortRequestDTO.page() * videoShortRequestDTO.size()
+        );
+        return videoMapper.toShortResponseDTO(videos);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<UserWithVideosResponseDTO> getFavoriteVideos(String userId){
-       UserEntity user = userRepo.findWithFavoritesById(userId);
-
-       return Collections.singletonList(userMapper.toDtoWithFavorites(user));
+        UserEntity user = userRepo.findWithFavoritesById(userId);
+        return Collections.singletonList(userMapper.toDtoWithFavorites(user));
     }
 
+    @Override
     @Transactional
-    public void markAsFavorite(String userId, String videoId) {
-        try {
-            UUID videoUuid = UUID.fromString(videoId);
-
-            if (favoriteVideoRepo.findByUserIdAndVideoId(userId, videoUuid).isPresent()) {
-                log.info("[FavoriteService]: Video {} already in favorites for user {}", videoId, userId);
-                return;
-            }
-
-            UserEntity userRef = userRepo.getReferenceById(userId);
-            VideoEntity videoRef = videoRepo.getReferenceById(videoUuid); // Используй аналог getReferenceById / getById
-
-            FavoriteVideo favoriteVideo = new FavoriteVideo();
-            favoriteVideo.setUser(userRef);
-            favoriteVideo.setVideo(videoRef);
-            favoriteVideo.setFavorite(true);
-
-            favoriteVideoRepo.save(favoriteVideo);
-            log.info("[VideoService markAsFavorite]: Video {} marked as favorite for user {}", videoId, userId);
-
-        } catch (Exception e) {
-            log.error("[VideoService markAsFavorite] Error: {}", e.getMessage(), e);
-            throw new RuntimeException("Внутренняя ошибка сервера");
+    public void markAsFavorite(String userId, UUID videoUuid) {
+        if (favoriteVideoRepo.findByUserIdAndVideoId(userId, videoUuid).isPresent()) {
+            log.info("[VideoService] Video {} already in favorites for user {}", videoUuid, userId);
+            return;
         }
+
+        UserEntity userRef = userRepo.getReferenceById(userId);
+        VideoEntity videoRef = videoRepo.getReferenceById(videoUuid);
+
+        FavoriteVideo favoriteVideo = new FavoriteVideo();
+        favoriteVideo.setUser(userRef);
+        favoriteVideo.setVideo(videoRef);
+        favoriteVideo.setFavorite(true);
+
+        favoriteVideoRepo.save(favoriteVideo);
+        log.info("[VideoService] Video {} marked as favorite for user {}", videoUuid, userId);
     }
 
+    @Override
     @Transactional
-    public void unmarkAsFavorite(String userId, String videoId) {
-        try {
-            UUID videoUuid = UUID.fromString(videoId);
-
-            favoriteVideoRepo.deleteByUserIdAndVideoId(userId, videoUuid);
-            log.info("[VideoService unmarkAsFavorite]: Video {} unmarked from favorites for user {}", videoId, userId);
-        } catch (Exception e) {
-            log.error("[VideoService unmarkAsFavorite] Error: {}", e.getMessage(), e);
-            throw new RuntimeException("Внутренняя ошибка сервера");
-        }
+    public void unmarkAsFavorite(String userId, UUID videoUuid) {
+        favoriteVideoRepo.deleteByUserIdAndVideoId(userId, videoUuid);
+        log.info("[VideoService] Video {} unmarked from favorites for user {}", videoUuid, userId);
     }
 }

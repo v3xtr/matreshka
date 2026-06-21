@@ -18,14 +18,17 @@ public class LikeService implements ILikeService {
     private final IVideoCacheRepo videoCacheRepo;
     private final IVideoRepo videoRepo;
 
+    @Override
     public void like(LikeRequestDTO likeRequestDTO) {
         videoCacheRepo.like(likeRequestDTO.videoId());
     }
 
+    @Override
     public void unlike(LikeRequestDTO likeRequestDTO) {
         videoCacheRepo.unlike(likeRequestDTO.videoId());
     }
 
+    @Override
     public long getLikesCount(String videoId) {
         long dbLikes = videoRepo.getLikes(UUID.fromString(videoId));
         long cacheDelta = videoCacheRepo.getDelta(videoId);

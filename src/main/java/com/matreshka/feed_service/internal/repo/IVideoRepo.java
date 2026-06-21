@@ -17,17 +17,16 @@ public interface IVideoRepo extends JpaRepository<VideoEntity, UUID> {
     @Query("SELECT v.likes FROM VideoEntity v WHERE v.id = :videoId")
     long getLikes(@Param("videoId") UUID videoId);
 
-    @Modifying
     @EntityGraph(attributePaths = {"comments", "likes"})
-    @Query("SELECT v.comments, v.comments FROM VideoEntity v WHERE v.id = :videoId")
+    @Query("SELECT v FROM VideoEntity v WHERE v.id = :videoId")
     VideoEntity getVideoWithLikesAndComments(@Param("videoId") UUID videoId);
 
     @Query(nativeQuery = true, value =
-            "SELECT * FROM videos ORDER BY RANDOM(:seed) LIMIT :limit OFFSET :size")
+            "SELECT * FROM videos ORDER BY MD5(CAST(id AS TEXT) || CAST(:seed AS TEXT)) LIMIT :size OFFSET :offset")
     List<VideoEntity> findRandomWithSeed(
             @Param("seed") double seed,
             @Param("size") int size,
-            @Param("limit") int limit);
+            @Param("offset") int offset);
 
     @Modifying
     @Query("UPDATE VideoEntity v SET v.likes = v.likes + :delta WHERE v.id = :videoId")

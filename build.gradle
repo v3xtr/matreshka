@@ -19,52 +19,49 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2024.0.0")
-	set('awsSdkVersion', "2.25.27")
 }
 
-
-
 dependencies {
-	// Spring Boot Starter-ы
+	// 1. Core Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'     // Один раз!
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'   // Один раз!
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	// Spring Cloud Stream + КРИТИЧЕСКИЙ БИНДЕР ДЛЯ RABBITMQ
-	implementation 'org.springframework.cloud:spring-cloud-stream'
-	implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit' // <-- ДОБАВИЛИ СЮДА!
-
-	// Servlet API (compileOnly)
-	compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
-
-	// Lombok (Один раз, без дублирования версий, так как версию подтянет Spring Boot)
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	// MapStruct
-	implementation 'org.mapstruct:mapstruct:1.6.3'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-
-	// Database & Flyway
+	// 2. Database & Migration
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
 
-	// Swagger UI / OpenApi
+	// 3. Spring Cloud Stream (RabbitMQ)
+	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+
+	// 4. OpenAPI / Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
 
-	// JWT
+	// 5. Logging
+	implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
+	implementation 'com.internetitem:logback-elasticsearch-appender:1.6'
+
+	// 6. JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
-	// Тесты
-	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Общий стартер для тестов
-	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+	// 7. Mapping & Utils
+	compileOnly 'org.projectlombok:lombok:1.18.34'
+	annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// 8. Tests
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

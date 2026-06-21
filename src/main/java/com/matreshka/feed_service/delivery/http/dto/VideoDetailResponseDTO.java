@@ -1,6 +1,7 @@
 package com.matreshka.feed_service.delivery.http.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record VideoDetailResponseDTO(
@@ -8,10 +9,11 @@ public record VideoDetailResponseDTO(
         String mediaId,
         String cdnUrl,
         String mimeType,
+        String name,
         String description,
         LocalDateTime createdAt,
         long likes,
-        long commentsCount,
+        List<CommentResponseDTO> comments,
         long views,
         UserShortInfoDTO author
 ) {}

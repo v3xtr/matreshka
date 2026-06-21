@@ -40,7 +40,7 @@ spec:
             - name: SPRING_JPA_OPEN_IN_VIEW
               value: "false"
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://85.198.69.217:5432/feed_service"
+              value: "jdbc:postgresql://85.198.69.217:5432/feed_db"
             - name: SPRING_DATASOURCE_USERNAME
               value: "postgres"
             - name: SPRING_DATASOURCE_PASSWORD

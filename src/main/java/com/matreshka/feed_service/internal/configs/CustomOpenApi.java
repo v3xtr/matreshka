@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CustomOpenApi {
+
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -29,8 +30,7 @@ public class CustomOpenApi {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("feed-service")
-                .pathsToMatch("/**")
-                .packagesToScan("com.matreshka.feed_service.delivery.http")
+                .pathsToMatch("/api/feed/**")
                 .build();
     }
 }

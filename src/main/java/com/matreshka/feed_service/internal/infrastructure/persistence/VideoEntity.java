@@ -2,6 +2,7 @@ package com.matreshka.feed_service.internal.infrastructure.persistence;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.domain.Persistable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class VideoEntity {
+public class VideoEntity implements Persistable<UUID> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -40,12 +42,24 @@ public class VideoEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    private String ip;
-
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Transient
+    @Builder.Default
+    private boolean isNew = true;
+
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
+
+    @PostLoad
+    @PostPersist
+    void markNotNew() {
+        this.isNew = false;
+    }
 }

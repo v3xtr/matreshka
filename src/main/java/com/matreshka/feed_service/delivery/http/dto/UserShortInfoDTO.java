@@ -5,5 +5,5 @@ import lombok.Builder;
 @Builder
 public record UserShortInfoDTO(
         String id,
-        String username
+        String name
 ) {}

@@ -19,6 +19,7 @@ public interface IUserMapper {
     @Mapping(target = "id", ignore = true )
     UserResponseDTO toResponseDTO(Optional<UserEntity> userEntity);
 
+    @Mapping(target = "name", ignore = true)
     @Mapping(target = "favoriteVideos", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "comments", ignore = true)
@@ -34,9 +35,11 @@ public interface IUserMapper {
             return java.util.Collections.emptyList();
         }
         return favoriteVideos.stream()
-                .map(fav -> fav.getVideo().getId().toString()) // Достаем Video, а из него уже String ID
+                .map(fav -> {
+                    assert fav.getVideo().getId() != null;
+                    return fav.getVideo().getId().toString();
+                })
                 .toList();
     }
-
 }
 
