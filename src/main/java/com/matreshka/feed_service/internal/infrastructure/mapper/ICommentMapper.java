@@ -24,8 +24,6 @@ public interface ICommentMapper {
     @Mapping(target = "name", ignore = true)
     UserShortInfoDTO toAuthorDTO(UserEntity userEntity);
 
-    List<CommentResponseDTO> toResponseDTOList(List<CommentEntity> commentEntities);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "user", ignore = true)
