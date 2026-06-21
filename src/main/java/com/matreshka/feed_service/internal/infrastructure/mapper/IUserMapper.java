@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public interface IUserMapper {
     @Named("mapFavoriteVideosToIds")
     default List<String> mapFavoriteVideosToIds(List<FavoriteVideo> favoriteVideos) {
         if (favoriteVideos == null) {
-            return java.util.Collections.emptyList();
+            return Collections.emptyList();
         }
         return favoriteVideos.stream()
                 .map(fav -> {
