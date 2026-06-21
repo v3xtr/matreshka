@@ -20,7 +20,7 @@ public interface ICommentMapper {
     CommentResponseDTO toResponseDTO(CommentEntity commentEntity);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "name", source = "name")
     UserShortInfoDTO toAuthorDTO(UserEntity userEntity);
 
     @Mapping(target = "id", ignore = true)
