@@ -7,7 +7,6 @@ import com.matreshka.feed_service.internal.infrastructure.persistence.CommentEnt
 import com.matreshka.feed_service.internal.infrastructure.persistence.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ICommentMapper {
