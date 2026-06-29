@@ -5,6 +5,7 @@ import com.matreshka.auth_service.delivery.http.dto.*;
 import com.matreshka.auth_service.internal.components.IdGenerator;
 import com.matreshka.auth_service.internal.components.JWTBuilder;
 import com.matreshka.auth_service.internal.configs.PasswordHashing;
+import com.matreshka.auth_service.internal.exceptions.BadRequestException;
 import com.matreshka.auth_service.internal.exceptions.ConflictException;
 import com.matreshka.auth_service.internal.exceptions.UserNotFoundException;
 import com.matreshka.auth_service.internal.infrastructure.mapper.IUserMapper;
@@ -16,7 +17,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -78,7 +78,7 @@ public class AuthService implements IAuthService {
         }
 
         if (!passwordHashing.passwordEncoder().matches(loginUserRequestDTO.password(), new String(userEntity.getPassword()))) {
-            throw new IllegalArgumentException("Неверные данные");
+            throw new BadRequestException("Неверные данные");
         }
 
         Map<String, String> tokens = jwtBuilder.generateTokens(userEntity.getId());

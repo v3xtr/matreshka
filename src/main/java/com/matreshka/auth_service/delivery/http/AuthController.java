@@ -9,13 +9,16 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final IAuthService authService;
@@ -24,7 +27,7 @@ public class AuthController {
     private final IVerificationService verificationService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserResponseDTO> register(
+    public ResponseEntity<Map<String, RegisterUserResponseDTO>> register(
             @Valid @RequestBody RegisterUserRequestDTO registerUserRequestDTO,
             HttpServletResponse response
     ) {
@@ -34,13 +37,17 @@ public class AuthController {
 
         RegisterUserResponseDTO userDto = result.userResponseDto();
 
-        brokerProducer.produce(userDto);
-
-        return ResponseEntity.ok(result.userResponseDto());
+        try {
+            brokerProducer.produce(userDto);
+            log.info("PRODUCT SENT TO KAFKA SUCCESSFULLY");
+        } catch (Exception e) {
+            log.error("KAFKA PRODUCTION FAILED: ", e);
+        }
+        return ResponseEntity.ok(Map.of("user", result.userResponseDto()));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginUserResponseDTO> login(
+    public ResponseEntity<Map<String, LoginUserResponseDTO>> login(
             @Valid @RequestBody LoginUserRequestDTO loginUserRequestDTO,
             HttpServletResponse response
     ){
@@ -48,7 +55,7 @@ public class AuthController {
 
         injectTokens(response, result.accessToken());
 
-        return ResponseEntity.ok(result.userResponseDto());
+        return ResponseEntity.ok(Map.of("user", result.userResponseDto()));
     }
 
     @PostMapping("/sendmail")
@@ -65,7 +72,7 @@ public class AuthController {
     private void injectTokens(HttpServletResponse response, String accessToken) {
         Cookie accessCookie = new Cookie("access_token", accessToken);
         accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(true);
+        accessCookie.setSecure(false);
         accessCookie.setPath("/");
         accessCookie.setMaxAge(15 * 60);
         response.addCookie(accessCookie);

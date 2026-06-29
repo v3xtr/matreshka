@@ -30,7 +30,8 @@ public class JWTBuilder {
     }
 
     private String createToken(String id, String secret, long expirationTime) {
-        SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
+        byte[] keyBytes = java.util.Base64.getDecoder().decode(secret);
+        SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 
         return Jwts.builder()
                 .subject(id)

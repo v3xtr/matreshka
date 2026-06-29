@@ -14,13 +14,18 @@ public class VerificationService implements IVerificationService {
     private final ICacheRepo cacheRepo;
 
     public boolean verifyCode(String to, String code){
-        log.info("verifyCode called with to={}, code={}", to, code);
-        String cacheCode = cacheRepo.getCode(to);
+        try{
+            log.info("verifyCode called with to={}, code={}", to, code);
+            String cacheCode = cacheRepo.getCode(to);
 
-        if(code == null){
-            return false;
+            if(code == null){
+                return false;
+            }
+
+            return code.equals(cacheCode);
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
 
-        return code.equals(cacheCode);
     }
 }

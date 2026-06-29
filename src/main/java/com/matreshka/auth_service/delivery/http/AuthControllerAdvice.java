@@ -1,10 +1,10 @@
 package com.matreshka.auth_service.delivery.http;
 
 import com.matreshka.auth_service.delivery.http.dto.ErrorResponseDTO;
+import com.matreshka.auth_service.internal.exceptions.BadRequestException;
 import com.matreshka.auth_service.internal.exceptions.ConflictException;
 import com.matreshka.auth_service.internal.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
