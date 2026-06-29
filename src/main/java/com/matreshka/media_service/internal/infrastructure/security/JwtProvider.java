@@ -34,7 +34,7 @@ public class JwtProvider implements IJwtProvider {
     public String extractUserId(String token) {
         try {
             Claims claims = parseClaims(token);
-            return claims.get("userId", String.class);
+            return claims.get("id", String.class);
         } catch (JwtException e) {
             log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;

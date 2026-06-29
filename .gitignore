@@ -18,6 +18,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 !**src/resources/application.yaml
+./media-deployment.yml
 
 ### IntelliJ IDEA ###
 .idea

@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-service
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: media-service
+  template:
+    metadata:
+      labels:
+        app: media-service
+    spec:
+      containers:
+        - name: media-service
+          image: proudsss/media-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8002
+          env:
+            # ✅ Swagger + base path
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /
+            - name: SPRINGDOC_API_DOCS_PATH
+              value: "/v3/api-docs"
+
+            # Важно для работы за ingress
+            - name: SERVER_FORWARD_HEADERS_STRATEGY
+              value: "framework"
+
+            # App config
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: SPRING_JPA_OPEN_IN_VIEW
+              value: "false"
+            - name: SERVER_PORT
+              value: "8002"
+
+            # DB
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://85.198.69.217:5432/media_db"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "kdfjfvhdkiojd83"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+            # Redis
+            - name: SPRING_DATA_REDIS_HOST
+              value: "85.198.69.217"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+            - name: SPRING_DATA_REDIS_PASSWORD
+              value: "kdfdfjkdfjkR632u"
+
+            # === НАСТРОЙКИ KAFKA ===
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service.default.svc.cluster.local:9092"
+
+            - name: SPRING_CLOUD_STREAM_KAFKA_STREAMS_BINDER_BROKERS
+              value: "kafka-service.default.svc.cluster.local:9092"
+
+            # ИСПРАВЛЕНО: Сменили группу, чтобы забрать старые объекты из user-notifications-topic
+            - name: SPRING_KAFKA_CONSUMER_GROUP_ID
+              value: "media-service-created-group"
+            - name: SPRING_KAFKA_CONSUMER_AUTO_OFFSET_RESET
+              value: "earliest"
+
+            # S3 / AWS
+            - name: AWS_S3_ENDPOINT
+              value: "https://s3.ru1.storage.beget.cloud"
+            - name: AWS_S3_ACCESS_KEY
+              value: "LM2JCURZW9HBM3IR6F8V"
+            - name: AWS_S3_SECRET_KEY
+              value: "x7cxbCcPWRV2rwjgnPyxmD566Qfe6cqbMZ69gj0F"
+            - name: AWS_S3_BUCKET_NAME
+              value: "9cdb3a15dcd8-divine-roux"
+            - name: AWS_S3_REGION
+              value: "ru-central-1"
+
+            - name: JWT_ACCESS_TOKEN_SECRET
+              value: "b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA=="
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-service
+  namespace: default
+spec:
+  selector:
+    app: media-service
+  ports:
+    - port: 8002
+      targetPort: 8002
+      protocol: TCP

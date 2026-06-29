@@ -5,8 +5,9 @@ import com.matreshka.media_service.delivery.http.dto.MediaResponseDTO;
 import com.matreshka.media_service.internal.infrastructure.persistence.MediaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IMediaMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "fileName", ignore = true)

@@ -55,9 +55,10 @@ public class MediaController {
         return ResponseEntity.status(HttpStatus.OK).body(userMedias);
     }
 
-    @DeleteMapping("/{s3Key}")
-    public ResponseEntity<String> delete(@PathVariable String s3Key) {
+    @DeleteMapping
+    public ResponseEntity<String> delete(@RequestParam("s3Key") String s3Key) {
+        log.info("[MediaController] Request to delete s3Key: {}", s3Key);
         mediaService.delete(s3Key);
-        return ResponseEntity.status(HttpStatus.OK).body("Вы успешно удалил Медиа");
+        return ResponseEntity.status(HttpStatus.OK).body("Вы успешно удалили Медиа");
     }
 }

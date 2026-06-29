@@ -37,6 +37,9 @@ public class MediaEntity {
     @Column(name = "mime_type", nullable = false)
     private String mimeType;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "thumbnail_url", length = 2048)
     private String thumbnailUrl;
 

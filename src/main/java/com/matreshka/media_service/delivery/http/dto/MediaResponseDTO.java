@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public record MediaResponseDTO(
         String id,
         String fileName,
+        String description,
         String s3Key,
         String url,
         String cdnUrl,
