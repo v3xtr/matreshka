@@ -5,7 +5,6 @@ import com.matreshka.auth_service.delivery.http.dto.*;
 import com.matreshka.auth_service.internal.components.IdGenerator;
 import com.matreshka.auth_service.internal.components.JWTBuilder;
 import com.matreshka.auth_service.internal.configs.PasswordHashing;
-import com.matreshka.auth_service.internal.exceptions.BadRequestException;
 import com.matreshka.auth_service.internal.exceptions.ConflictException;
 import com.matreshka.auth_service.internal.exceptions.UserNotFoundException;
 import com.matreshka.auth_service.internal.infrastructure.mapper.IUserMapper;
@@ -13,6 +12,7 @@ import com.matreshka.auth_service.internal.infrastructure.persistence.UserEntity
 import com.matreshka.auth_service.internal.repo.IUserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,10 @@ public class AuthService implements IAuthService {
     private final JWTBuilder jwtBuilder;
     private final StringRedisTemplate redisTemplate;
     private final IdGenerator idGenerator;
+
+    @Value("${jwt.access.secret}")
+    private String accessSecret;
+
 
     @Transactional
     @Override
@@ -78,7 +82,7 @@ public class AuthService implements IAuthService {
         }
 
         if (!passwordHashing.passwordEncoder().matches(loginUserRequestDTO.password(), new String(userEntity.getPassword()))) {
-            throw new BadRequestException("Неверные данные");
+            throw new IllegalArgumentException("Неверные данные");
         }
 
         Map<String, String> tokens = jwtBuilder.generateTokens(userEntity.getId());
@@ -89,12 +93,11 @@ public class AuthService implements IAuthService {
         return new AuthResult<>(responseDto, tokens.get("accessToken"), tokens.get("refreshToken"));
     }
 
-    @Override
-    public String refreshToken(String userId) {
-        return jwtBuilder.generateAccessToken(userId);
+    public String refreshToken(String userId){
+        return jwtBuilder.createToken(userId, accessSecret, 15 * 60);
     }
 
-    private void saveToken(String userId, String refreshToken) {
+    public void saveToken(String userId, String refreshToken) {
         String redisKey = String.format("refreshToken:%s", userId);
         if (refreshToken == null) {
             throw new RuntimeException("refreshToken must be provided");

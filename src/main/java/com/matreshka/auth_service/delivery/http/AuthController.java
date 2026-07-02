@@ -9,17 +9,15 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Slf4j
 public class AuthController {
 
     private final IAuthService authService;
@@ -28,7 +26,7 @@ public class AuthController {
     private final IVerificationService verificationService;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, RegisterUserResponseDTO>> register(
+    public ResponseEntity<RegisterUserResponseDTO> register(
             @Valid @RequestBody RegisterUserRequestDTO registerUserRequestDTO,
             HttpServletResponse response
     ) {
@@ -38,17 +36,13 @@ public class AuthController {
 
         RegisterUserResponseDTO userDto = result.userResponseDto();
 
-        try {
-            brokerProducer.produce(userDto);
-            log.info("PRODUCT SENT TO KAFKA SUCCESSFULLY");
-        } catch (Exception e) {
-            log.error("KAFKA PRODUCTION FAILED: ", e);
-        }
-        return ResponseEntity.ok(Map.of("user", result.userResponseDto()));
+        brokerProducer.produce(userDto);
+
+        return ResponseEntity.ok(result.userResponseDto());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, LoginUserResponseDTO>> login(
+    public ResponseEntity<LoginUserResponseDTO> login(
             @Valid @RequestBody LoginUserRequestDTO loginUserRequestDTO,
             HttpServletResponse response
     ){
@@ -56,7 +50,7 @@ public class AuthController {
 
         injectTokens(response, result.accessToken());
 
-        return ResponseEntity.ok(Map.of("user", result.userResponseDto()));
+        return ResponseEntity.ok(result.userResponseDto());
     }
 
     @PostMapping("/sendmail")
@@ -71,9 +65,14 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<Void> refreshToken(@Valid @RequestBody String userId, HttpServletResponse response){
+    public ResponseEntity<Boolean> refreshAccessToken(
+            @AuthenticationPrincipal String userId,
+            HttpServletResponse response
+    ){
         String accessToken = authService.refreshToken(userId);
+
         injectTokens(response, accessToken);
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

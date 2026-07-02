@@ -1,5 +1,6 @@
 package com.matreshka.auth_service.internal.components;
 
+import com.matreshka.auth_service.internal.infrastructure.persistence.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +29,8 @@ public class JWTBuilder {
         return tokens;
     }
 
-    public String generateAccessToken(String userId){
-        return createToken(userId, accessSecret, 15 * 60 * 1000);
-    }
-
-    private String createToken(String id, String secret, long expirationTime) {
-        byte[] keyBytes = java.util.Base64.getDecoder().decode(secret);
-        SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+    public String createToken(String id, String secret, long expirationTime) {
+        SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
 
         return Jwts.builder()
                 .subject(id)
@@ -43,5 +39,14 @@ public class JWTBuilder {
                 .expiration(new Date(System.currentTimeMillis() + expirationTime * 1000))
                 .signWith(key)
                 .compact();
+    }
+
+    public boolean verifyRefresh(String refreshToken){
+        try{
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(accessSecret.getBytes())).build().parse(refreshToken);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

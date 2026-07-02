@@ -6,4 +6,5 @@ public interface IAuthService {
     AuthResult<RegisterUserResponseDTO> register(RegisterUserRequestDTO registerUserRequestDTO);
     AuthResult<LoginUserResponseDTO> login(LoginUserRequestDTO loginUserRequestDTO);
     String refreshToken(String userId);
+
 }

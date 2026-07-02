@@ -14,13 +14,11 @@ public class BrokerProducer implements IBrokerProducer {
 
     private final StreamBridge streamBridge;
 
-    @Override
-    public void produce(RegisterUserResponseDTO userDto) {
-        log.info("[BrokerProducer] Sending DTO directly to StreamBridge: {}", userDto);
+    public void produce(RegisterUserResponseDTO userDto){
 
         boolean sent = streamBridge.send("outputMappingFunc-out-0", userDto);
 
-        if (!sent) {
+        if(!sent){
             log.error("Failed to send event to binding: outputMappingFunc-out-0");
             throw new RuntimeException("Ошибка сервера");
         }
