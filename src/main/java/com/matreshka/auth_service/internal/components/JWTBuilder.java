@@ -1,6 +1,5 @@
 package com.matreshka.auth_service.internal.components;
 
-import com.matreshka.auth_service.internal.infrastructure.persistence.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +26,10 @@ public class JWTBuilder {
         tokens.put("refreshToken", createToken(id, refreshSecret, 7 * 24 * 60 * 60 * 1000));
 
         return tokens;
+    }
+
+    public String generateAccessToken(String userId){
+        return createToken(userId, accessSecret, 15 * 60 * 1000);
     }
 
     private String createToken(String id, String secret, long expirationTime) {

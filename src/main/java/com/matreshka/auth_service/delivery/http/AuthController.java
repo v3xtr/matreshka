@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,10 +70,17 @@ public class AuthController {
         return ResponseEntity.ok(verificationService.verifyCode(checkCodeDTO.userId(), checkCodeDTO.code()));
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<Void> refreshToken(@Valid @RequestBody String userId, HttpServletResponse response){
+        String accessToken = authService.refreshToken(userId);
+        injectTokens(response, accessToken);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     private void injectTokens(HttpServletResponse response, String accessToken) {
         Cookie accessCookie = new Cookie("access_token", accessToken);
         accessCookie.setHttpOnly(true);
-        accessCookie.setSecure(false);
+        accessCookie.setSecure(true);
         accessCookie.setPath("/");
         accessCookie.setMaxAge(15 * 60);
         response.addCookie(accessCookie);

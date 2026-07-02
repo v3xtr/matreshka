@@ -89,7 +89,12 @@ public class AuthService implements IAuthService {
         return new AuthResult<>(responseDto, tokens.get("accessToken"), tokens.get("refreshToken"));
     }
 
-    public void saveToken(String userId, String refreshToken) {
+    @Override
+    public String refreshToken(String userId) {
+        return jwtBuilder.generateAccessToken(userId);
+    }
+
+    private void saveToken(String userId, String refreshToken) {
         String redisKey = String.format("refreshToken:%s", userId);
         if (refreshToken == null) {
             throw new RuntimeException("refreshToken must be provided");
