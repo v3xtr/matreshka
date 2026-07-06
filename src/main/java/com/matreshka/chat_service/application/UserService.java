@@ -1,7 +1,7 @@
 package com.matreshka.chat_service.application;
 
 import com.matreshka.chat_service.application.port.IUserService;
-import com.matreshka.chat_service.delivery.broker.dto.UserEvent;
+import com.matreshka.chat_service.delivery.broker.dto.UserRegisteredEvent;
 import com.matreshka.chat_service.internal.infrastructure.mapper.IUserMapper;
 import com.matreshka.chat_service.internal.infrastructure.persistence.MessageDocument;
 import com.matreshka.chat_service.internal.infrastructure.persistence.UserEntity;
@@ -20,7 +20,7 @@ public class UserService implements IUserService {
     private final IMessageRepo chatRepo;
 
     @Transactional
-    public void processUser(UserEvent userEvent){
+    public void processUser(UserRegisteredEvent userEvent){
 
         UserEntity userEntity = userMapper.toEntity(userEvent);
 

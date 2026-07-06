@@ -1,7 +1,7 @@
 package com.matreshka.chat_service.application.port;
 
-import com.matreshka.chat_service.delivery.broker.dto.UserEvent;
+import com.matreshka.chat_service.delivery.broker.dto.UserRegisteredEvent;
 
 public interface IUserService {
-    void processUser(UserEvent userEvent);
+    void processUser(UserRegisteredEvent userEvent);
 }
