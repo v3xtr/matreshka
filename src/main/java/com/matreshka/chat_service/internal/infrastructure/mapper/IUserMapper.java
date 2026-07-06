@@ -12,6 +12,7 @@ public interface IUserMapper {
     @Mapping(target = "id", source = "id")
     UserEntity toEntity(UserRegisteredEvent user);
 
+    @Mapping(target = "isRead", ignore = true)
     @Mapping(target = "message", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "senderId", ignore = true)

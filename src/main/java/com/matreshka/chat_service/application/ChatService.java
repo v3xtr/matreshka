@@ -21,7 +21,7 @@ public class ChatService implements IChatService {
     private final IRoomRepo roomRepository;
     private final IChatMapper chatMapper;
 
-    public String createRoom(CreateRoomRequestDTO createRoomRequestDTO) {
+    public void createRoom(CreateRoomRequestDTO createRoomRequestDTO) {
         String roomId = Stream.of(createRoomRequestDTO.userA(), createRoomRequestDTO.userB()).sorted().collect(Collectors.joining(":"));
 
         if (!roomRepository.existsById(roomId)) {
@@ -31,7 +31,6 @@ public class ChatService implements IChatService {
             roomRepository.save(room);
         }
 
-        return roomId;
     }
 
     public SendMessageResponseDTO sendMessage(String roomId, SendMessageRequestDTO messageDto) {
@@ -42,7 +41,22 @@ public class ChatService implements IChatService {
         return new SendMessageResponseDTO();
     }
 
-    public List<MessageDocument> searchMessages(String roomId, String query) {
-        return messageRepository.findByRoomIdAndMessageContainingIgnoreCase(roomId, query);
+    @Override
+    public void setRead(String roomId, String messageId) {
+
+        MessageDocument message = messageRepository
+                .findByIdAndRoomId(messageId, roomId)
+                .orElseThrow(() -> new RuntimeException("Message not found"));
+
+        message.setIsRead(true);
+
+        messageRepository.save(message);
+    }
+
+    public List<MessageResponseDTO> searchMessages(String roomId, String query) {
+        return messageRepository.findByRoomIdAndMessageContainingIgnoreCase(roomId, query)
+                .stream()
+                .map(chatMapper::toResponse)
+                .toList();
     }
 }

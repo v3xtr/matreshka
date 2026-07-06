@@ -17,8 +17,11 @@ import javax.crypto.SecretKey;
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    @Value("${jwt.access.token.secret}")
-    private String accessTokenSecret;
+    private final String accessTokenSecret;
+
+    public JwtProvider(@Value("${jwt.access.token.secret}") String accessTokenSecret) {
+        this.accessTokenSecret = accessTokenSecret;
+    }
 
     @Override
     public boolean isValidToken(String token) {

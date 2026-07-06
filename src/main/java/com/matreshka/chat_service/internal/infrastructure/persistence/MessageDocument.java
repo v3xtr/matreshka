@@ -16,7 +16,9 @@ public class MessageDocument {
     private String id;
     @Indexed
     private String roomId;
+
     private String message;
     private String senderId;
+    private Boolean isRead = false;
     private LocalDateTime createdAt;
 }
