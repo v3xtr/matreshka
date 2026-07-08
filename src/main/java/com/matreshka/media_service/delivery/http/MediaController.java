@@ -39,7 +39,7 @@ public class MediaController {
     ) {
         List<MediaResponseDTO> medias = mediaService.create(mediaCreateRequestDTO, userId);
         for (MediaResponseDTO media : medias) {
-            if (media.type().equals("video")) {
+            if (media.type().contains("video")) {
                 brokerProducer.publishMedia(medias);
             }
         }

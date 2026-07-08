@@ -15,17 +15,23 @@ import java.net.URI;
 @Configuration
 public class Bucket {
 
-    @Value("${aws.s3.region}")
-    private String region;
+    private final String region;
 
-    @Value("${aws.s3.access-key}")
-    private String accessKey;
+    private final String accessKey;
 
-    @Value("${aws.s3.secret-key}")
-    private String secretKey;
+    private final String secretKey;
 
-    @Value("${aws.s3.endpoint}")
-    private String endpoint;
+    private final String endpoint;
+
+    public Bucket(
+            @Value("${aws.s3.endpoint}") String endpoint, @Value("${aws.s3.region}") String region,
+            @Value("${aws.s3.access-key}") String accessKey, @Value("${aws.s3.secret-key}") String secretKey
+    ) {
+        this.region = region;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+        this.endpoint = endpoint;
+    }
 
     @Bean
     public S3Client s3Client() {

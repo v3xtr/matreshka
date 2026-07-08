@@ -18,15 +18,23 @@ public class BrokerProducer implements IBrokerProducer {
     private final StreamBridge streamBridge;
 
     public void publishMedia(@NotNull List<MediaResponseDTO> events) {
-        for(MediaResponseDTO event : events){
+        events.forEach(event -> {
             log.info("Sending event: {}", event);
 
-            boolean sent = streamBridge.send("media-created-out-0", event);
-
-            if(!sent){
-                log.error("[MediaService BrokerProducer publishMedia]: error sending");
-                throw new RuntimeException("Внутряняя ошибка сервера");
+            if(event.extension().equals("mp4")){
+                publishToTopic("video-success-out-0", event);
+            }else{
+                publishToTopic("video-process-out-0", event);
             }
+        });
+    }
+
+    private void publishToTopic(String topic, MediaResponseDTO event) {
+        boolean sent = streamBridge.send(topic, event);
+
+        if(!sent){
+            log.error("[MediaService BrokerProducer publishMedia]: error sending");
+            throw new RuntimeException("Внутряняя ошибка сервера");
         }
     }
 }

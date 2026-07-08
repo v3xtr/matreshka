@@ -6,6 +6,7 @@ public record MediaResponseDTO(
         String id,
         String fileName,
         String description,
+        String extension,
         String s3Key,
         String url,
         String cdnUrl,
