@@ -24,11 +24,14 @@ public class ChatService implements IChatService {
     public void createRoom(CreateRoomRequestDTO createRoomRequestDTO) {
         String roomId = Stream.of(createRoomRequestDTO.userA(), createRoomRequestDTO.userB()).sorted().collect(Collectors.joining(":"));
 
+
         if (!roomRepository.existsById(roomId)) {
             RoomDocument room = new RoomDocument();
             room.setId(roomId);
             room.setParticipants(List.of(createRoomRequestDTO.userA(), createRoomRequestDTO.userB()));
             roomRepository.save(room);
+        }else{
+            throw new RuntimeException("Room already exists");
         }
 
     }

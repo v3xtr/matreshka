@@ -94,6 +94,12 @@ management:
   endpoint:
     Prometheus:
       enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+    otlp:
+      tracing:
+        endpoint: http://tempo-collector.default.svc.cluster.local:4317
   Prometheus:
     metrics:
       export:
