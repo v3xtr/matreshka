@@ -7,4 +7,5 @@ public interface IAuthService {
     AuthResult<LoginUserResponseDTO> login(LoginUserRequestDTO loginUserRequestDTO);
     String refreshToken(String userId);
 
+    void saveToken(String userId, String refreshToken);
 }

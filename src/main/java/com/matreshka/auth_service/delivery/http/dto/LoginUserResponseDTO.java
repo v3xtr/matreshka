@@ -4,5 +4,6 @@ public record LoginUserResponseDTO(
     String id,
     String name,
     String phone,
-    String description) {
+    String email
+) {
 }

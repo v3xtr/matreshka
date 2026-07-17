@@ -47,6 +47,7 @@ public class AuthService implements IAuthService {
 
         String rawPassword = registerUserRequestDTO.password();
         String encodedPassword = passwordHashing.passwordEncoder().encode(rawPassword);
+
         userEntity.setPassword(encodedPassword.toCharArray());
 
         userEntity.setId(idGenerator.generateId());
@@ -93,10 +94,12 @@ public class AuthService implements IAuthService {
         return new AuthResult<>(responseDto, tokens.get("accessToken"), tokens.get("refreshToken"));
     }
 
+    @Override
     public String refreshToken(String userId){
         return jwtBuilder.createToken(userId, accessSecret, 15 * 60);
     }
 
+    @Override
     public void saveToken(String userId, String refreshToken) {
         String redisKey = String.format("refreshToken:%s", userId);
         if (refreshToken == null) {

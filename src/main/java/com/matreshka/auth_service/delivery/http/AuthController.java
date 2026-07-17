@@ -38,7 +38,7 @@ public class AuthController {
 
         brokerProducer.produce(userDto);
 
-        return ResponseEntity.ok(result.userResponseDto());
+        return ResponseEntity.status(HttpStatus.CREATED).body(result.userResponseDto());
     }
 
     @PostMapping("/login")
@@ -50,7 +50,7 @@ public class AuthController {
 
         injectTokens(response, result.accessToken());
 
-        return ResponseEntity.ok(result.userResponseDto());
+        return ResponseEntity.status(HttpStatus.CREATED).body(result.userResponseDto());
     }
 
     @PostMapping("/sendmail")

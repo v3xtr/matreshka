@@ -14,7 +14,7 @@ public interface IUserMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "phone", source = "phone")
-    @Mapping(target = "description", source = "description")
+    @Mapping(target = "email", source = "email")
     LoginUserResponseDTO toLoginUserResponseDTO(UserEntity userEntity);
 
     @Mapping(target = "id", ignore = true)

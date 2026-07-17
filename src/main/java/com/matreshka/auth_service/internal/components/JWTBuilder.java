@@ -1,6 +1,6 @@
 package com.matreshka.auth_service.internal.components;
 
-import com.matreshka.auth_service.internal.infrastructure.persistence.UserEntity;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+
 public class JWTBuilder {
 
-    @Value("${jwt.access.secret}")
-    private String accessSecret;
+    private final String accessSecret;
+    private final String refreshSecret;
 
-    @Value("${jwt.refresh.secret}")
-    private String refreshSecret;
+    public JWTBuilder(@Value("${jwt.access.secret}") String accessSecret, @Value("${jwt.refresh.secret}") String refreshSecret) {
+        this.accessSecret = accessSecret;
+        this.refreshSecret = refreshSecret;
+    }
 
     public Map<String, String> generateTokens(String id){
         Map<String, String> tokens = new HashMap<>();
@@ -41,12 +44,7 @@ public class JWTBuilder {
                 .compact();
     }
 
-    public boolean verifyRefresh(String refreshToken){
-        try{
-            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(accessSecret.getBytes())).build().parse(refreshToken);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public SecretKey verifyRefresh(){
+            return Keys.hmacShaKeyFor(refreshSecret.getBytes());
     }
 }
