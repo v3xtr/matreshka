@@ -22,7 +22,7 @@ public class OutBoxWorker {
     private final ObjectMapper objectMapper;
 
     @Scheduled(fixedRate = 3000)
-    public void processOutboxentitys() {
+    public void processOutboxentities() {
         List<OutBoxEntity> entities = outBoxRepo.findPending();
 
         if (entities.isEmpty()) return;
