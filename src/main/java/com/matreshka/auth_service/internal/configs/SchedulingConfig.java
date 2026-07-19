@@ -1,28 +1,24 @@
 package com.matreshka.auth_service.internal.configs;
 
-import org.springframework.context.annotation.Bean;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @Configuration
+@RequiredArgsConstructor
+@Slf4j
 public class SchedulingConfig implements SchedulingConfigurer {
-
-    @Bean(destroyMethod = "shutdown")
-    public ThreadPoolTaskScheduler outboxTaskScheduler() {
-        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-        taskScheduler.setPoolSize(5);
-        taskScheduler.setThreadNamePrefix("outbox-sched-");
-
-        taskScheduler.setWaitForTasksToCompleteOnShutdown(true);
-        taskScheduler.setAwaitTerminationSeconds(20);
-
-        return taskScheduler;
-    }
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.setTaskScheduler(outboxTaskScheduler());
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(5);
+        scheduler.setThreadNamePrefix("outbox-worker-");
+        scheduler.initialize();
+
+        taskRegistrar.setTaskScheduler(scheduler);
     }
 }

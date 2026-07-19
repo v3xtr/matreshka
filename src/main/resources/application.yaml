@@ -80,7 +80,6 @@ server:
     include-binding-errors: always
 
 jwt:
-  access:
-    secret: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
-  refresh:
-    secret: ${JWT_REFRESH_TOKEN_SECRET:placeholder}
+  secrets:
+    access: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
+    refresh:  ${JWT_REFRESH_TOKEN_SECRET:placeholder}

@@ -34,10 +34,6 @@ public class AuthController {
 
         injectTokens(response, result.accessToken());
 
-        RegisterUserResponseDTO userDto = result.userResponseDto();
-
-        brokerProducer.produce(userDto);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(result.userResponseDto());
     }
 

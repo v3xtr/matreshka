@@ -1,7 +1,7 @@
 package com.matreshka.auth_service.delivery.broker.port;
 
-import com.matreshka.auth_service.delivery.http.dto.RegisterUserResponseDTO;
+import com.matreshka.auth_service.delivery.broker.dto.UserRegisteredEvent;
 
 public interface IBrokerProducer {
-    void produce(RegisterUserResponseDTO userDto);
+    void produce(UserRegisteredEvent userDto);
 }

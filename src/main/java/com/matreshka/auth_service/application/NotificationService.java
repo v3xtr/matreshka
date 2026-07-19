@@ -20,7 +20,7 @@ public class NotificationService implements INotificationService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-
+    @Override
     public void sendMail(String to) {
         String code = String.format("%06d", new Random().nextInt(999999));
         SimpleMailMessage message = new SimpleMailMessage();

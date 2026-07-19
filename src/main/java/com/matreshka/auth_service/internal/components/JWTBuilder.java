@@ -1,9 +1,10 @@
 package com.matreshka.auth_service.internal.components;
 
 
+import com.matreshka.auth_service.internal.configs.AuthProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,22 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-
+@RequiredArgsConstructor
 public class JWTBuilder {
 
-    private final String accessSecret;
-    private final String refreshSecret;
-
-    public JWTBuilder(@Value("${jwt.access.secret}") String accessSecret, @Value("${jwt.refresh.secret}") String refreshSecret) {
-        this.accessSecret = accessSecret;
-        this.refreshSecret = refreshSecret;
-    }
+    private final AuthProperties authProperties;
 
     public Map<String, String> generateTokens(String id){
         Map<String, String> tokens = new HashMap<>();
 
-        tokens.put("accessToken", createToken(id, accessSecret, 15 * 60 * 1000));
-        tokens.put("refreshToken", createToken(id, refreshSecret, 7 * 24 * 60 * 60 * 1000));
+        tokens.put("accessToken", createToken(id, authProperties.access(), 15 * 60 * 1000));
+        tokens.put("refreshToken", createToken(id, authProperties.refresh(), 7 * 24 * 60 * 60 * 1000));
 
         return tokens;
     }
@@ -45,6 +40,6 @@ public class JWTBuilder {
     }
 
     public SecretKey verifyRefresh(){
-            return Keys.hmacShaKeyFor(refreshSecret.getBytes());
+            return Keys.hmacShaKeyFor(authProperties.refresh().getBytes());
     }
 }
