@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface IOutBoxRepo extends JpaRepository<OutBoxEntity, Long> {
 
-    @Query(value = "SELECT * FROM outbox_events WHERE is_processed = false AND LIMIT 10 FOR UPDATE SKIP LOCKED", nativeQuery = true)
+    @Query(value = "SELECT * FROM outbox_events WHERE is_processed = false LIMIT 10 FOR UPDATE SKIP LOCKED", nativeQuery = true)
     List<OutBoxEntity> findPending();
 }
