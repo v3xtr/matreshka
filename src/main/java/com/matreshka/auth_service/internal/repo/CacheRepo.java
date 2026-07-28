@@ -30,4 +30,8 @@ public class CacheRepo implements ICacheRepo {
         redisTemplate.opsForValue().set(redisKey, refreshToken, 7, TimeUnit.DAYS);
     }
 
+    public String getToken(String userId){
+        String redisKey = String.format("refreshToken:%s", userId);
+        return redisTemplate.opsForValue().get(redisKey);
+    }
 }

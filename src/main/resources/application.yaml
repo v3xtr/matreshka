@@ -67,7 +67,7 @@ spring:
           destination: auth-events-topic
           group: auth-service-stream-group
         outputMappingFunc-out-0:
-          destination: user-notifications-topic
+          destination: user.created
       kafka:
         binder:
           brokers: ${SPRING_CLOUD_STREAM_KAFKA_STREAMS_BINDER_BROKERS:localhost:9092}

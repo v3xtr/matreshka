@@ -9,10 +9,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +30,7 @@ public class AuthController {
     ) {
         AuthResult<RegisterUserResponseDTO> result = authService.register(registerUserRequestDTO);
 
-        injectTokens(response, result.accessToken());
+        injectTokens(response, result.accessToken(), result.refreshToken());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result.userResponseDto());
     }
@@ -44,9 +42,9 @@ public class AuthController {
     ){
         AuthResult<LoginUserResponseDTO> result = authService.login(loginUserRequestDTO);
 
-        injectTokens(response, result.accessToken());
+        injectTokens(response, result.accessToken(), result.refreshToken());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result.userResponseDto());
+        return ResponseEntity.status(HttpStatus.OK).body(result.userResponseDto());
     }
 
     @PostMapping("/sendmail")
@@ -61,18 +59,38 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<Boolean> refreshAccessToken(
-            @AuthenticationPrincipal String userId,
+    public ResponseEntity<Void> refreshAccessToken(
+            @CookieValue(name = "access_token", required = false) String accessToken,
             HttpServletResponse response
-    ){
-        String accessToken = authService.refreshToken(userId);
+    ) {
+        if (accessToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        injectTokens(response, accessToken);
+        String newAccessToken = authService.refreshToken(accessToken);
+
+        injectAccessTokenOnly(response, newAccessToken);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    private void injectTokens(HttpServletResponse response, String accessToken) {
+    private void injectTokens(HttpServletResponse response, String accessToken, String refreshToken) {
+        Cookie accessCookie = new Cookie("access_token", accessToken);
+        accessCookie.setHttpOnly(true);
+        accessCookie.setSecure(true);
+        accessCookie.setPath("/");
+        accessCookie.setMaxAge(15 * 60);
+        response.addCookie(accessCookie);
+
+        Cookie refreshCookie = new Cookie("refresh_token", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(7 * 24 * 60 * 60);
+        response.addCookie(refreshCookie);
+    }
+
+    private void injectAccessTokenOnly(HttpServletResponse response, String accessToken) {
         Cookie accessCookie = new Cookie("access_token", accessToken);
         accessCookie.setHttpOnly(true);
         accessCookie.setSecure(true);

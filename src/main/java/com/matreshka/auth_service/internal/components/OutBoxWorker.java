@@ -22,7 +22,7 @@ public class OutBoxWorker {
     private final ObjectMapper objectMapper;
 
     @Scheduled(fixedRate = 3000)
-    public void processOutboxentities() {
+    public void processOutboxEntities() {
         List<OutBoxEntity> entities = outBoxRepo.findPending();
 
         if (entities.isEmpty()) return;
@@ -32,6 +32,8 @@ public class OutBoxWorker {
         for (OutBoxEntity entity : entities) {
             try {
                 UserRegisteredEvent eventDto = objectMapper.readValue(entity.getPayload(), UserRegisteredEvent.class);
+
+                log.info("Отправка события {}", eventDto);
 
                 brokerProducer.produce(eventDto);
 

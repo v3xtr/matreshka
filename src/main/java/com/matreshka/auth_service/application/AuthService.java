@@ -4,24 +4,19 @@ import com.matreshka.auth_service.application.port.IAuthService;
 import com.matreshka.auth_service.delivery.http.dto.*;
 import com.matreshka.auth_service.internal.components.IdGenerator;
 import com.matreshka.auth_service.internal.components.JWTBuilder;
-import com.matreshka.auth_service.internal.configs.AuthProperties;
 import com.matreshka.auth_service.internal.configs.PasswordHashing;
 import com.matreshka.auth_service.internal.exceptions.ConflictException;
+import com.matreshka.auth_service.internal.exceptions.UnAuthorizedException;
 import com.matreshka.auth_service.internal.exceptions.UserNotFoundException;
-import com.matreshka.auth_service.internal.infrastructure.mapper.IOutBoxMapper;
 import com.matreshka.auth_service.internal.infrastructure.mapper.IUserMapper;
-import com.matreshka.auth_service.internal.infrastructure.persistence.OutBoxEntity;
 import com.matreshka.auth_service.internal.infrastructure.persistence.UserEntity;
 import com.matreshka.auth_service.internal.repo.CacheRepo;
-import com.matreshka.auth_service.internal.repo.IOutBoxRepo;
 import com.matreshka.auth_service.internal.repo.IUserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Map;
 
 @Service
@@ -34,11 +29,7 @@ public class AuthService implements IAuthService {
     private final PasswordHashing passwordHashing;
     private final JWTBuilder jwtBuilder;
     private final IdGenerator idGenerator;
-    private final IOutBoxMapper outBoxMapper;
-    private final IOutBoxRepo outBoxRepo;
     private final CacheRepo cacheRepo;
-    private final AuthProperties authProperties;
-
 
     @Transactional
     @Override
@@ -50,7 +41,6 @@ public class AuthService implements IAuthService {
         });
 
         UserEntity userEntity = userMapper.toUserEntity(registerUserRequestDTO);
-
         String encodedPassword = passwordHashing.passwordEncoder().encode(registerUserRequestDTO.password());
 
         UserEntity savedUser = saveToDB(userEntity, encodedPassword);
@@ -67,19 +57,17 @@ public class AuthService implements IAuthService {
     @Override
     public AuthResult<LoginUserResponseDTO> login(LoginUserRequestDTO loginUserRequestDTO) {
         String inputLogin = loginUserRequestDTO.login().trim();
-        log.info("[AUTH-SERVICE] Попытка входа для логина: '" + inputLogin + "'");
+        log.info("[AUTH-SERVICE] Попытка входа для логина: '{}'", inputLogin);
 
         UserEntity userEntity;
 
         if (inputLogin.startsWith("+7") || inputLogin.matches("\\d+")) {
-            log.info("[AUTH-SERVICE] Определен тип входа: Телефон");
             userEntity = userRepo.findUserByPhone(inputLogin).orElseThrow(
-                    () -> new UserNotFoundException("Пользователь с таким телефоном не найден")
+                    () -> new UserNotFoundException("Неверные Данные")
             );
         } else {
-            log.info("[AUTH-SERVICE] Определен тип входа: Email");
             userEntity = userRepo.findUserByEmail(inputLogin).orElseThrow(
-                    () -> new UserNotFoundException("Пользователь с таким Email не найден")
+                    () -> new UserNotFoundException("Неверные Данные")
             );
         }
 
@@ -88,7 +76,6 @@ public class AuthService implements IAuthService {
         }
 
         Map<String, String> tokens = jwtBuilder.generateTokens(userEntity.getId());
-
         saveToken(userEntity.getId(), tokens.get("refreshToken"));
 
         LoginUserResponseDTO responseDto = userMapper.toLoginUserResponseDTO(userEntity);
@@ -97,8 +84,27 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public String refreshToken(String userId){
-        return jwtBuilder.createToken(userId, authProperties.access(), 15 * 60);
+    public String refreshToken(String accessToken) {
+        try {
+            String userId = jwtBuilder.extractUserIdIgnoringExpiration(accessToken);
+
+            if (userId == null) {
+                throw new UnAuthorizedException("Пожалуйста авторизуйтесь");
+            }
+
+            String storedRefreshToken = cacheRepo.getToken(userId);
+
+            if (storedRefreshToken == null) {
+                throw new UnAuthorizedException("Пожалуйста авторизуйтесь");
+            }
+
+            return jwtBuilder.refreshAccessTokenByRefresh(storedRefreshToken);
+
+        } catch (UnAuthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new UnAuthorizedException("Ошибка при обновлении токена");
+        }
     }
 
     @Override
@@ -106,19 +112,11 @@ public class AuthService implements IAuthService {
         cacheRepo.saveToken(userId, refreshToken);
     }
 
-    private UserEntity saveToDB(UserEntity userEntity, String encodedPassword){
+    private UserEntity saveToDB(UserEntity userEntity, String encodedPassword) {
         userEntity.setPassword(encodedPassword.toCharArray());
 
         userEntity.setId(idGenerator.generateId());
 
-        UserEntity savedUser = userRepo.save(userEntity);
-
-        OutBoxEntity outBoxEntity = outBoxMapper.toEntity(savedUser);
-
-        outBoxEntity.setAggregateId(userEntity.getId());
-
-        outBoxRepo.save(outBoxEntity);
-
-        return savedUser;
+        return userRepo.save(userEntity);
     }
 }

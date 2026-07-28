@@ -2,6 +2,7 @@ package com.matreshka.auth_service.delivery.http;
 
 import com.matreshka.auth_service.delivery.http.dto.ErrorResponseDTO;
 import com.matreshka.auth_service.internal.exceptions.ConflictException;
+import com.matreshka.auth_service.internal.exceptions.UnAuthorizedException;
 import com.matreshka.auth_service.internal.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
@@ -38,6 +39,14 @@ public class AuthControllerAdvice {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(UnAuthorizedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUnAuthorizedException(UnAuthorizedException e) {
+        log.error("Unauthorized exception: {}", e.getMessage());
+
+        ErrorResponseDTO error = new ErrorResponseDTO(e.getMessage(), "SESSION_EXPIRED");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponseDTO> handleRuntimeException(RuntimeException e) {
         log.error("Unhandled runtime exception: ", e);
@@ -45,5 +54,13 @@ public class AuthControllerAdvice {
 
         ErrorResponseDTO error = new ErrorResponseDTO("Внутренняя ошибка сервера", "INTERNAL_SERVER_ERROR");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("Illegal argument exception: {}", e.getMessage());
+
+        ErrorResponseDTO error = new ErrorResponseDTO(e.getMessage(), "ILLEGAL_ARGUMENT");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
