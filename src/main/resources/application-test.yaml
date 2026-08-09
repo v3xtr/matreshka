@@ -5,8 +5,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${EMAIL_USER:placeholder}
-    password: ${EMAIL_PASS:placeholder}
+    username: ${EMAIL_USER:smirnoffa675@gmail.com}
+    password: ${EMAIL_PASS:gmuh firu kxmu jlhb}
     properties:
       mail:
         smtp:
@@ -15,9 +15,9 @@ spring:
             enable: true
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:placeholder}
-    username: ${SPRING_DATASOURCE_USERNAME:placeholder}
-    password: ${SPRING_DATASOURCE_PASSWORD:placeholder}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/auth_db}
+    username: ${SPRING_DATASOURCE_USERNAME:myuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:mypassword}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -42,9 +42,9 @@ spring:
 
   data:
     redis:
-      host: ${SPRING_DATA_REDIS_HOST:85.198.69.217}
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
       port: ${SPRING_DATA_REDIS_PORT:6379}
-      password: ${SPRING_DATA_REDIS_PASSWORD:placeholder}
+      password: ${SPRING_DATA_REDIS_PASSWORD:}
 
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
@@ -70,9 +70,6 @@ spring:
           destination: user.created
       kafka:
         binder:
-          consumer-properties:
-            session.timeout.ms: 10000
-            heartbeat.interval.ms: 3000
           brokers: ${SPRING_CLOUD_STREAM_KAFKA_STREAMS_BINDER_BROKERS:localhost:9092}
   threads:
     virtual:
@@ -87,5 +84,5 @@ server:
 
 jwt:
   secrets:
-    access: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
-    refresh:  ${JWT_REFRESH_TOKEN_SECRET:placeholder}
+    access: ${JWT_ACCESS_TOKEN_SECRET:b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA==}
+    refresh:  ${JWT_REFRESH_TOKEN_SECRET:b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA==}

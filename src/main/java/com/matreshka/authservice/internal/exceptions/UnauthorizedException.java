@@ -1,0 +1,7 @@
+package com.matreshka.authservice.internal.exceptions;
+
+public class UnauthorizedException extends RuntimeException {
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}
