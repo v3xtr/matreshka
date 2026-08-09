@@ -102,16 +102,27 @@ Every service talks through Kafka — `auth-service` and the media pipeline incl
 - **Retry + DLQ** (`products-service`, consuming `media-processor-result`) — a message that fails repeatedly (e.g. the advert isn't in Postgres yet when the media event arrives) is retried with backoff before landing in a dead-letter topic instead of being silently dropped.
 - **CQRS** (`products-service`) — writes go to Postgres; on commit the same advert is projected into Elasticsearch, which serves search/read traffic.
 
-### Data stores
+### Data stores — one database per service
 
-| Store | Used by |
+No service reaches into another's database — every service owns its schema outright, and the only way to learn about another service's data is the Kafka events above or that service's own API. Most services also run their own Redis in front of their own store, purely as a local cache — not a shared one.
+
+| Service | Store(s) it owns |
 |---|---|
-| PostgreSQL | auth, vk-oauth, products, profile, feed, chat (user mirror), notification, media, thumbnail, admin, cryptography-app |
-| MongoDB | chat-service (rooms/messages) |
-| Elasticsearch | products-service (search), platform logging |
-| Redis | caching — auth, vk-oauth, products, profile, feed, chat, notification, media, thumbnail, admin |
-| S3-compatible (Beget Cloud) | media, video-converter-worker, thumbnail |
-| Firebase | notification-service (push delivery) |
+| auth-service | PostgreSQL + Redis |
+| vk-oauth-service | PostgreSQL + Redis |
+| google-oauth-service | PostgreSQL (via Prisma) |
+| products-service | PostgreSQL + Elasticsearch (search index) + Redis |
+| feed-service | PostgreSQL + Redis |
+| profile-service | PostgreSQL + Redis |
+| chat-service | MongoDB (rooms/messages) + PostgreSQL (user mirror) + Redis |
+| notification-service | PostgreSQL + Redis |
+| media-service | PostgreSQL + Redis |
+| video-converter-worker | none — stateless, S3 in/out only |
+| thumbnail-service | PostgreSQL + Redis |
+| admin-service | PostgreSQL + Redis |
+| cryptography-app | PostgreSQL |
+
+Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`/`thumbnail-service`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery.
 
 ### Known gaps
 
