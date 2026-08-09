@@ -1,0 +1,92 @@
+spring:
+  application:
+    name: auth-service
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USER:placeholder}
+    password: ${EMAIL_PASS:placeholder}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:placeholder}
+    username: ${SPRING_DATASOURCE_USERNAME:placeholder}
+    password: ${SPRING_DATASOURCE_PASSWORD:placeholder}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: "classpath:db/migration"
+
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:85.198.69.217}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      password: ${SPRING_DATA_REDIS_PASSWORD:placeholder}
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: auth-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+  cloud:
+    stream:
+      bindings:
+        inputMappingFunc-in-0:
+          destination: auth-events-topic
+          group: auth-service-stream-group
+        outputMappingFunc-out-0:
+          destination: user-notifications-topic
+      kafka:
+        binder:
+          brokers: ${SPRING_CLOUD_STREAM_KAFKA_STREAMS_BINDER_BROKERS:localhost:9092}
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: 8000
+  error:
+    include-message: always
+    include-stacktrace: always
+    include-binding-errors: always
+
+jwt:
+  access:
+    secret: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
+  refresh:
+    secret: ${JWT_REFRESH_TOKEN_SECRET:placeholder}
+
+vk:
+  oauth:
+    client-id: ${VK_OAUTH_CLIENT_ID:placeholder}
+    client-secret: ${VK_OAUTH_CLIENT_SECRET:placeholder}
+    redirect-uri: ${VK_OAUTH_REDIRECT_URI:placeholder}
