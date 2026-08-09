@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring WebSocket Chat Test</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        #status {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .connected {
+            color: green;
+        }
+
+        .disconnected {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Spring STOMP Chat Test</h2>
+
+<div class="block">
+    <label>Server</label>
+    <input id="server" value="http://85.198.96.229:8080">
+
+    <label>Room ID</label>
+    <input id="roomId" value="room1">
+
+    <button id="connectBtn">Connect</button>
+    <button id="disconnectBtn">Disconnect</button>
+
+    <div id="status" class="disconnected">
+        Disconnected
+    </div>
+</div>
+
+<div class="block">
+    <label>Sender ID</label>
+    <input id="senderId" placeholder="user123">
+
+    <label>Text</label>
+    <input id="text" placeholder="Hello">
+
+    <button id="sendBtn">Send Message</button>
+</div>
+
+<div class="block">
+    <h3>Messages</h3>
+    <div id="messages"></div>
+</div>
+
+<script>
+
+    let stompClient = null;
+
+    const status = document.getElementById("status");
+    const messages = document.getElementById("messages");
+
+    function logMessage(data) {
+        const div = document.createElement("div");
+        div.className = "message";
+        div.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    document.getElementById("connectBtn").onclick = () => {
+
+        if (stompClient && stompClient.connected) {
+            alert("Already connected");
+            return;
+        }
+
+        const server = document.getElementById("server").value;
+        const roomId = document.getElementById("roomId").value;
+
+        // Новый endpoint
+        const socket = new SockJS(server + "/api/chat/chat-websocket");
+
+        stompClient = new StompJs.Client({
+
+            webSocketFactory: () => socket,
+
+            reconnectDelay: 5000,
+
+            debug: (str) => {
+                console.log("[STOMP]", str);
+            },
+
+            onConnect: () => {
+
+                status.innerText = "Connected";
+                status.className = "connected";
+
+                console.log("Connected");
+
+                stompClient.subscribe("/topic/room/" + roomId, (message) => {
+
+                    const body = JSON.parse(message.body);
+
+                    console.log("Received:", body);
+
+                    logMessage(body);
+
+                });
+
+            },
+
+            onDisconnect: () => {
+
+                status.innerText = "Disconnected";
+                status.className = "disconnected";
+
+                console.log("Disconnected");
+
+            },
+
+            onStompError: (frame) => {
+
+                console.error("Broker error", frame);
+
+                alert(frame.headers.message);
+
+            },
+
+            onWebSocketError: (err) => {
+                console.error("WebSocket error", err);
+            }
+
+        });
+
+        stompClient.activate();
+
+    };
+
+    document.getElementById("disconnectBtn").onclick = () => {
+
+        if (stompClient) {
+            stompClient.deactivate();
+        }
+
+    };
+
+    document.getElementById("sendBtn").onclick = () => {
+
+        if (!stompClient || !stompClient.connected) {
+            alert("Connect first");
+            return;
+        }
+
+        const roomId = document.getElementById("roomId").value;
+
+        const payload = {
+            senderId: document.getElementById("senderId").value,
+            text: document.getElementById("text").value
+        };
+
+        console.log("Sending:", payload);
+
+        stompClient.publish({
+            destination: "/app/chat.sendMessage/" + roomId,
+            body: JSON.stringify(payload)
+        });
+
+        document.getElementById("text").value = "";
+
+    };
+
+</script>
+
+</body>
+</html>

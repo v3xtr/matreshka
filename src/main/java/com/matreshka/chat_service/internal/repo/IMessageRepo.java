@@ -12,4 +12,7 @@ public interface IMessageRepo extends MongoRepository<MessageDocument, String> {
     List<MessageDocument> findByRoomIdAndMessageContainingIgnoreCase(String roomId, String text);
 
     Optional<MessageDocument> findByIdAndRoomId(String id, String roomId);
+
+    List<MessageDocument> findByRoomIdAndSenderIdNotAndIsReadFalse(String roomId, String userId);
+
 }

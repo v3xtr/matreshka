@@ -19,6 +19,7 @@ public class UserService implements IUserService {
     private final IUserMapper userMapper;
     private final IMessageRepo chatRepo;
 
+    @Override
     @Transactional
     public void processUser(UserRegisteredEvent userEvent){
 

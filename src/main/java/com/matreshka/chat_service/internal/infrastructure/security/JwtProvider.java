@@ -5,7 +5,6 @@ import com.matreshka.chat_service.internal.infrastructure.security.port.IJwtProv
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,12 +16,11 @@ import javax.crypto.SecretKey;
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    private final String accessTokenSecret;
+    private final String accessToken;
 
-    public JwtProvider(@Value("${jwt.access.token.secret}") String accessTokenSecret) {
-        this.accessTokenSecret = accessTokenSecret;
+    public JwtProvider(@Value("${jwt.secrets.access}") String accessToken) {
+        this.accessToken = accessToken;
     }
-
     @Override
     public boolean isValidToken(String token) {
         try {
@@ -38,7 +36,7 @@ public class JwtProvider implements IJwtProvider {
     public String extractUserId(String token) {
         try {
             Claims claims = parseClaims(token);
-            return claims.get("userId", String.class);
+            return claims.get("id", String.class);
         } catch (JwtException e) {
             log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;
@@ -54,8 +52,7 @@ public class JwtProvider implements IJwtProvider {
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(accessTokenSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(accessToken.getBytes());
     }
 }
 

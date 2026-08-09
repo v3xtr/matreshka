@@ -1,5 +1,6 @@
 package com.matreshka.chat_service.internal.infrastructure.mapper;
 
+import com.matreshka.chat_service.delivery.broker.dto.NotificationEvent;
 import com.matreshka.chat_service.delivery.http.dto.MessageResponseDTO;
 import com.matreshka.chat_service.delivery.http.dto.SendMessageRequestDTO;
 import com.matreshka.chat_service.internal.infrastructure.persistence.MessageDocument;
@@ -17,5 +18,7 @@ public interface IChatMapper {
     MessageDocument toDocument(SendMessageRequestDTO messageDto);
 
     MessageResponseDTO toResponse(MessageDocument messageDocument);
+
+    MessageResponseDTO toResponse(NotificationEvent event);
 
 }

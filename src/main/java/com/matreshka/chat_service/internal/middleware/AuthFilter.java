@@ -31,6 +31,13 @@ public class AuthFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
+
+        if (path.startsWith("/chat-websocket")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         log.info("[AuthFilter] Incoming path: {}", path);
 
         String token = null;
