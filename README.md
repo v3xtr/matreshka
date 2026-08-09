@@ -25,21 +25,27 @@ This is the monorepo root: each service lives on its **own branch**, named after
 ## System design
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'fontSize':'15px'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {
+    'background': '#000000',
+    'primaryColor': '#000000',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#ffffff',
+    'lineColor': '#ffffff',
+    'secondaryColor': '#000000',
+    'tertiaryColor': '#000000',
+    'clusterBkg': '#000000',
+    'clusterBorder': '#ffffff',
+    'edgeLabelBackground': '#000000',
+    'fontSize': '15px'
+}}}%%
 flowchart TB
-    classDef identity fill:#3b82f6,stroke:#1d4ed8,stroke-width:1.5px,color:#ffffff
-    classDef core fill:#8b5cf6,stroke:#6d28d9,stroke-width:1.5px,color:#ffffff
-    classDef media fill:#f97316,stroke:#c2410c,stroke-width:1.5px,color:#ffffff
-    classDef broker fill:#0f766e,stroke:#134e4a,stroke-width:2.5px,color:#ecfeff,font-weight:bold
-    classDef store fill:#e2e8f0,stroke:#475569,stroke-width:1.5px,color:#0f172a
-
-    subgraph Identity["🔑 Identity"]
+    subgraph Identity
         AUTH[auth-service]
         VK[vk-oauth-service]
-        GOOGLE["google-oauth-service<br/><i>TypeScript, legacy</i>"]
+        GOOGLE[google-oauth-service<br/>TypeScript, legacy]
     end
 
-    subgraph Core["⚙️ Core"]
+    subgraph Core
         PRODUCTS[products-service]
         FEED[feed-service]
         PROFILE[profile-service]
@@ -48,24 +54,24 @@ flowchart TB
         ADMIN[admin-service]
     end
 
-    subgraph MediaPipeline["🎬 Media pipeline"]
+    subgraph MediaPipeline[Media pipeline]
         MEDIA[media-service]
         CONVERTER[video-converter-worker]
         THUMB[thumbnail-service]
     end
 
-    KAFKA(("⚡ Kafka"))
+    KAFKA((Kafka))
 
     AUTH -- user.created --> KAFKA
     KAFKA -- user.created --> PRODUCTS
     KAFKA -- user.created --> FEED
     KAFKA -- user.created --> CHAT
 
-    VK -. "UserRegisteredEvent<br/>(different topic, not yet consumed)" .-> KAFKA
+    VK -. UserRegisteredEvent - different topic, not consumed .-> KAFKA
 
     MEDIA -- media-created-topic --> KAFKA
     KAFKA -- media-processor-process --> CONVERTER
-    CONVERTER -- "media-processor-result / error" --> KAFKA
+    CONVERTER -- media-processor-result / error --> KAFKA
     KAFKA -- media-processor-result --> PRODUCTS
     MEDIA -- media.deleted --> KAFKA
     KAFKA -- media.deleted --> PRODUCTS
@@ -74,16 +80,10 @@ flowchart TB
 
     CHAT -- chat-messages-topic --> KAFKA
     KAFKA -- chat-messages-topic --> NOTIF
-    NOTIF -- push --> FCM[("Firebase")]
+    NOTIF -- push --> FCM[(Firebase)]
 
-    PRODUCTS -- write --> PG_P[("Postgres")]
-    PRODUCTS -- search index --> ES[("Elasticsearch")]
-
-    class AUTH,VK,GOOGLE identity
-    class PRODUCTS,FEED,PROFILE,CHAT,NOTIF,ADMIN core
-    class MEDIA,CONVERTER,THUMB media
-    class KAFKA broker
-    class PG_P,ES,FCM store
+    PRODUCTS -- write --> PG_P[(Postgres)]
+    PRODUCTS -- search index --> ES[(Elasticsearch)]
 ```
 
 *The dashed edge is a known integration gap, not aspirational design — see below.*
