@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 
 public interface IMediaMapper {
-    @Mapping(target = "user.id", source = "id")
-    @Mapping(target = "advert.id", source = "id")
+    @Mapping(target = "advert", ignore = true)
     MediaEntity toMediaEntity(MediaEvent mediaEvent);
 }
