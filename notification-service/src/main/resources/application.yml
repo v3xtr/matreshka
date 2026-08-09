@@ -1,0 +1,71 @@
+server:
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: notification-service
+
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:validate}
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.batch_size: 50
+        order_inserts: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "com.matreshka.*"
+
+  cloud:
+    function:
+      definition: consumeChatMessages
+    stream:
+      bindings:
+        consumeChatMessages-in-0:
+          destination: chat-messages-topic
+      kafka:
+        binder:
+          brokers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+          auto-create-topics: true
+        bindings:
+          consumeChatMessages-in-0:
+            consumer:
+              configuration:
+                spring.json.value.default.type: "com.matreshka.notification_service.internal.models.NotificationEvent"
+
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+
+jwt:
+  access:
+    token:
+      secret: ${JWT_ACCESS_TOKEN_SECRET}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    config-url: /api-docs/notifications/v3/api-docs
+    url: /api-docs/notifications/v3/api-docs
