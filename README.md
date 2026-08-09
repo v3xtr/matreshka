@@ -55,9 +55,9 @@ flowchart TB
     end
 
     subgraph MediaPipeline[Media pipeline]
-        MEDIA[media-service<br/>PostgreSQL + Redis]
-        CONVERTER[video-converter-worker<br/>stateless, no DB]
-        THUMB[thumbnail-service<br/>PostgreSQL + Redis]
+        MEDIA[media-service<br/>PostgreSQL + Redis + S3]
+        CONVERTER[video-converter-worker<br/>S3 only, no DB]
+        THUMB[thumbnail-service<br/>PostgreSQL + Redis + S3]
     end
 
     KAFKA((Kafka))
