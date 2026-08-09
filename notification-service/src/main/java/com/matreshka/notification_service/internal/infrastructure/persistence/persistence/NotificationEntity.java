@@ -14,16 +14,19 @@ import java.util.UUID;
 @Builder
 public class NotificationEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String title;
 
     private String body;
 
-    private UUID userId;
+    private String userId;
 
     private String fromUserId;
+
+    @Column(length = 512, nullable = false)
+    private String token;
 
     @Builder.Default
     private boolean isRead = false;

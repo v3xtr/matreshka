@@ -22,7 +22,7 @@ public class NotificationCacheRepo implements INotificationCacheRepo {
     public void saveToCache(NotificationEvent notificationEvent){
         try{
             String jsonValue = objectMapper.writeValueAsString(notificationEvent);
-            redisTemplate.opsForValue().set(notificationEvent.userId(), jsonValue);
+            redisTemplate.opsForValue().set(notificationEvent.receiverId(), jsonValue);
         }catch (Exception e){
             log.error("[NotificationCacheRepo saveToCache]: Ошибка при сохранении в кэш", e);
             throw new RuntimeException("Internal Server Error");
@@ -33,13 +33,18 @@ public class NotificationCacheRepo implements INotificationCacheRepo {
         String key = "notifications_queue";
 
         Long size = redisTemplate.opsForList().size(key);
-        if (size == null || size == 0) return Collections.emptyList();
+
+        if (size == null || size == 0) {
+            return Collections.emptyList();
+        }
 
         List<String> jsons = redisTemplate.opsForList().range(key, 0, size - 1);
 
         redisTemplate.opsForList().trim(key, size, -1);
 
-        if (jsons == null) return Collections.emptyList();
+        if (jsons == null) {
+            return Collections.emptyList();
+        }
 
         return jsons.stream()
                 .map(this::deserialize)
@@ -51,7 +56,7 @@ public class NotificationCacheRepo implements INotificationCacheRepo {
         try {
             return objectMapper.readValue(json, NotificationEvent.class);
         } catch (Exception e) {
-            log.error("[NotificationCacheRepo deserialize]: Ошибка десериализации: " + e.getMessage());
+            log.error("[NotificationCacheRepo deserialize]: Ошибка десериализации: {}", e.getMessage());
             return null;
         }
     }

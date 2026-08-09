@@ -1,6 +1,8 @@
 package com.matreshka.notification_service.internal.infrastructure.security;
 
 import com.matreshka.notification_service.internal.infrastructure.security.port.IJwtProvider;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -14,42 +16,43 @@ import javax.crypto.SecretKey;
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    @Value("${jwt.access.token.secret}")
-    private String accessTokenSecret;
+    private final String accessTokenSecret;
 
-    public boolean isValidToken(String token){
-        if(token == null || token.trim().isEmpty()){
-            return false;
-        }
+    public JwtProvider(@Value("${jwt.access.token.secret}") String accessTokenSecret){
+        this.accessTokenSecret = accessTokenSecret;
+    }
 
-        try{
-            Jwts.parser()
-                    .verifyWith(getSignKey())
-                    .build()
-                    .parseSignedClaims(token);
+    @Override
+    public boolean isValidToken(String token) {
+        try {
+            parseClaims(token);
             return true;
-        }catch (IllegalArgumentException e){
-            log.error("[JwtProvider isValid] Token validation failed: {}", e.getMessage());
+        } catch (Exception e) {
+            log.error("[JwtProvider] Token validation failed: {}", e.getMessage());
             return false;
         }
     }
 
+    @Override
     public String extractUserId(String token) {
         try {
-            return Jwts.parser()
-                    .verifyWith(getSignKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload()
-                    .getSubject();
-        } catch (Exception e) {
-            log.error("[JwtProvider extractUserId] Failed to extract userId: {}", e.getMessage());
+            Claims claims = parseClaims(token);
+            return claims.get("id", String.class);
+        } catch (JwtException e) {
+            log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;
         }
     }
 
-    private SecretKey getSignKey(){
-        byte[] keyBytes = Decoders.BASE64.decode(accessTokenSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private Claims parseClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSignKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private SecretKey getSignKey() {
+        return Keys.hmacShaKeyFor(accessTokenSecret.getBytes());
     }
 }

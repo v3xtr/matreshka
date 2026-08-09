@@ -1,12 +1,12 @@
-# Этап 1: Сборка
-FROM gradle:8.5-jdk21 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build -x test --no-daemon
+FROM eclipse-temurin:21-jre-jammy
 
-# Этап 2: Запуск
-FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
-EXPOSE 8080
+
+RUN groupadd -g 1001 notificationsgroup && \
+    useradd -u 1001 -g notificationsgroup -m -s /bin/false notificationsuser
+
+COPY --chown=notificationsuser:notificationsgroup build/libs/*.jar app.jar
+
+USER notificationsuser
+
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,55 +1,66 @@
 package com.matreshka.notification_service.application;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import com.matreshka.notification_service.application.port.INotificationService;
-import com.matreshka.notification_service.delivery.dto.NotificationResponseDTO;
-import com.matreshka.notification_service.internal.mapper.NotificationMapper;
-import com.matreshka.notification_service.internal.models.NotificationEvent;
-import com.matreshka.notification_service.internal.repo.INotificationRepo;
-import com.matreshka.notification_service.internal.repo.cache.port.INotificationCacheRepo;
+import com.matreshka.notification_service.delivery.http.dto.NotificationRequestDTO;
+import com.matreshka.notification_service.delivery.http.dto.NotificationResponseDTO;
+import com.matreshka.notification_service.internal.components.FirebaseUtils;
 import com.matreshka.notification_service.internal.infrastructure.persistence.persistence.NotificationEntity;
+import com.matreshka.notification_service.internal.mapper.NotificationMapper;
+import com.matreshka.notification_service.internal.repo.INotificationRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationService implements INotificationService {
-    private final INotificationCacheRepo notificationCacheRepo;
+
     private final INotificationRepo notificationRepo;
     private final NotificationMapper notificationMapper;
+    private final FirebaseUtils firebaseUtils;
 
-    @Scheduled(fixedRate = 10000)
-    private void saveToDB(){
-        List<NotificationEvent> notificationEvents = notificationCacheRepo.popAll();
-
-        if(notificationEvents.isEmpty()) return;
-
-        List<NotificationEntity> notificationEntities = notificationEvents.stream().map(notificationMapper::toEntity)
-                .toList();
-
-        notificationRepo.saveAll(notificationEntities);
-
-        log.info("Successfully flushed {} notifications to Postgres", notificationEntities .size());
-    }
-
-    public void processNotification(NotificationEvent notificationEvent){
-        try{
-            notificationCacheRepo.saveToCache(notificationEvent);
-        }catch (Exception e){
-            log.error("[NotificationService processNotification]: {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
+    @Override
     public List<NotificationResponseDTO> getNotifications(String userId) {
-        return notificationRepo.findAllByUserId(UUID.fromString(userId))
+        return notificationRepo.findAllByUserId(userId)
                 .stream()
                 .map(notificationMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    public void sendPush(String fromUserId, String userId, String messageBody) {
+        String token = notificationRepo.findTokenByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
+
+        Notification notification = Notification.builder()
+                .setTitle("Новое сообщение от " + fromUserId)
+                .setBody(messageBody)
+                .build();
+
+        Message message = Message.builder()
+                .setToken(token)
+                .setNotification(notification)
+                .putData("senderId", fromUserId)
+                .putData("type", "CHAT_MESSAGE")
+                .build();
+
+        firebaseUtils.toCompletableFuture(FirebaseMessaging.getInstance().sendAsync(message))
+                .thenAccept(id -> log.info("Push delivered to: {}", id))
+                .exceptionally(ex -> {
+                    System.err.println("Ошибка отправки пуша: " + ex.getMessage());
+                    return null;
+                });
+    }
+
+    @Override
+    public void saveToken(NotificationRequestDTO notificationRequestDTO){
+        NotificationEntity entity = notificationMapper.toEntity(notificationRequestDTO);
+        notificationRepo.save(entity);
     }
 }

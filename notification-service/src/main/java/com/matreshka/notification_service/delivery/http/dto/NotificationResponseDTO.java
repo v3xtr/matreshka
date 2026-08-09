@@ -1,4 +1,4 @@
-package com.matreshka.notification_service.delivery.dto;
+package com.matreshka.notification_service.delivery.http.dto;
 
 import java.util.UUID;
 
