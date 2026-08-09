@@ -1,29 +1,12 @@
-FROM node:20-alpine AS builder
+FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+RUN groupadd -g 1002 profilegroup && \
+    useradd -u 1002 -g profilegroup -m -s /bin/false profileuser
 
-RUN npm install -g pnpm \
-    && pnpm install --frozen-lockfile
+COPY --chown=profileuser:profilegroup build/libs/*.jar app.jar
 
-COPY . .
+USER profileuser
 
-RUN pnpm run build
-
-RUN npx prisma generate
-
-FROM node:20-alpine
-
-WORKDIR /app
-
-COPY package.json pnpm-lock.yaml ./
-
-RUN npm install -g pnpm \
-    && pnpm install --frozen-lockfile --prod
-
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
-
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/cmd/app/index.mjs"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
