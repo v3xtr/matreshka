@@ -49,7 +49,7 @@ flowchart TB
         PRODUCTS[products-service<br/>PostgreSQL + Redis<br/>plus Elasticsearch index]
         FEED[feed-service<br/>PostgreSQL + Redis]
         PROFILE[profile-service<br/>PostgreSQL + Redis]
-        CHAT[chat-service<br/>MongoDB + PostgreSQL + Redis]
+        CHAT[chat-service<br/>MongoDB + PostgreSQL]
         NOTIF[notification-service<br/>PostgreSQL + Redis]
         ADMIN[admin-service<br/>PostgreSQL + Redis]
     end
@@ -111,7 +111,7 @@ No service reaches into another's database — every service owns its schema out
 | products-service | PostgreSQL + Elasticsearch (search index) + Redis |
 | feed-service | PostgreSQL + Redis |
 | profile-service | PostgreSQL + Redis |
-| chat-service | MongoDB (rooms/messages) + PostgreSQL (user mirror) + Redis |
+| chat-service | MongoDB (rooms/messages) + PostgreSQL (user mirror) |
 | notification-service | PostgreSQL + Redis |
 | media-service | PostgreSQL + Redis |
 | video-converter-worker | none — stateless, S3 in/out only |
@@ -126,6 +126,7 @@ Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `
 - VK and Google sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
 - `google-oauth-service` hasn't made the TypeScript → Java / Kafka jump that `vk-oauth-service` and `profile-service` already went through.
 - `thumbnail-service` is being rewritten from RabbitMQ to Kafka; `build.gradle` still carries the old `spring-cloud-stream-binder-rabbit` dependency until that lands.
+- `chat-service` declares an `ICacheRepo`/`CacheRepo` abstraction with no Redis dependency and an empty implementation — a caching layer that was planned but never wired up.
 - `cryptography-app` has a working `CryptoService` (AES/GCM, random IV per call) but no HTTP layer and no caller yet; it's a standalone module waiting to be adopted.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
 
