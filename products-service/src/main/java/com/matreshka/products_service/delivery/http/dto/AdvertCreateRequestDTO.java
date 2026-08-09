@@ -1,23 +1,26 @@
 package com.matreshka.products_service.delivery.http.dto;
 
-import  com.matreshka.products_service.internal.infrastructure.persistence.enums.*;
+import com.matreshka.products_service.internal.infrastructure.persistence.enums.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.util.List;
 
 public record AdvertCreateRequestDTO(
         @NotBlank(message = "Категория обязательна")
         String category,
 
-        @NotBlank
+        @NotBlank(message = "Заголовок обязателен")
         @Size(min = 5, max = 200, message = "Заголовок 5-200 символов")
         String title,
 
         @NotBlank(message = "Укажите цену")
+        @Pattern(regexp = "\\d+(\\.\\d{1,2})?", message = "Цена должна быть числом")
         String price,
 
-        @NotBlank
+        @NotBlank(message = "Описание обязательно")
         @Size(min = 10, max = 2000, message = "Описание 10-2000 символов")
         String description,
 
@@ -27,12 +30,15 @@ public record AdvertCreateRequestDTO(
         @NotBlank(message = "Контакты обязательны")
         String contacts,
 
+        @Valid
         @NotEmpty(message = "Нужно минимум 1 фото")
-        @Size(max = 10)
+        @Size(max = 10, message = "Не более 10 фото")
         List<PictureDTO> pictures,
 
+        @Valid
         List<ServiceDTO> services,
 
+        @Valid
         List<WorkScheduleDTO> workSchedule,
 
         String videoId,
@@ -97,23 +103,32 @@ public record AdvertCreateRequestDTO(
         Boolean isProfitable,
         BusinessForm businessForm,
         OfferType offerType,
-        String payBackPeriod
+        String payBackPeriod,
+        String condition
 ) {
     public record PictureDTO(
-            @NotBlank String pictureUrl
+            @NotBlank(message = "URL фото не может быть пустым")
+            String pictureUrl
     ) {}
 
     public record ServiceDTO(
-            @NotBlank(message = "Текст услуги не может быть пустым") String text
+            @NotBlank(message = "Текст услуги не может быть пустым")
+            String text
     ) {}
 
     public record WorkScheduleDTO(
-            @Min(0) @Max(6) int fromDay,
-            @Min(0) @Max(6) int toDay,
+            @NotNull(message = "Укажите день начала")
+            DayOfWeek fromDay,
+
+            @NotNull(message = "Укажите день окончания")
+            DayOfWeek toDay,
+
             @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Формат времени: ЧЧ:мм")
             String fromTime,
+
             @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Формат времени: ЧЧ:мм")
             String toTime,
+
             boolean is24h
     ) {}
 }

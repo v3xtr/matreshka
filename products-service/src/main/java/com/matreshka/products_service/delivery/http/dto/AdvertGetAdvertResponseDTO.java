@@ -4,18 +4,24 @@ import com.matreshka.products_service.internal.infrastructure.persistence.enums.
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
-public record AdvertCreateResponseDTO(
-        String id,
+public record AdvertGetAdvertResponseDTO(
+        UUID id,
+
         String firstName,
         String lastName,
         String fathersName,
         String gender,
+
         String category,
         String subCategory,
         String title,
+        String description,
         String profession,
         String sphere,
+
         String brand,
         String model,
         Integer yearOfManufacture,
@@ -29,8 +35,11 @@ public record AdvertCreateResponseDTO(
         Integer horsePower,
         Drive drive,
         SteeringWheel steeringWheel,
+        String condition,
+
         String price,
         PriceFor priceFor,
+
         VesselType vesselType,
         Integer vesselLength,
         Integer vesselWidth,
@@ -39,6 +48,7 @@ public record AdvertCreateResponseDTO(
         String vesselBodyMaterial,
         String engineType,
         Cooling cooling,
+
         PropertyType propertyType,
         BigDecimal totalArea,
         BigDecimal livingArea,
@@ -59,24 +69,31 @@ public record AdvertCreateResponseDTO(
         Boolean hasSportPlayground,
         PaymentType paymentType,
         Boolean hasDocuments,
-        String description,
+
         BigDecimal workExperience,
         String advantages,
         Employment employment,
         WorkFormat workFormat,
+
         String petBreed,
         String petName,
         String petColor,
+
         TransactionScope transactionScope,
         Boolean isProfitable,
         BusinessForm businessForm,
         OfferType offerType,
         String payBackPeriod,
+
         String address,
         String contacts,
-        Boolean isInElastic,
         String userId,
-        String condition,
+
+        List<String> pictureUrls,
+        MediaResponseDTO video,
+        List<ServiceResponseDTO> services,
+        List<WorkPeriodResponseDTO> workSchedule,
+
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

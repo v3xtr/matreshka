@@ -24,9 +24,8 @@ public class MediaEntity {
     @Column(name = "mime_type")
     private String mimeType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "advert_id")

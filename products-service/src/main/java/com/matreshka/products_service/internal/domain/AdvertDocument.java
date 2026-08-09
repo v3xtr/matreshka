@@ -1,5 +1,6 @@
 package com.matreshka.products_service.internal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -8,14 +9,15 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.List;
 
-@Document(indexName = "adverts", createIndex = false)
+@Document(indexName = "adverts")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AdvertDocument {
 
     @Id
@@ -91,9 +93,6 @@ public class AdvertDocument {
     private Integer horsePower;
 
     @Field(type = FieldType.Double)
-    private BigDecimal totalArea;
-
-    @Field(type = FieldType.Double)
     private BigDecimal livingArea;
 
     @Field(type = FieldType.Double)
@@ -117,6 +116,12 @@ public class AdvertDocument {
     @Field(type = FieldType.Boolean)
     private Boolean hasDocuments;
 
-    @Field(type = FieldType.Date)
-    private LocalDateTime createdAt;
+    @Field(type = FieldType.Double)
+    private BigDecimal totalArea;
+
+    @Field(type = FieldType.Keyword)
+    private List<String> pictureUrls;
+
+    @Field(type = FieldType.Keyword)
+    private String createdAt;
 }

@@ -2,8 +2,8 @@ package com.matreshka.products_service.delivery.http.dto;
 
 import java.util.UUID;
 
-public record AdvertDeleteRequestDTO(
+public record UpdateVideoInAdvertRequestDTO(
         UUID id,
-        String s3Key
+        String videoId
 ) {
 }

@@ -3,6 +3,8 @@ package com.matreshka.products_service.internal.infrastructure.persistence;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "work_period")
 @NoArgsConstructor
@@ -14,7 +16,7 @@ public class WorkPeriodEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(name = "from_day", nullable = false)
     private Integer fromDay;

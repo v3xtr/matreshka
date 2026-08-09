@@ -8,7 +8,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "adverts")
@@ -20,11 +22,9 @@ import java.util.List;
 public class AdvertEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
-
-    @Column(name = "advert_id")
-    private String advertId;
+    private UUID id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -43,6 +43,13 @@ public class AdvertEntity {
 
     @Column(name = "sub_category")
     private String subCategory;
+
+    @Column(name = "description")
+    private String description;
+
+    @ManyToMany(mappedBy = "favoriteAdverts", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<UserEntity> favoriteByUsers = new ArrayList<>();
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -80,6 +87,9 @@ public class AdvertEntity {
 
     @Column(name = "milage")
     private Long milage;
+
+    @Column(name = "condition", length = 244)
+    private String condition;
 
     @Column(name = "engine_capacity")
     private Integer engineCapacity;
@@ -191,8 +201,6 @@ public class AdvertEntity {
     @Column(name = "has_documents")
     private Boolean hasDocuments;
 
-    @Column(name = "description", nullable = false)
-    private String description;
 
     @Column(name = "work_experience", precision = 10, scale = 2)
     private BigDecimal workExperience;

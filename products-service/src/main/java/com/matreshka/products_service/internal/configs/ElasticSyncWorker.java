@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
+import java.util.UUID;
 
 @Configuration
 @EnableScheduling
@@ -33,7 +34,7 @@ public class ElasticSyncWorker {
 
             if (entities.isEmpty()) return;
 
-            List<String> ids = entities.stream()
+            List<UUID> ids = entities.stream()
                     .map(AdvertEntity::getId)
                     .toList();
 

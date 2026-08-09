@@ -4,12 +4,18 @@ import com.matreshka.products_service.internal.infrastructure.persistence.enums.
 
 import java.math.BigDecimal;
 
-public record AdvertSearchRequestDTO(
-        String query,
+public record AdvertSearchResponseDTO(
+        String id,
+        String title,
+        String description,
         String category,
         String subCategory,
         String profession,
         String sphere,
+        String price,
+        PriceFor priceFor,
+        String address,
+        String userId,
         Employment employment,
         WorkFormat workFormat,
         PropertyType propertyType,
@@ -20,20 +26,19 @@ public record AdvertSearchRequestDTO(
         BusinessForm businessForm,
         OfferType offerType,
         TransactionScope transactionScope,
-        String userId,
-        Boolean hasParking,
-        Boolean hasElevator,
+        Integer yearOfManufacture,
+        Integer engineCapacity,
+        Integer horsePower,
+        BigDecimal livingArea,
+        BigDecimal kitchenArea,
+        Integer apartmentFloor,
+        Integer floorsInHouse,
         Boolean hasBalcony,
+        Boolean hasElevator,
+        Boolean hasParking,
         Boolean hasDocuments,
-        Integer yearOfManufactureFrom,
-        Integer yearOfManufactureTo,
-        Integer engineCapacityFrom,
-        Integer engineCapacityTo,
-        Integer horsePowerFrom,
-        Integer horsePowerTo,
-        BigDecimal totalAreaFrom,
-        BigDecimal totalAreaTo,
-        Integer take,
-        String cursor,
-        Integer page
-) {}
+        BigDecimal totalArea,
+        String pictureUrls,
+        String createdAt
+) {
+}
