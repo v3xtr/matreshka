@@ -14,6 +14,7 @@ build/
 .springBeans
 .sts4-cache
 bin/
+src/main/resources/application.properties
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
@@ -35,3 +36,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secrets ###
+src/main/resources/creds.json
+src/main/resources/*firebase*.json
+notification-deployment.yml
