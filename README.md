@@ -1,16 +1,24 @@
 # vk-oauth
 
-Handles "Sign in with VK" for the Matreshka platform: OAuth exchange with VK, user creation/linking, JWT issuance. Part of the [matreshka](../) microservices monorepo.
+> "Sign in with VK" for the Matreshka platform.
 
-Recently rewritten from TypeScript to Java/Spring Boot to match the rest of the platform's stack.
+Part of the [matreshka](../) microservices monorepo. Recently rewritten from TypeScript to Java/Spring Boot to match the rest of the platform's stack.
+
+## Responsibilities
+
+- OAuth exchange with VK
+- User creation/linking
+- JWT issuance after successful auth
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Security
-- **PostgreSQL** — user records
-- **Redis** — token cache
-- **Kafka** — publishes `user.created` for other services to consume
-- **JWT** — issues access/refresh tokens after successful VK auth
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Persistence | PostgreSQL |
+| Cache | Redis (token cache) |
+| Messaging | Kafka |
+| Auth | JWT (issues access/refresh tokens) |
 
 ## Architecture
 
@@ -19,6 +27,12 @@ delivery/    → HTTP controllers, DTOs, Kafka producer
 application/ → OAuth flow orchestration
 internal/    → domain entities, repositories, mappers, JWT/config
 ```
+
+## Events
+
+| Topic | Direction | Purpose |
+|---|---|---|
+| `user.created` | produce | published after successful VK auth, consumed by products/feed/profile/chat services |
 
 ## Running locally
 
