@@ -1,3 +1,9 @@
 .idea/
 .DS_Store
 *.iml
+
+# main holds docs only — no k8s manifests, monitoring config, or
+# per-service package files, since those carry live cluster secrets
+*.yml
+*.yaml
+*.json
