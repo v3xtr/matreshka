@@ -1,6 +1,8 @@
 # admin-service
 
-Scaffolding for platform administration (moderation, admin-only operations) on the Matreshka platform. Part of the [matreshka](../) microservices monorepo.
+> Platform administration (moderation, admin-only operations) for the Matreshka platform.
+
+Part of the [matreshka](../) microservices monorepo.
 
 ## Status
 
@@ -8,5 +10,15 @@ Early stage — project skeleton with the standard layered structure (`applicati
 
 ## Stack
 
-- **Java / Spring Boot**
-- **Kafka** — broker consumer already scaffolded (`BrokerConsumer`)
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Messaging | Kafka (consumer already scaffolded) |
+
+## Architecture
+
+```
+delivery/    → HTTP controller (empty), Kafka consumer
+application/ → AdminService (empty)
+internal/    → domain entity, repository, middleware
+```
