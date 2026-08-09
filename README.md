@@ -94,7 +94,7 @@ Every service talks through Kafka — `auth-service` and the media pipeline incl
 
 `vk-oauth-service` also publishes to Kafka (`UserRegisteredEvent`, via `StreamBridge`), but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. That's a routing gap to close, not a broker problem. `google-oauth-service` is the one straggler: still TypeScript/Prisma rather than the Java/Kafka pattern `vk-oauth-service` and `profile-service` already migrated to, so it isn't in the diagram's Kafka flow at all yet — porting it is the natural next step.
 
-`thumbnail-service`'s `build.gradle` still declares a `spring-cloud-stream-binder-rabbit` dependency left over from before the Kafka migration; worth confirming it's actually dead weight and deleting it if so.
+`thumbnail-service` is mid-migration off RabbitMQ onto Kafka to match the rest of the pipeline — the diagram already shows the target topology.
 
 ### Reliability patterns in use
 
@@ -117,7 +117,7 @@ Every service talks through Kafka — `auth-service` and the media pipeline incl
 
 - VK and Google sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
 - `google-oauth-service` hasn't made the TypeScript → Java / Kafka jump that `vk-oauth-service` and `profile-service` already went through.
-- `thumbnail-service` has a leftover RabbitMQ binder dependency in `build.gradle` — clean up once confirmed unused.
+- `thumbnail-service` is being rewritten from RabbitMQ to Kafka; `build.gradle` still carries the old `spring-cloud-stream-binder-rabbit` dependency until that lands.
 - `cryptography-app` has a working `CryptoService` (AES/GCM, random IV per call) but no HTTP layer and no caller yet; it's a standalone module waiting to be adopted.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
 
