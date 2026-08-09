@@ -1,25 +1,34 @@
 # notification-service
 
-Delivers push notifications to users on the Matreshka platform, triggered by chat messages and other platform events. Part of the [matreshka](../) microservices monorepo.
+> Delivers push notifications to users on the Matreshka platform.
+
+Part of the [matreshka](../) microservices monorepo.
+
+## Responsibilities
+
+- Consumes chat message events and turns them into a push notification
+- Manages device tokens for Firebase Cloud Messaging
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Security, Spring Cloud Stream
-- **PostgreSQL** — stores notifications and device tokens, versioned with **Flyway**
-- **Redis** — caching
-- **Firebase Cloud Messaging** — actual push delivery to devices
-- **Kafka** (Spring Cloud Stream) — consumes chat message events
-- **JWT** — stateless auth via `AuthFilter`
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Persistence | PostgreSQL, versioned with Flyway |
+| Cache | Redis |
+| Messaging | Kafka (Spring Cloud Stream) |
+| Push delivery | Firebase Cloud Messaging |
+| Auth | JWT, validated in `AuthFilter` |
 
 ## Architecture
 
 ```
-delivery/    → HTTP controllers, DTOs, Kafka consumers
+delivery/    → HTTP controllers, DTOs, Kafka consumer
 application/ → use cases / services
 internal/    → domain entities, repositories, mappers, config, FCM worker
 ```
 
-## Kafka
+## Events
 
 | Topic | Direction | Purpose |
 |---|---|---|
@@ -27,7 +36,7 @@ internal/    → domain entities, repositories, mappers, config, FCM worker
 
 ## Running locally
 
-Needs Postgres, Redis and Kafka reachable at the URLs configured via env vars (see `application.yml`), plus a Firebase service account key (not version-controlled — see `.gitignore`) for FCM.
+Needs Postgres, Redis and Kafka reachable at the URLs configured via env vars (see `application.yml`), plus a Firebase service account key (not version-controlled) for FCM.
 
 ## Deployment
 
