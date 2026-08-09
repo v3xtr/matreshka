@@ -1,14 +1,25 @@
 # chat-service
 
-Real-time messaging between users on the Matreshka platform — rooms, messages, WebSocket delivery. Part of the [matreshka](../) microservices monorepo.
+> Real-time messaging between users on the Matreshka platform.
+
+Part of the [matreshka](../) microservices monorepo.
+
+## Responsibilities
+
+- Rooms and messages
+- Real-time delivery over WebSocket (STOMP)
+- Mirrors user records for chat participants
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Security, Spring WebSocket (STOMP over SockJS)
-- **MongoDB** — stores rooms and messages (document-shaped, fits chat's access patterns better than relational)
-- **Redis** — caching
-- **Kafka** (Spring Cloud Stream) — consumes `user.created` to mirror user records, publishes chat/notification events
-- **JWT** — stateless auth via `AuthFilter` + `SecurityConfig`
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Persistence | MongoDB (document shape fits chat's access patterns) |
+| Cache | Redis |
+| Messaging | Kafka (Spring Cloud Stream) |
+| Real-time | WebSocket / STOMP over SockJS |
+| Auth | JWT, validated in `AuthFilter` |
 
 ## Architecture
 
@@ -18,14 +29,14 @@ application/ → use cases / services
 internal/    → domain documents, repositories, mappers, config
 ```
 
-`index.html` is a minimal manual STOMP/WebSocket test page — not part of the service, just a smoke-test client for local development.
+`index.html` at the repo root is a minimal manual STOMP/WebSocket test page — not part of the service, just a smoke-test client for local development.
 
-## Kafka
+## Events
 
 | Topic | Direction | Purpose |
 |---|---|---|
 | `user.created` | consume | mirror user records for chat participants |
-| `chat-messages-topic` | produce | outbound chat message events |
+| `chat-messages-topic` | produce | outbound chat message events, consumed by `notification-service` |
 
 ## Running locally
 
