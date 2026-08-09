@@ -32,21 +32,6 @@ public class AuthFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         log.info("[AuthFilter] DEBUG PATH: {}", path);
 
-        if (path.contains("/api-docs") ||
-                path.contains("/v3/api-docs") ||
-                path.contains("/swagger-ui") ||
-                path.contains("/webjars") ||
-                path.equals("/favicon.ico") ||
-                path.contains("api-docs") ||
-                path.contains("swagger") ||
-                path.contains("webjars") ||
-                path.contains("/actuator")
-        ) {
-            log.debug("[AuthFilter] Skipping auth for swagger/docs path: {}", path);
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         String token = null;
         Cookie[] cookies = request.getCookies();
 

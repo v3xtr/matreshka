@@ -6,16 +6,24 @@ import com.matreshka.products_service.internal.infrastructure.persistence.UserEn
 import com.matreshka.products_service.internal.infrastructure.persistence.mapper.IUserMapper;
 import com.matreshka.products_service.internal.repo.IUserRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements IUserService {
+
     private final IUserRepo userRepo;
     private final IUserMapper userMapper;
 
+    @Override
     public void processUser(UserRegisteredEvent event) {
-        UserEntity user = userMapper.toEntity(event);
-        userRepo.save(user);
+        try{
+            UserEntity user = userMapper.toEntity(event);
+            userRepo.save(user);
+        }catch (Exception e){
+            log.error("Error processing user event", e);
+        }
     }
 }

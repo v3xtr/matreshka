@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.io.IOException;
 import java.util.List;
 
 @Configuration
@@ -22,20 +23,27 @@ public class SecurityConfig {
     private final AuthFilter authFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/v3/api-docs/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**").permitAll()
-                        .requestMatchers("/api/advert/**").permitAll()
-                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers(
+                                "/api-docs",
+                                "/api-docs/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/favicon.ico"
+                        ).permitAll()
+                        .requestMatchers("/api/adverts/search").permitAll()
                         .anyRequest().authenticated()
-                );
-
-        return http.build();
+                ).build();
     }
 
     private CorsConfigurationSource corsConfigurationSource() {
@@ -46,7 +54,11 @@ public class SecurityConfig {
                 "http://localhost:5173",
                 "http://85.198.96.229",
                 "http://85.198.96.229:5173/",
-                "http://85.198.69.217*"
+                "http://85.198.69.217*",
+                "https://xn--80aaouhzn4c.com",
+                "http://xn--80aaouhzn4c.com",
+                "https://матрешка.com",
+                "http://матрешка.com"
         ));
 
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

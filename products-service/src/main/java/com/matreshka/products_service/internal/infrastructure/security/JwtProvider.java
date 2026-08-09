@@ -1,5 +1,6 @@
 package com.matreshka.products_service.internal.infrastructure.security;
 
+import com.matreshka.products_service.internal.configs.AuthProperties;
 import com.matreshka.products_service.internal.infrastructure.security.port.IJwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -16,8 +17,11 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    @Value("${jwt.access.token.secret}")
-    private String accessTokenSecret;
+    private final AuthProperties authProperties;
+
+    public JwtProvider(AuthProperties authProperties) {
+        this.authProperties = authProperties;
+    }
 
     @Override
     public boolean isValidToken(String token) {
@@ -34,7 +38,7 @@ public class JwtProvider implements IJwtProvider {
     public String extractUserId(String token) {
         try {
             Claims claims = parseClaims(token);
-            return claims.get("userId", String.class);
+            return claims.get("id", String.class);
         } catch (JwtException e) {
             log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;
@@ -50,7 +54,6 @@ public class JwtProvider implements IJwtProvider {
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = accessTokenSecret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(authProperties.access().getBytes());
     }
 }
