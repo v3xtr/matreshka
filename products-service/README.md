@@ -1,35 +1,46 @@
 # products-service
 
-Manages adverts (listings) for the Matreshka platform — creation, search, media attachment, favorites. Part of the [matreshka](../) microservices monorepo.
+> Listings (adverts) for the Matreshka platform — creation, search, media attachment, favorites.
+
+Part of the [matreshka](../) microservices monorepo.
+
+## Responsibilities
+
+- CRUD for adverts, with ownership tied to the authenticated user
+- Full-text/faceted search via Elasticsearch
+- Links uploaded media (photos, video) to an advert once processing finishes
+- Favorites
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Data JPA, Spring Security, Spring Cloud Stream
-- **PostgreSQL** — system of record, versioned with **Flyway**
-- **Elasticsearch** — read-optimized search index (CQRS: Postgres for writes, ES for search)
-- **Redis** — caching
-- **Kafka** (via Spring Cloud Stream) — consumes user/media events, publishes advert-related events
-- **JWT** — stateless auth via a custom `AuthFilter` + `SecurityConfig`
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Persistence (writes) | PostgreSQL, versioned with Flyway |
+| Persistence (reads/search) | Elasticsearch |
+| Cache | Redis |
+| Messaging | Kafka (Spring Cloud Stream) |
+| Auth | JWT, validated in `AuthFilter` |
 
 ## Architecture
 
 ```
-delivery/    → HTTP controllers, DTOs, Kafka consumers/producers (inbound/outbound adapters)
-application/ → use cases / services, orchestrates domain + infrastructure
-internal/    → domain entities, repositories, mappers, config — not exposed outside the module
+delivery/    → HTTP controllers, DTOs, Kafka consumers/producers
+application/ → use cases / services
+internal/    → domain entities, repositories, mappers, config
 ```
 
-Advert writes go to Postgres inside a transaction; on commit, the same advert is projected into Elasticsearch for search. Media (photos/video) is uploaded separately and processed asynchronously — a `MediaEvent` arrives over Kafka once processing finishes, and the resulting `media` row is linked back to its advert.
+**CQRS**: advert writes go to Postgres inside a transaction; on commit, the same advert is projected into Elasticsearch for search. Postgres is the system of record, Elasticsearch serves read/search traffic.
 
-## Kafka topics
+## Events
 
 | Topic | Direction | Purpose |
 |---|---|---|
 | `user.created` | consume | mirror user records needed for adverts |
-| `media-processor-result` | consume | media (photo/video) finished processing, ready to link |
+| `media-processor-result` | consume | media finished processing, link it to its advert |
 | `media.deleted` | consume | remove a media record |
 
-`media-processor-result` is configured with retry (backoff) + DLQ (`media-processor-result.DLQ`) — a message that fails repeatedly (e.g. the advert isn't in Postgres yet) is retried before being routed to the DLQ instead of being silently dropped.
+`media-processor-result` has retry (backoff) + a dead-letter topic (`media-processor-result.DLQ`) — a message that fails repeatedly (e.g. the advert isn't in Postgres yet) is retried before being routed to the DLQ instead of silently dropped.
 
 ## Running locally
 
@@ -37,4 +48,4 @@ Needs Postgres, Redis, Elasticsearch and Kafka reachable at the URLs configured 
 
 ## Deployment
 
-Deployed to Kubernetes via `deployment.sh` + `products-deployment.yaml`. The deployment manifest is **not** version-controlled (it carries plaintext credentials for the cluster's Postgres/Redis/S3/JWT signing key) — it lives only on the deploying machine.
+Deployed to Kubernetes via `deployment.sh` + a k8s manifest. The manifest is **not** version-controlled (carries plaintext credentials for Postgres/Redis/S3/JWT signing) — it lives only on the deploying machine.
