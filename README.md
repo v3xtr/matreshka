@@ -40,24 +40,24 @@ This is the monorepo root: each service lives on its **own branch**, named after
 }}}%%
 flowchart TB
     subgraph Identity
-        AUTH[auth-service]
-        VK[vk-oauth-service]
-        GOOGLE[google-oauth-service<br/>TypeScript, legacy]
+        AUTH[auth-service<br/>PostgreSQL + Redis<br/>transactional outbox]
+        VK[vk-oauth-service<br/>PostgreSQL + Redis]
+        GOOGLE[google-oauth-service<br/>PostgreSQL via Prisma<br/>TypeScript, legacy]
     end
 
     subgraph Core
-        PRODUCTS[products-service]
-        FEED[feed-service]
-        PROFILE[profile-service]
-        CHAT[chat-service]
-        NOTIF[notification-service]
-        ADMIN[admin-service]
+        PRODUCTS[products-service<br/>PostgreSQL + Redis<br/>plus Elasticsearch index]
+        FEED[feed-service<br/>PostgreSQL + Redis]
+        PROFILE[profile-service<br/>PostgreSQL + Redis]
+        CHAT[chat-service<br/>MongoDB + PostgreSQL + Redis]
+        NOTIF[notification-service<br/>PostgreSQL + Redis]
+        ADMIN[admin-service<br/>PostgreSQL + Redis]
     end
 
     subgraph MediaPipeline[Media pipeline]
-        MEDIA[media-service]
-        CONVERTER[video-converter-worker]
-        THUMB[thumbnail-service]
+        MEDIA[media-service<br/>PostgreSQL + Redis]
+        CONVERTER[video-converter-worker<br/>stateless, no DB]
+        THUMB[thumbnail-service<br/>PostgreSQL + Redis]
     end
 
     KAFKA((Kafka))
@@ -81,12 +81,9 @@ flowchart TB
     CHAT -- chat-messages-topic --> KAFKA
     KAFKA -- chat-messages-topic --> NOTIF
     NOTIF -- push --> FCM[(Firebase)]
-
-    PRODUCTS -- write --> PG_P[(Postgres)]
-    PRODUCTS -- search index --> ES[(Elasticsearch)]
 ```
 
-*The dashed edge is a known integration gap, not aspirational design — see below.*
+*Each box lists the database(s) it owns outright — no service reads or writes another's schema. The dashed edge is a known integration gap, not aspirational design — see below.*
 
 ### Kafka is the backbone
 
