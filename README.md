@@ -80,6 +80,15 @@ flowchart TB
     CHAT -- chat-messages-topic --> KAFKA
     KAFKA -- chat-messages-topic --> NOTIF
     NOTIF -- push --> FCM[(Firebase)]
+
+    S3[(S3)]
+    CDN{{CDN}}
+
+    MEDIA -- store --> S3
+    CONVERTER -- store --> S3
+    THUMB -- store --> S3
+    S3 -- origin --> CDN
+    CDN -- file URL --> CLIENTS[client apps]
 ```
 
 *Each box lists the database(s) it owns outright — no service reads or writes another's schema. The dashed edge is a known integration gap, not aspirational design — see below.*
@@ -117,7 +126,7 @@ No service reaches into another's database — every service owns its schema out
 | thumbnail-service | PostgreSQL + Redis |
 | admin-service | PostgreSQL + Redis |
 
-Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`/`thumbnail-service`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery.
+Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`/`thumbnail-service`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery. Files are never served straight out of S3 — it's origin storage only, sitting behind a CDN that client apps actually fetch from.
 
 ### Known gaps
 
