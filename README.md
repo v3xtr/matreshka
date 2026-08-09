@@ -25,14 +25,21 @@ This is the monorepo root: each service lives on its **own branch**, named after
 ## System design
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'fontSize':'15px'}}}%%
 flowchart TB
-    subgraph Identity
+    classDef identity fill:#3b82f6,stroke:#1d4ed8,stroke-width:1.5px,color:#ffffff
+    classDef core fill:#8b5cf6,stroke:#6d28d9,stroke-width:1.5px,color:#ffffff
+    classDef media fill:#f97316,stroke:#c2410c,stroke-width:1.5px,color:#ffffff
+    classDef broker fill:#0f766e,stroke:#134e4a,stroke-width:2.5px,color:#ecfeff,font-weight:bold
+    classDef store fill:#e2e8f0,stroke:#475569,stroke-width:1.5px,color:#0f172a
+
+    subgraph Identity["🔑 Identity"]
         AUTH[auth-service]
         VK[vk-oauth-service]
-        GOOGLE[google-oauth-service<br/>TypeScript, legacy]
+        GOOGLE["google-oauth-service<br/><i>TypeScript, legacy</i>"]
     end
 
-    subgraph Core
+    subgraph Core["⚙️ Core"]
         PRODUCTS[products-service]
         FEED[feed-service]
         PROFILE[profile-service]
@@ -41,49 +48,53 @@ flowchart TB
         ADMIN[admin-service]
     end
 
-    subgraph Media pipeline
+    subgraph MediaPipeline["🎬 Media pipeline"]
         MEDIA[media-service]
         CONVERTER[video-converter-worker]
         THUMB[thumbnail-service]
     end
 
-    AUTH -- user.created --> KAFKA((Kafka))
+    KAFKA(("⚡ Kafka"))
+
+    AUTH -- user.created --> KAFKA
     KAFKA -- user.created --> PRODUCTS
     KAFKA -- user.created --> FEED
     KAFKA -- user.created --> CHAT
 
-    VK -. UserRegisteredEvent .-> KAFKA
-    GOOGLE -. user.created via fanout .-> RABBIT((RabbitMQ))
+    VK -. "UserRegisteredEvent<br/>(different topic, not yet consumed)" .-> KAFKA
 
     MEDIA -- media-created-topic --> KAFKA
     KAFKA -- media-processor-process --> CONVERTER
-    CONVERTER -- media-processor-result / error --> KAFKA
+    CONVERTER -- "media-processor-result / error" --> KAFKA
     KAFKA -- media-processor-result --> PRODUCTS
     MEDIA -- media.deleted --> KAFKA
     KAFKA -- media.deleted --> PRODUCTS
-
-    MEDIA -. thumbnail job .-> RABBIT
-    RABBIT -. thumbnail job .-> THUMB
+    MEDIA -- thumbnail job --> KAFKA
+    KAFKA -- thumbnail job --> THUMB
 
     CHAT -- chat-messages-topic --> KAFKA
     KAFKA -- chat-messages-topic --> NOTIF
-    NOTIF -- push --> FCM[(Firebase)]
+    NOTIF -- push --> FCM[("Firebase")]
 
-    PRODUCTS -- write --> PG_P[(Postgres)]
-    PRODUCTS -- search index --> ES[(Elasticsearch)]
+    PRODUCTS -- write --> PG_P[("Postgres")]
+    PRODUCTS -- search index --> ES[("Elasticsearch")]
+
+    class AUTH,VK,GOOGLE identity
+    class PRODUCTS,FEED,PROFILE,CHAT,NOTIF,ADMIN core
+    class MEDIA,CONVERTER,THUMB media
+    class KAFKA broker
+    class PG_P,ES,FCM store
 ```
 
-*Dashed edges are known integration gaps — see below, not aspirational design.*
+*The dashed edge is a known integration gap, not aspirational design — see below.*
 
-### Identity: two brokers, one intent
+### Kafka is the backbone
 
-`auth-service` is the source of truth for the `user.created` Kafka topic — written via a **transactional outbox** (the event is committed in the same DB transaction as the user row, then relayed by a background worker), and it's the only producer that `products-service`, `feed-service`, and `chat-service` actually consume.
+Every service talks through Kafka — `auth-service` and the media pipeline included. `auth-service` is the source of truth for the `user.created` topic, written via a **transactional outbox** (the event is committed in the same DB transaction as the user row, then relayed by a background worker); `products-service`, `feed-service`, and `chat-service` are its only real consumers.
 
-`vk-oauth-service` (Java, already migrated) publishes its own `UserRegisteredEvent` to Kafka, but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. `google-oauth-service` (still TypeScript/Prisma, the one OAuth provider not yet ported to Java the way `vk-oauth-service` and `profile-service` were) publishes on a RabbitMQ fanout exchange instead of Kafka entirely, which no downstream consumer currently listens to. Both are real gaps, not a deliberate multi-broker design — worth closing before either signup path scales.
+`vk-oauth-service` also publishes to Kafka (`UserRegisteredEvent`, via `StreamBridge`), but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. That's a routing gap to close, not a broker problem. `google-oauth-service` is the one straggler: still TypeScript/Prisma rather than the Java/Kafka pattern `vk-oauth-service` and `profile-service` already migrated to, so it isn't in the diagram's Kafka flow at all yet — porting it is the natural next step.
 
-### Media pipeline: two brokers, by necessity not accident
-
-`thumbnail-service` predates the Kafka migration and still runs on RabbitMQ for its inbound job queue; everything else in the media pipeline (`media-service`, `video-converter-worker`, `products-service`) is on Kafka. Unlike the identity-layer split above, this one is intentional — documented in `thumbnail-service`'s own history as "not yet migrated," not a silent gap.
+`thumbnail-service`'s `build.gradle` still declares a `spring-cloud-stream-binder-rabbit` dependency left over from before the Kafka migration; worth confirming it's actually dead weight and deleting it if so.
 
 ### Reliability patterns in use
 
@@ -104,7 +115,9 @@ flowchart TB
 
 ### Known gaps
 
-- VK and Google sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Identity" above.
+- VK and Google sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
+- `google-oauth-service` hasn't made the TypeScript → Java / Kafka jump that `vk-oauth-service` and `profile-service` already went through.
+- `thumbnail-service` has a leftover RabbitMQ binder dependency in `build.gradle` — clean up once confirmed unused.
 - `cryptography-app` has a working `CryptoService` (AES/GCM, random IV per call) but no HTTP layer and no caller yet; it's a standalone module waiting to be adopted.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
 
