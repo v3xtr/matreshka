@@ -38,3 +38,7 @@ src/main/resoureces/application.properties
 .vscode/
 admin-service/
 .DS_Store
+
+### Secrets ###
+src/main/resources/application.properties
+thumbnail-deployment.yml
