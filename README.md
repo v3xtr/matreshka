@@ -1,14 +1,24 @@
 # feed-service
 
-Serves the video feed for the Matreshka platform — video metadata, views, favorites. Part of the [matreshka](../) microservices monorepo.
+> Serves the video feed for the Matreshka platform — video metadata, views, favorites.
+
+Part of the [matreshka](../) microservices monorepo.
+
+## Responsibilities
+
+- Video metadata for the feed
+- View tracking
+- Favorites
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Security
-- **PostgreSQL** — versioned with **Flyway**
-- **Redis** — video cache
-- **Kafka** — consumes user/media events, publishes media-delete events
-- **JWT** — stateless auth
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Persistence | PostgreSQL, versioned with Flyway |
+| Cache | Redis (video cache) |
+| Messaging | Kafka (Spring Cloud Stream) |
+| Auth | JWT |
 
 ## Architecture
 
@@ -17,6 +27,14 @@ delivery/    → HTTP controllers, DTOs, Kafka consumers/producers
 application/ → use cases / services
 internal/    → domain entities, repositories, mappers, config
 ```
+
+## Events
+
+| Topic | Direction | Purpose |
+|---|---|---|
+| `user.created` | consume | mirror user records |
+| `media-processor-result` | consume | video finished processing |
+| `media.deleted` | consume/produce | media removal flow |
 
 ## Running locally
 
