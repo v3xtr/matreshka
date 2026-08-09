@@ -1,14 +1,25 @@
 # thumbnail-service
 
-Generates video thumbnails on the Matreshka platform: consumes a media-ready event, extracts a frame via FFmpeg, uploads it to S3. Part of the [matreshka](../) microservices monorepo.
+> Generates video thumbnails on the Matreshka platform.
+
+Part of the [matreshka](../) microservices monorepo. A background worker, not an HTTP service.
+
+## Flow
+
+1. Consumes `media.created` from RabbitMQ
+2. Extracts a frame via **FFmpeg**
+3. Uploads the thumbnail to **S3**
+4. Publishes the result to `media.thumbnail.results`
 
 ## Stack
 
-- **Java / Spring Boot** — Spring Cloud Stream
-- **RabbitMQ** — consumes `media.created`, publishes results to `media.thumbnail.results`
-- **FFmpeg** — frame extraction (invoked as an external process, path configured via `ffmpeg.path`)
-- **AWS S3** (Beget Cloud) — thumbnail storage
-- **Elasticsearch** — logging
+| Concern | Technology |
+|---|---|
+| Language / framework | Java, Spring Boot |
+| Messaging | RabbitMQ (predates the platform's move to Kafka, not yet migrated) |
+| Thumbnail extraction | FFmpeg (external process) |
+| Storage | AWS S3-compatible (Beget Cloud) |
+| Logging | Elasticsearch |
 
 ## Running locally
 
