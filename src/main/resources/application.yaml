@@ -55,7 +55,7 @@ spring:
       default-binder: kafka
       bindings:
         consumeUser-in-0:
-          destination: user-notifications-topic
+          destination: user.created
           group: chat-service-group
         chatMessages-out-0:
           destination: chat-messages-topic
@@ -70,9 +70,9 @@ spring:
 
 
 jwt:
-  access:
-    token:
-      secret: ${JWT_ACCESS_TOKEN_SECRET:place-holder}
+  secrets:
+    access: ${JWT_ACCESS_TOKEN_SECRET:place-holder}
+
 
 springdoc:
   swagger-ui:
@@ -84,7 +84,8 @@ springdoc:
 
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web.socket: DEBUG
 
 management:
   endpoints:
