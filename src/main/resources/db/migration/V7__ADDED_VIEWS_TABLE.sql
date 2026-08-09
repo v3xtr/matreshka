@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS views
+(
+    id        UUID         NOT NULL,
+    user_id   VARCHAR(255) NOT NULL,
+    video_id  UUID         NOT NULL,
+    viewed_at TIMESTAMP WITHOUT TIME ZONE,
+    CONSTRAINT pk_views PRIMARY KEY (id)
+);
+
+ALTER TABLE videos DROP COLUMN IF EXISTS views;
+ALTER TABLE videos ADD COLUMN views_count BIGINT NOT NULL DEFAULT 0;
+
+ALTER TABLE views
+    ADD CONSTRAINT uc_c18dc9ad93cff8817d0a094f8 UNIQUE (user_id, video_id);
+
+ALTER TABLE views
+    ADD CONSTRAINT FK_VIEWS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE views
+    ADD CONSTRAINT FK_VIEWS_ON_VIDEO FOREIGN KEY (video_id) REFERENCES videos (id);

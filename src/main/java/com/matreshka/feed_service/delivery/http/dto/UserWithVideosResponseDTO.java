@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record UserWithVideosResponseDTO (
-        UUID id,
+        String id,
         List<String> favoriteVideos
 
 ){

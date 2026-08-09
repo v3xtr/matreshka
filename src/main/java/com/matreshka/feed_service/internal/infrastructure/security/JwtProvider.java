@@ -10,15 +10,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    @Value("${jwt.access.token.secret}")
-    private String accessTokenSecret;
+    private final String accessTokenSecret;
 
+    public JwtProvider(@Value("${jwt.access.token.secret}") String accessTokenSecret) {
+        this.accessTokenSecret = accessTokenSecret;
+    }
     @Override
     public boolean isValidToken(String token) {
         try {
@@ -34,7 +35,7 @@ public class JwtProvider implements IJwtProvider {
     public String extractUserId(String token) {
         try {
             Claims claims = parseClaims(token);
-            return claims.get("userId", String.class);
+            return claims.get("id", String.class);
         } catch (JwtException e) {
             log.error("[JwtProvider] Failed to extract userId: {}", e.getMessage());
             return null;
@@ -50,7 +51,6 @@ public class JwtProvider implements IJwtProvider {
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = accessTokenSecret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(accessTokenSecret.getBytes());
     }
 }

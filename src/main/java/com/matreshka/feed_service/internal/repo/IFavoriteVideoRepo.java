@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface IFavoriteVideoRepo extends JpaRepository<FavoriteVideo, String> {
     Optional<FavoriteVideo> findByUserIdAndVideoId(String userId, UUID videoId);
     void deleteByUserIdAndVideoId(String userId, UUID videoId);
+    boolean existsByUserIdAndVideoId(String userId, UUID mediaId);
 }

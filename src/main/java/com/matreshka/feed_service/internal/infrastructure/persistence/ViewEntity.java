@@ -5,16 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "favorite_videos")
+@Table(
+        name = "views",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "video_id"})
+        }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FavoriteVideo {
+public class ViewEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,6 +35,5 @@ public class FavoriteVideo {
     @JoinColumn(name = "video_id", nullable = false)
     private VideoEntity video;
 
-    @Column(name = "is_favorite", nullable = false)
-    private boolean isFavorite = false;
+    private LocalDateTime viewedAt;
 }

@@ -1,6 +1,8 @@
 package com.matreshka.feed_service.internal.infrastructure.persistence;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.util.List;
@@ -17,6 +19,13 @@ public class UserEntity {
     private String id;
 
     private String name;
+
+    @Max(value = 5)
+    @Min(value = 1)
+    @Builder.Default
+    private Double rating = 5.0;
+
+    private String avatar;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<VideoEntity> videos;

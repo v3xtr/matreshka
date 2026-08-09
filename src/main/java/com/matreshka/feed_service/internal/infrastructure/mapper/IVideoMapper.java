@@ -14,16 +14,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface IVideoMapper {
 
-    @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "name", source = "user.name")
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "author", source = "user")
+    @Mapping(target = "isFavorite", source = "isFavorite")
+    @Mapping(target = "author", source = "videoEntity.user")
     @Mapping(target = "comments", expression = "java(mapComments(videoEntity.getComments()))")
-    VideoDetailResponseDTO toDetailResponseDTO(VideoEntity videoEntity);
-
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    UserShortInfoDTO toAuthorDTO(UserEntity userEntity);
+    @Mapping(target = "views", expression = "java(videoEntity.getViews() != null ? (long) videoEntity.getViews().size() : 0L)")
+    @Mapping(target = "title", source = "videoEntity.title")
+    @Mapping(target = "productId", source = "videoEntity.productId")
+    VideoDetailResponseDTO toDetailResponseDTO(VideoEntity videoEntity, boolean isFavorite);
 
     default List<CommentResponseDTO> mapComments(List<CommentEntity> comments) {
         if (comments == null) {
@@ -35,14 +32,17 @@ public interface IVideoMapper {
                 .toList();
     }
 
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "publishedAt", ignore = true)
+    @Mapping(target = "viewsCount", ignore = true)
     @Mapping(target = "views", ignore = true)
     @Mapping(target = "user", ignore = true)
-    @Mapping(target = "mediaId", ignore = true)
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "likes", ignore = true)
     @Mapping(target = "comments", ignore = true)
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "isNew", ignore = true)
-    VideoEntity toEntity(MediaEvent mediaEvent);
+    @Mapping(target = "productId", expression = "java(event.productId() != null && !event.productId().isBlank() ? java.util.UUID.fromString(event.productId()) : null)")
+    VideoEntity toEntity(MediaEvent event);
 
     List<VideoShortResponseDTO> toShortResponseDTO(List<VideoEntity> videoEntities);
 

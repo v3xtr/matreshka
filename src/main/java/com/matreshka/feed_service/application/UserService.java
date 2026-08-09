@@ -2,6 +2,7 @@ package com.matreshka.feed_service.application;
 
 import com.matreshka.feed_service.application.port.IUserService;
 import com.matreshka.feed_service.delivery.broker.dto.UserRegisteredEvent;
+import com.matreshka.feed_service.delivery.broker.dto.UserUpdatedEvent;
 import com.matreshka.feed_service.internal.infrastructure.mapper.IUserMapper;
 import com.matreshka.feed_service.internal.infrastructure.persistence.UserEntity;
 import com.matreshka.feed_service.internal.repo.IUserRepo;
@@ -21,6 +22,13 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void processUser(UserRegisteredEvent event){
+        UserEntity user = userMapper.toEntity(event);
+        userRepo.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void processUpdatedUser(UserUpdatedEvent event){
         UserEntity user = userMapper.toEntity(event);
         userRepo.save(user);
     }

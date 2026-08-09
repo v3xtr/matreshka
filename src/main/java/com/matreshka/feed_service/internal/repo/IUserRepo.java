@@ -13,7 +13,7 @@ public interface IUserRepo extends JpaRepository<UserEntity, String> {
     @Query("SELECT u FROM UserEntity u JOIN FETCH u.videos WHERE u.id = :id")
     Optional<UserEntity> findByIdWithVideos(@Param("id") String id);
 
-    @Query("SELECT u FROM UserEntity u LEFT JOIN FETCH u.favoriteVideos WHERE u.id = :id")
+    @Query("SELECT u FROM UserEntity u LEFT JOIN FETCH u.favoriteVideos WHERE u.id = :userId")
     UserEntity findWithFavoritesById(@Param("userId") String userId);
 
 }

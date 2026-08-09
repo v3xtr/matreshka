@@ -1,5 +1,7 @@
 package com.matreshka.feed_service.internal.infrastructure.mapper;
 
+import com.matreshka.feed_service.delivery.broker.dto.UserRegisteredEvent;
+import com.matreshka.feed_service.delivery.broker.dto.UserUpdatedEvent;
 import com.matreshka.feed_service.delivery.http.dto.UserResponseDTO;
 import com.matreshka.feed_service.delivery.http.dto.UserWithVideosResponseDTO;
 import com.matreshka.feed_service.internal.infrastructure.persistence.FavoriteVideo;
@@ -20,12 +22,19 @@ public interface IUserMapper {
     @Mapping(target = "id", ignore = true )
     UserResponseDTO toResponseDTO(Optional<UserEntity> userEntity);
 
-    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "rating", ignore = true)
+    @Mapping(target = "avatar", ignore = true)
+    @Mapping(target = "name", source = "name")
     @Mapping(target = "favoriteVideos", ignore = true)
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "comments", ignore = true)
     @Mapping(target = "videos", ignore = true)
-    UserEntity toEntity(Object userRequestDTO);
+    UserEntity toEntity(UserRegisteredEvent userRequestDTO);
+
+    @Mapping(target = "videos", ignore = true)
+    @Mapping(target = "comments", ignore = true)
+    @Mapping(target = "favoriteVideos", ignore = true)
+    UserEntity toEntity(UserUpdatedEvent userRequestDTO);
 
     @Mapping(target = "favoriteVideos", source = "favoriteVideos", qualifiedByName = "mapFavoriteVideosToIds")
     UserWithVideosResponseDTO toDtoWithFavorites(UserEntity entity);

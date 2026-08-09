@@ -21,8 +21,8 @@ public class VideoCacheRepo implements IVideoCacheRepo {
         redisTemplate.opsForValue().decrement(key);
     }
 
-    public void addView(String videoId){
-        String key = "views:post:" + videoId;
+    public void addView(String videoId, String userId){
+        String key = "views:post:" + videoId + ":userId" + userId;
         redisTemplate.opsForValue().increment(key);
     }
 
@@ -39,5 +39,14 @@ public class VideoCacheRepo implements IVideoCacheRepo {
         } catch (NumberFormatException e) {
             return 0L;
         }
+    }
+
+    @Override
+    public boolean hasViewed(String videoId, String userId) {
+        String key = "video:view:" + videoId;
+
+        return Boolean.TRUE.equals(
+                redisTemplate.opsForSet().isMember(key, userId)
+        );
     }
 }

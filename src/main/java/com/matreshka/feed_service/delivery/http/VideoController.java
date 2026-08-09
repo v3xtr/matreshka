@@ -1,6 +1,8 @@
 package com.matreshka.feed_service.delivery.http;
 
 import com.matreshka.feed_service.application.port.IVideoService;
+import com.matreshka.feed_service.delivery.broker.dto.MediaDeleteEvent;
+import com.matreshka.feed_service.delivery.broker.port.IBrokerProducer;
 import com.matreshka.feed_service.delivery.http.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +23,7 @@ import java.util.UUID;
 public class VideoController {
 
     private final IVideoService videoService;
+    private final IBrokerProducer brokerProducer;
 
     @PostMapping("/add-view")
     public ResponseEntity<Void> addView(@Valid @RequestBody VideoRequestDTO videoRequestDTO){
@@ -33,8 +37,11 @@ public class VideoController {
     }
 
     @GetMapping("/{videoId}")
-    public ResponseEntity<VideoDetailResponseDTO> getVideo(@PathVariable UUID videoId){
-        return ResponseEntity.ok(videoService.getVideo(videoId));
+    public ResponseEntity<VideoDetailResponseDTO> getVideo(
+            @AuthenticationPrincipal String userId,
+            @PathVariable UUID videoId
+    ){
+        return ResponseEntity.ok(videoService.getVideo(userId, videoId));
     }
 
     @GetMapping("/welcome-feed")
@@ -43,7 +50,7 @@ public class VideoController {
     }
 
     @PostMapping("/mark-as-favorite")
-    public ResponseEntity<?> markAsFavorite(
+    public ResponseEntity<String> markAsFavorite(
             @Valid @RequestBody FavoriteRequestDTO dto,
             @AuthenticationPrincipal String userId
     ) {
@@ -61,7 +68,7 @@ public class VideoController {
     }
 
     @PostMapping("/unmark-as-favorite")
-    public ResponseEntity<?> unmarkAsFavorite(
+    public ResponseEntity<String> unmarkAsFavorite(
             @Valid @RequestBody FavoriteRequestDTO dto,
             @AuthenticationPrincipal String userId
     ) {
@@ -74,12 +81,24 @@ public class VideoController {
             videoService.unmarkAsFavorite(userId, videoUuid);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Invalid UUID format for videoId: " + dto.videoId());
+            return ResponseEntity.badRequest().body("Неверный формат video id " + dto.videoId());
         }
     }
 
     @GetMapping("/favorites/{userId}")
     public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@PathVariable String userId){
         return ResponseEntity.ok(videoService.getFavoriteVideos(userId));
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Map<String, String>> deleteVideo(@RequestBody DeleteVideoRequestDTO deleteVideoRequestDTO){
+        videoService.deleteVideo(deleteVideoRequestDTO);
+        MediaDeleteEvent mediaDeleteEvent = new MediaDeleteEvent(
+                UUID.fromString(deleteVideoRequestDTO.id()),
+                deleteVideoRequestDTO.s3Key()
+        );
+        brokerProducer.publishMediaDeleted(mediaDeleteEvent);
+        return ResponseEntity.status(200).body(Map.of("message", "Видео было успешно удалено"));
     }
 }

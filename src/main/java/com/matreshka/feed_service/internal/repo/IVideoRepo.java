@@ -32,8 +32,14 @@ public interface IVideoRepo extends JpaRepository<VideoEntity, UUID> {
     @Query("UPDATE VideoEntity v SET v.likes = v.likes + :delta WHERE v.id = :videoId")
     void incrementLikes(@Param("videoId") UUID videoId, @Param("delta") long delta);
 
+    @Query("SELECT COUNT(v) > 0 FROM ViewEntity v WHERE v.video.id = :videoId AND v.user.id = :userId")
+    boolean hasViewed(@Param("videoId") UUID videoId, @Param("userId") String userId);
+
     @Modifying
-    @Query("UPDATE VideoEntity v SET v.views = v.views + :delta WHERE v.id = :videoId")
+    @Query("UPDATE VideoEntity v SET v.viewsCount = v.viewsCount + :delta WHERE v.id = :videoId")
     void incrementViews(@Param("videoId") UUID videoId, @Param("delta") long delta);
 
+    @Modifying
+    @Query("DELETE FROM VideoEntity v WHERE v.cdnUrl = :cdnUrl")
+    void deleteBys3Key(@Param("cdnUrl") String cdnUrl);
 }

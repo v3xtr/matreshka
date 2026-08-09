@@ -2,6 +2,7 @@ package com.matreshka.feed_service.internal.infrastructure.persistence;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.Persistable;
 
 import java.time.LocalDateTime;
@@ -18,11 +19,10 @@ import java.util.UUID;
 public class VideoEntity implements Persistable<UUID> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "media_id")
-    private String mediaId;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "cdn_url")
     private String cdnUrl;
@@ -36,8 +36,12 @@ public class VideoEntity implements Persistable<UUID> {
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
     private List<CommentEntity> comments;
 
+    @OneToMany(mappedBy = "video")
+    private List<ViewEntity> views;
+
+    @Column(name = "views_count")
     @Builder.Default
-    private long views = 0;
+    private long viewsCount = 0;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -47,6 +51,13 @@ public class VideoEntity implements Persistable<UUID> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @Column(name = "published_at")
+    @CreationTimestamp
+    private LocalDateTime publishedAt;
+
+    @Column(name = "product_id")
+    private UUID productId;
 
     @Transient
     @Builder.Default

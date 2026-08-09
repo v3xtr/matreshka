@@ -6,14 +6,16 @@ import java.util.UUID;
 
 public record VideoDetailResponseDTO(
         UUID id,
-        String mediaId,
         String cdnUrl,
         String mimeType,
-        String name,
+        String title,
         String description,
         LocalDateTime createdAt,
         long likes,
         List<CommentResponseDTO> comments,
         long views,
-        UserShortInfoDTO author
+        UserShortInfoDTO author,
+        LocalDateTime publishedAt,
+        Boolean isFavorite,
+        UUID productId
 ) {}

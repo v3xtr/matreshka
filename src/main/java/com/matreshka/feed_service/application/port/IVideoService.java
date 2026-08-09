@@ -1,5 +1,6 @@
 package com.matreshka.feed_service.application.port;
 
+import com.matreshka.feed_service.delivery.broker.dto.MediaDeleteEvent;
 import com.matreshka.feed_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.feed_service.delivery.http.dto.*;
 
@@ -14,5 +15,7 @@ public interface IVideoService {
     void processMedia(MediaEvent mediaEvent);
     void markAsFavorite(String userId, UUID videoId);
     void unmarkAsFavorite(String userId, UUID videoId);
-    VideoDetailResponseDTO getVideo(UUID videoId);
+    VideoDetailResponseDTO getVideo(String userId, UUID videoId);
+    void deleteVideo(MediaDeleteEvent mediaDeleteEvent);
+    void deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO);
 }
