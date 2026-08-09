@@ -20,7 +20,6 @@ This is the monorepo root: each service lives on its **own branch**, named after
 | `video-converter-worker` | video-converter-worker | Java / Spring Boot | Video transcoding (ffmpeg → S3) |
 | `thumbnail-service` | thumbnail-service | Java / Spring Boot | Thumbnail generation (ffmpeg → S3) |
 | `admin-service` | admin-service | Java / Spring Boot | Platform administration *(early stage)* |
-| `cryptography-app` | cryptography-app | Java / Spring Boot | AES-GCM encrypt/decrypt utility *(standalone, not wired in)* |
 
 ## System design
 
@@ -117,7 +116,6 @@ No service reaches into another's database — every service owns its schema out
 | video-converter-worker | none — stateless, S3 in/out only |
 | thumbnail-service | PostgreSQL + Redis |
 | admin-service | PostgreSQL + Redis |
-| cryptography-app | PostgreSQL |
 
 Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`/`thumbnail-service`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery.
 
@@ -127,7 +125,6 @@ Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `
 - `google-oauth-service` hasn't made the TypeScript → Java / Kafka jump that `vk-oauth-service` and `profile-service` already went through.
 - `thumbnail-service` is being rewritten from RabbitMQ to Kafka; `build.gradle` still carries the old `spring-cloud-stream-binder-rabbit` dependency until that lands.
 - `chat-service` declares an `ICacheRepo`/`CacheRepo` abstraction with no Redis dependency and an empty implementation — a caching layer that was planned but never wired up.
-- `cryptography-app` has a working `CryptoService` (AES/GCM, random IV per call) but no HTTP layer and no caller yet; it's a standalone module waiting to be adopted.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
 
 ## Working in this repo
