@@ -1,4 +1,12 @@
 FROM eclipse-temurin:21-jre-jammy
+
 WORKDIR /app
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+
+RUN groupadd -g 1001 productsgroup && \
+    useradd -u 1001 -g productsgroup -m -s /bin/false productsuser
+
+COPY --chown=productsuser:productsgroup build/libs/*.jar app.jar
+
+USER productsuser
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

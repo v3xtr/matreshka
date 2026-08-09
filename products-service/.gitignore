@@ -36,3 +36,4 @@ products-deployment.yaml
 
 ### VS Code ###
 .vscode/
+test-endpoints.http

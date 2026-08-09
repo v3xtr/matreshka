@@ -32,14 +32,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
+
 	// 2. Database & Migration
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
 
-	// 3. Spring Cloud Stream (RabbitMQ)
+	// 3. Spring Cloud Stream (kafka)
 	implementation 'org.springframework.cloud:spring-cloud-stream'
-	implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
 
 	// 4. OpenAPI / Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
@@ -61,10 +62,6 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-	// 9. Elastic
-	implementation 'co.elastic.clients:elasticsearch-java:9.3.0'
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
 	//10. Prometheus
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
