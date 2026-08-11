@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,17 +86,20 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/favorites/{userId}")
-    public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@PathVariable String userId){
+    @GetMapping("/favorites")
+    public ResponseEntity<List<UserWithVideosResponseDTO>> getFavoriteVideos(@AuthenticationPrincipal String userId){
         return ResponseEntity.ok(videoService.getFavoriteVideos(userId));
     }
 
 
-    @PostMapping
-    public ResponseEntity<Map<String, String>> deleteVideo(@RequestBody DeleteVideoRequestDTO deleteVideoRequestDTO){
-        videoService.deleteVideo(deleteVideoRequestDTO);
+    @DeleteMapping
+    public ResponseEntity<Map<String, String>> deleteVideo(
+            @RequestBody DeleteVideoRequestDTO deleteVideoRequestDTO,
+            @AuthenticationPrincipal String userId
+    ){
+        videoService.deleteVideo(deleteVideoRequestDTO, userId);
         MediaDeleteEvent mediaDeleteEvent = new MediaDeleteEvent(
-                UUID.fromString(deleteVideoRequestDTO.id()),
+                deleteVideoRequestDTO.id(),
                 deleteVideoRequestDTO.s3Key()
         );
         brokerProducer.publishMediaDeleted(mediaDeleteEvent);

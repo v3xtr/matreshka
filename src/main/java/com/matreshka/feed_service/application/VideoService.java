@@ -4,6 +4,7 @@ import com.matreshka.feed_service.application.port.IVideoService;
 import com.matreshka.feed_service.delivery.broker.dto.MediaDeleteEvent;
 import com.matreshka.feed_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.feed_service.delivery.http.dto.*;
+import com.matreshka.feed_service.internal.ForbiddenException;
 import com.matreshka.feed_service.internal.infrastructure.mapper.IUserMapper;
 import com.matreshka.feed_service.internal.infrastructure.mapper.IVideoMapper;
 import com.matreshka.feed_service.internal.infrastructure.persistence.FavoriteVideo;
@@ -15,10 +16,11 @@ import com.matreshka.feed_service.internal.repo.IUserRepo;
 import com.matreshka.feed_service.internal.repo.IVideoRepo;
 import com.matreshka.feed_service.internal.repo.IViewRepo;
 import com.matreshka.feed_service.internal.repo.port.IVideoCacheRepo;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -81,7 +83,7 @@ public class VideoService implements IVideoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<VideoShortResponseDTO> getVideosWelcome(VideoShortRequestDTO videoShortRequestDTO){
+    public List<VideoShortResponseDTO> getVideosWelcome(VideoShortRequestDTO videoShortRequestDTO) {
         List<VideoEntity> videos = videoRepo.findRandomWithSeed(
                 videoShortRequestDTO.seed(),
                 videoShortRequestDTO.size(),
@@ -92,7 +94,7 @@ public class VideoService implements IVideoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserWithVideosResponseDTO> getFavoriteVideos(String userId){
+    public List<UserWithVideosResponseDTO> getFavoriteVideos(String userId) {
         UserEntity user = userRepo.findWithFavoritesById(userId);
         return Collections.singletonList(userMapper.toDtoWithFavorites(user));
     }
@@ -159,12 +161,17 @@ public class VideoService implements IVideoService {
         log.info("[VideoService] New view registered for video {} by user {}", videoId, userId);
     }
 
-    public void deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO){
-        try{
-            videoRepo.deleteBys3Key(deleteVideoRequestDTO.s3Key());
-        }catch (Exception e){
-            throw new RuntimeException("Не удалось удалить видео");
+    public void deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO, String userId) {
+
+        VideoEntity videoEntity = videoRepo.findById(deleteVideoRequestDTO.id()).orElseThrow(
+                () -> new EntityNotFoundException("Такого Видео не существует")
+        );
+
+        if (!videoEntity.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("У вас нет прав на удаление данного видео");
         }
+
+        videoRepo.deleteBys3Key(deleteVideoRequestDTO.s3Key());
     }
 
     @Transactional
