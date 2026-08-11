@@ -24,14 +24,14 @@ public class CommentsService implements ICommentsService {
 
     @Override
     @Transactional
-    public void addComment(CommentRequestDTO commentRequestDTO) {
+    public void addComment(CommentRequestDTO commentRequestDTO, String userId) {
         CommentEntity commentEntity = commentMapper.toEntity(commentRequestDTO);
 
         if (commentEntity.getCreatedAt() == null) {
             commentEntity.setCreatedAt(LocalDateTime.now());
         }
 
-        commentEntity.setUser(userRepo.getReferenceById(commentRequestDTO.userId()));
+        commentEntity.setUser(userRepo.getReferenceById(userId));
 
         commentEntity.setVideo(videoRepo.getReferenceById(commentRequestDTO.videoId()));
 
