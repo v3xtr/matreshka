@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class ProductsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Объявление создано"));
     }
 
+    @PreAuthorize("#userId == authentication.principal")
     @PutMapping
     public ResponseEntity<AdvertUpdateRequestDTO> update(@Valid @RequestBody AdvertUpdateRequestDTO advertUpdateRequestDTO) {
         AdvertUpdateRequestDTO advert = productsService.update(advertUpdateRequestDTO);
@@ -72,17 +74,11 @@ public class ProductsController {
         return ResponseEntity.status(HttpStatus.OK).body(adverts);
     }
 
+    @PreAuthorize("#userId == authentication.principal")
     @PatchMapping
     public ResponseEntity<Void> updateAdvertVideo(UpdateVideoInAdvertRequestDTO updateVideoInAdvertRequestDTO) {
         productsService.updateVideoId(updateVideoInAdvertRequestDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @GetMapping("/media/{videoId}/status")
-    public ResponseEntity<MediaResponseDTO> getMediaStatus(@PathVariable String videoId) {
-        return mediaService.getStatus(videoId)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")

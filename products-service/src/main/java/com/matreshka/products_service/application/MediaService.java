@@ -2,7 +2,6 @@ package com.matreshka.products_service.application;
 
 import com.matreshka.products_service.application.port.IMediaService;
 import com.matreshka.products_service.delivery.broker.dto.MediaEvent;
-import com.matreshka.products_service.delivery.http.dto.MediaResponseDTO;
 import com.matreshka.products_service.internal.infrastructure.NotFoundException;
 import com.matreshka.products_service.internal.infrastructure.persistence.AdvertEntity;
 import com.matreshka.products_service.internal.infrastructure.persistence.MediaEntity;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -57,18 +55,5 @@ public class MediaService implements IMediaService {
     @Override
     public void deleteMedia(String s3Key) {
         mediaRepo.deleteBys3Key(s3Key);
-    }
-
-    @Override
-    public Optional<MediaResponseDTO> getStatus(String videoId) {
-        return mediaRepo.findById(videoId)
-                .filter(media -> media.getCdnUrl() != null)
-                .map(media -> new MediaResponseDTO(
-                        media.getId(),
-                        media.getCdnUrl(),
-                        media.getType(),
-                        media.getMimeType(),
-                        media.getPublishedAt()
-                ));
     }
 }

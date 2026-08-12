@@ -12,6 +12,7 @@ public record MediaEvent(
         String type,
         String mimeType,
         String userId,
+        String advertId,
         LocalDateTime publishedAt,
         LocalDateTime createdAt
 ) {
