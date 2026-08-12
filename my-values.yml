@@ -1,0 +1,10 @@
+loki:
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      memory: 256Mi
+promtail:
+  resources:
+    limits:
+      memory: 128Mi

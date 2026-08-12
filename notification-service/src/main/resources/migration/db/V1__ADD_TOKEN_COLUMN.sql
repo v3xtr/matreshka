@@ -1,0 +1,1 @@
+ALTER TABLE notifications ADD COLUMN token VARCHAR(512) DEFAULT '';

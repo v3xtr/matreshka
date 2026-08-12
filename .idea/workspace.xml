@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="30a6a1d1-2579-4ed0-92a0-4b624f84b1ee" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/broker/dto/NotificationEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/broker/port/IBrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/exceptions/ConflictException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/dto/UserUpdatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/ViewEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IViewRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/resources/db/migration/V11__ADDED_TITLE_COLUMN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/resources/db/migration/V12__ADDED_PRODUCT_ID.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/resources/db/migration/V7__ADDED_VIEWS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/feed-service/src/main/resources/db/migration/V8__ALTER_USER.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media-service/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/exception/UnAuthorizedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media-service/src/main/resources/migration/db/V5__ADD_TITLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media-service/src/main/resources/migration/db/V6__ADD_PRODUCT_ID.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/matreshka/notification_service/delivery/http/NotificationControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/matreshka/notification_service/delivery/http/dto/NotificationRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/matreshka/notification_service/internal/components/FirebaseUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/migration/db/V1__ADD_TOKEN_COLUMN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/migration/db/V2__ALTER_USER_ID.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertSearchResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/FavoriteAdvertResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/configs/AuthProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V0__INIT_USERS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V1__INIT_ADVERTS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V2__INIT_PICTURES_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V3__INIT_SERVICES_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V4__INIT_WORK_PERIOS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V5__INIT_MEDIA_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V6__INIT_USER_FAVORITE_ADVERTS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/port/IReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/broker/dto/UserUpdatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/broker/port/IBrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/ReviewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/dto/RateRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/dto/ReviewRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/dto/ReviewResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/mapper/IReviewMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/persistence/ReviewEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/repo/IReviewRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V0__CREATE_USERS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V1__CREATE_EMPLOYEES_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V2__CREATE_REVIEWS_TABLE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V3__ADDED_CREATED_AT_COLUMN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/S3Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/VideoConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/VideoProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/port/IS3Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/port/IVideoConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/application/port/IVideoProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/BrokerConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/dto/VideoErrorEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/dto/VideoEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/dto/VideoJobEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/dto/VideoResultEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/delivery/broker/port/IBrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/internal/adapters/BucketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/internal/configs/S3Properties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/video_converter_worker/internal/configs/ThreadConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video-converter-worker/video-converter-deployment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/deployment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/application/OAuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/application/port/IOAuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/broker/port/IBrokerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/http/OAuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/http/OAuthControllerAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/http/dto/CombinedUserResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/delivery/http/dto/UserResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/components/IdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/components/JWTBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/configs/ApplicationJWTProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/configs/ApplicationVkPropeties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/configs/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/infrastructure/mapper/IUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/infrastructure/model/UserModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/infrastructure/persistence/UserEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/repo/IUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/repo/TokenCacheRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/java/com/matreshla/vk_oauth/internal/repo/port/ITokenCacheRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/resources/db/migration/V0__CREATE_TABLES.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/resources/db/migration/V1__DROP_COLUMN.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vk-oauth/src/main/resources/db/migration/V3__ADD_COLUMNS.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/AuthServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/NotificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/VerificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/port/IAuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/port/INotificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/application/port/IVerificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/broker/BrokerProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/broker/port/IBrokerProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/AuthControllerAdvice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/AuthResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/CheckCodeDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/ErrorResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/LoginUserRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/LoginUserResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/RegisterUserRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/RegisterUserResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/delivery/http/dto/SendMailRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/components/IdGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/components/JWTBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/components/OutBoxListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/components/OutBoxWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/configs/AuthProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/configs/PasswordHashing.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/configs/SchedulingConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/configs/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/exceptions/BadRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/exceptions/ConflictException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/exceptions/UnAuthorizedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/exceptions/UserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/infrastructure/mapper/IOutBoxMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/infrastructure/mapper/IUserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/infrastructure/persistence/OutBoxEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/infrastructure/persistence/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/repo/CacheRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/repo/IOutBoxRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/repo/IUserRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/matreshka/auth_service/internal/repo/port/ICacheRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/test/java/com/matreshka/auth_service/AuthServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/ChatServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/ChatServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/port/IChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/application/port/IChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/http/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/http/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/http/ChatControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/http/ChatControllerAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/socket/ChatSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/delivery/socket/ChatSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/adapter/MongoDBTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/adapter/MongoDBTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/configs/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/configs/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/mapper/IChatMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/mapper/IChatMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/persistence/RoomDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/persistence/RoomDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/security/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/infrastructure/security/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/middleware/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/middleware/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/repo/IMessageRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/repo/IMessageRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/repo/IRoomRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/matreshka/chat_service/internal/repo/IRoomRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/chat-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/feed-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/feed-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/VideoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/VideoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/port/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/port/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/port/IVideoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/application/port/IVideoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/BrokerConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/BrokerConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/dto/MediaEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/dto/MediaEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/FeedAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/FeedAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/VideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/VideoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/UserWithVideosResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/UserWithVideosResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/VideoDetailResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/VideoDetailResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/VideoRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/delivery/http/dto/VideoRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/mapper/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/mapper/IUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/mapper/IVideoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/mapper/IVideoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/FavoriteVideo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/FavoriteVideo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/VideoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/persistence/VideoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/security/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/infrastructure/security/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IFavoriteVideoRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IFavoriteVideoRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IUserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IUserRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IVideoRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/IVideoRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/VideoCacheRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/VideoCacheRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/port/IVideoCacheRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/java/com/matreshka/feed_service/internal/repo/port/IVideoCacheRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/feed-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/media-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/media-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/application/MediaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/application/MediaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/application/port/IMediaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/application/port/IMediaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/broker/BrokerProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/MediaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/MediaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/MediaControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/MediaControllerAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/MediaCreateRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/MediaCreateRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/MediaResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/MediaResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/PresignedUrlRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/delivery/http/dto/PresignedUrlRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/filter/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/filter/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/MediaEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/MediaEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/mapper/IMediaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/persistence/mapper/IMediaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/security/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/infrastructure/security/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/repo/IMediaRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/com/matreshka/media_service/internal/repo/IMediaRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/notification-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/notification-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/matreshka/notification_service/internal/configs/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/matreshka/notification_service/internal/configs/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/products-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/products-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/ProductsServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/ProductsServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/MediaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/MediaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/ProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/ProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/port/IProductsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/application/port/IProductsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/BrokerConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/BrokerConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/BrokerProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/BrokerProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/ProductsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/ProductsControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/ProductsControllerAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertCreateRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertCreateRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertCreateResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertCreateResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertDeleteRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertDeleteRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertGetAdvertResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertGetAdvertResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertSearchRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/delivery/http/dto/AdvertSearchRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/configs/ElasticSyncWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/configs/ElasticSyncWorker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/domain/AdvertDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/domain/AdvertDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/filter/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/filter/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/AdvertEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/AdvertEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/PictureEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/PictureEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/ServiceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/ServiceEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/WorkPeriodEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/WorkPeriodEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/mapper/IAdvertEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/mapper/IAdvertEntityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/mapper/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/persistence/mapper/IUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/security/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/infrastructure/security/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/repo/IAdvertRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/repo/IAdvertRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/repo/IAdvertSearchRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/products-service/src/main/java/com/matreshka/products_service/internal/repo/IAdvertSearchRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V0__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V1__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V2__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V3__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V5__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V6__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products-service/src/main/resources/db/migration/V7__ADD_COLUMN_ADVERT_ENTITY.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/profile-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/profile-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/ProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/ProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/port/IProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/application/port/IProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/broker/dto/UserRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/broker/dto/UserRegisteredEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/ProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/dto/UserResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/delivery/http/dto/UserResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/mapper/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/mapper/IUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/persistence/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/persistence/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/security/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/infrastructure/security/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/middlewares/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/matreshka/profile_service/internal/middlewares/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V0__INIT_TABLES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V1__INIT_EMPLOYEES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V2__ADD_USER_ID_TO_EMPLOYEES.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/resources/db/migration/V3__ADD_POSITION_COLUMN_TO_EMPLOYEE.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/thumbnail-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/thumbnail-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thumbnail-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/thumbnail-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thumbnail-service/thumbnail-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/thumbnail-service/thumbnail-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/video-converter-worker/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/converter-deployment.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/converter/Converter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/converter/port/IConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/delivery/broker/Broker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/java/com/matreshka/thread/ThreadStart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/resources/application.local.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video-converter-worker/src/main/resources/application.prod.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/.idea/amplicode-jpa.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/.idea/awsToolkit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/videoConverter/src/ThreadStart.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="1475" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/admin-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/auth-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/chat-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/cryptography-app">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/feed-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/media-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/notification-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/products-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/profile-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/thumbnail-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/video-converter-worker">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/vk-oauth">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Docker Compose" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0000478872130063" />
+      <entry key="MS500" value="1.1367867126575923" />
+      <entry key="S2" value="1.6081503739308456" />
+      <entry key="S5" value="1.819607804897097" />
+      <entry key="S10" value="1.9075412361621324" />
+      <entry key="S30" value="2.1667770591591857" />
+      <entry key="S60" value="2.6118288950549564" />
+      <entry key="M2" value="3.111256829727052" />
+      <entry key="M5" value="3.590801516160366" />
+      <entry key="M10" value="4.009565608795349" />
+      <entry key="M15" value="4.53336651201948" />
+      <entry key="M30" value="5.96071420612446" />
+      <entry key="H1" value="7.6028153898282484" />
+      <entry key="H2" value="9.111781166732781" />
+      <entry key="H4" value="10.284883798975985" />
+      <entry key="D1" value="11.66227865922426" />
+      <entry key="W1" value="11.950236173596224" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9526829891699532" />
+      <entry key="MS500" value="1.1254335471879435" />
+      <entry key="S2" value="1.6038333347953377" />
+      <entry key="S5" value="1.8176159097484963" />
+      <entry key="S10" value="1.9064895019164463" />
+      <entry key="S30" value="2.166347877676086" />
+      <entry key="S60" value="2.6115391192146014" />
+      <entry key="M2" value="3.1110688323606386" />
+      <entry key="M5" value="3.590704841185451" />
+      <entry key="M10" value="4.009450556079098" />
+      <entry key="M15" value="4.5332028925558046" />
+      <entry key="M30" value="5.960504415855237" />
+      <entry key="H1" value="7.602640813391282" />
+      <entry key="H2" value="9.11166779670116" />
+      <entry key="H4" value="10.284819073884004" />
+      <entry key="D1" value="11.662266595486205" />
+      <entry key="W1" value="11.950234416602106" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3HNRZNsjwzhgMHiSZRFJ4gwzkH9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "6f97b549",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/v3xtr/Documents/java/matreshka",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FeedServiceApplication">
+    <configuration name="AdminServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="admin-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.admin_service.AdminServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="auth-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.authservice.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="chat-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.chat_service.ChatServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CryptographyAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="cryptography-app.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.cryptographyapp.CryptographyAppApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FeedServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="feed-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.feed_service.FeedServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MediaServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="media-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.media_service.MediaServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="notification-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.notification_service.NotificationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductsServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="products-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.products_service.ProductsServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProfileServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="profile-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshka.profile_service.ProfileServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VkOauthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="vk-oauth.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.matreshla.vk_oauth.VkOauthApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-63390994e64e-intellij.indexing.shared.core-IU-262.8665.337" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.8665.337" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30a6a1d1-2579-4ed0-92a0-4b624f84b1ee" name="Changes" comment="" />
+      <created>1785706594713</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1785706594713</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matrshka-ingress-api
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/auth
+            pathType: Prefix
+            backend: { service: { name: auth-service, port: { number: 8000 } } }
+          - path: /api/profile
+            pathType: Prefix
+            backend: { service: { name: profile-service, port: { number: 8001 } } }
+          - path: /api/media
+            pathType: Prefix
+            backend: { service: { name: media-service, port: { number: 8002 } } }
+          - path: /api/chat
+            pathType: Prefix
+            backend: { service: { name: chat-service, port: { number: 8003 } } }
+          - path: /api/advert
+            pathType: Prefix
+            backend: { service: { name: products-service, port: { number: 8005 } } }
+          - path: /api/feed
+            pathType: Prefix
+            backend: { service: { name: feed-service, port: { number: 8007 } } }
+          - path: /api/notifications
+            pathType: Prefix
+            backend: { service: { name: notifications-service, port: { number: 8010 } } }
+          - path: /api/chat
+            pathType: Prefix
+            backend: { service: { name: chat-service, port: { number: 8003 } } }
+          - path: /chat-websocket
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-service
+                port:
+                  number: 8003
+          - path: /api/oauth
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth-service
+                port:
+                  number: 8012

@@ -1,0 +1,189 @@
+{
+  "id": 8,
+  "type": "timeseries",
+  "title": "Http Requests",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 9,
+    "w": 16
+  },
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "drawStyle": "line",
+        "lineInterpolation": "stepBefore",
+        "barAlignment": 0,
+        "barWidthFactor": 0.6,
+        "lineWidth": 2,
+        "fillOpacity": 0,
+        "gradientMode": "none",
+        "spanNulls": false,
+        "insertNulls": false,
+        "showPoints": "auto",
+        "showValues": false,
+        "pointSize": 5,
+        "stacking": {
+          "mode": "none",
+          "group": "A"
+        },
+        "axisPlacement": "auto",
+        "axisLabel": "",
+        "axisColorMode": "text",
+        "axisBorderShow": false,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "axisCenteredZero": false,
+        "hideFrom": {
+          "tooltip": false,
+          "viz": false,
+          "legend": false
+        },
+        "thresholdsStyle": {
+          "mode": "line"
+        },
+        "lineStyle": {
+          "fill": "solid"
+        }
+      },
+      "color": {
+        "mode": "palette-classic"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 100
+          }
+        ]
+      },
+      "fieldMinMax": true
+    },
+    "overrides": [
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{status=\"200\"}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{status=\"400\"}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{status=\"404\"}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{status=\"401\"}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "orange",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{status=\"500\"}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "dark-red",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "{}"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "transparent",
+              "mode": "fixed"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "pluginVersion": "12.4.0",
+  "targets": [
+    {
+      "direction": "backward",
+      "editorMode": "code",
+      "expr": "sum by (status) (rate({app=~\".+\"} | regexp `status=(?P<status>\\d+)` [1m]))",
+      "queryType": "range",
+      "refId": "A"
+    }
+  ],
+  "datasource": {
+    "type": "loki",
+    "uid": "afrc70mi3cem8b"
+  },
+  "options": {
+    "tooltip": {
+      "mode": "single",
+      "sort": "none",
+      "hideZeros": false
+    },
+    "legend": {
+      "showLegend": true,
+      "displayMode": "list",
+      "placement": "bottom",
+      "calcs": []
+    }
+  }
+}

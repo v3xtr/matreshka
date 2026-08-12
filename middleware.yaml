@@ -1,0 +1,15 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-docs-prefix
+  namespace: default
+spec:
+  stripPrefix:
+    prefixes:
+      - /api-docs/auth
+      - /api-docs/profile
+      - /api-docs/media
+      - /api-docs/chat
+      - /api-docs/advert
+      - /api-docs/feed
+      - /api-docs/notifications

@@ -1,0 +1,1 @@
+ALTER TABLE media DROP CONSTRAINT IF EXISTS fk_media_on_user;

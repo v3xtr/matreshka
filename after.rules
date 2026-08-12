@@ -1,0 +1,33 @@
+#
+# rules.input-after
+#
+*filter
+:ufw-after-input - [0:0]
+:ufw-after-output - [0:0]
+:ufw-after-forward - [0:0]
+# End required lines
+
+-A ufw-after-input -p udp --dport 137 -j ufw-skip-to-policy-input
+-A ufw-after-input -p udp --dport 138 -j ufw-skip-to-policy-input
+-A ufw-after-input -p tcp --dport 139 -j ufw-skip-to-policy-input
+-A ufw-after-input -p tcp --dport 445 -j ufw-skip-to-policy-input
+-A ufw-after-input -p udp --dport 67 -j ufw-skip-to-policy-input
+-A ufw-after-input -p udp --dport 68 -j ufw-skip-to-policy-input
+-A ufw-after-input -m addrtype --dst-type BROADCAST -j ufw-skip-to-policy-input
+
+# --- БЛОК DOCKER-USER ---
+# Эта цепочка обрабатывается ДО правил Docker, поэтому они не будут перезаписаны.
+:DOCKER-USER - [0:0]
+
+# 1. Разрешаем доверенные IP (Кубернетес) для всех портов (DB, Redis, Mongo)
+-A DOCKER-USER -s 85.198.96.229 -p tcp -m multiport --dports 5432,6379,6432,7432,8432,27017,9200 -j ACCEPT
+-A DOCKER-USER -s 34.160.111.145 -p tcp -m multiport --dports 5432,6379,6432,7432,8432,27017,9200 -j ACCEPT
+
+# 2. Блокируем доступ снаружи к этим портам для всех остальных
+-A DOCKER-USER -p tcp -m multiport --dports 5432,6379,6432,7432,27017 -j DROP
+
+# 3. Возвращаем управление обратно в Docker для легитимного трафика
+-A DOCKER-USER -j RETURN
+# ------------------------
+
+COMMIT

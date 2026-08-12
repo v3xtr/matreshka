@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="thumbnail-service.main" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
+      <module name="admin-service.main" options="-parameters" />
+      <module name="admin-service.test" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
+      <module name="auth-service.main" options="-parameters" />
+      <module name="auth-service.test" options="-parameters" />
+      <module name="chat-service" options="-parameters" />
+      <module name="chat-service.main" options="-parameters" />
+      <module name="chat-service.test" options="-parameters" />
+      <module name="cryptography-app" options="-parameters" />
+      <module name="cryptography-app.main" options="-parameters" />
+      <module name="cryptography-app.test" options="-parameters" />
+      <module name="feed-service" options="-parameters" />
+      <module name="feed-service.main" options="-parameters" />
+      <module name="feed-service.test" options="-parameters" />
+      <module name="media-service" options="-parameters" />
+      <module name="media-service.main" options="-parameters" />
+      <module name="media-service.test" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
+      <module name="notification-service.main" options="-parameters" />
+      <module name="notification-service.test" options="-parameters" />
+      <module name="products-service" options="-parameters" />
+      <module name="products-service.main" options="-parameters" />
+      <module name="products-service.test" options="-parameters" />
+      <module name="profile-service" options="-parameters" />
+      <module name="profile-service.main" options="-parameters" />
+      <module name="profile-service.test" options="-parameters" />
+      <module name="thumbnail-service" options="-parameters" />
+      <module name="thumbnail-service.main" options="-parameters" />
+      <module name="thumbnail-service.test" options="-parameters" />
+      <module name="video-converter-worker" options="-parameters" />
+      <module name="video-converter-worker.main" options="-parameters" />
+      <module name="video-converter-worker.test" options="-parameters" />
+      <module name="vk-oauth" options="-parameters" />
+      <module name="vk-oauth.main" options="-parameters" />
+      <module name="vk-oauth.test" options="-parameters" />
+    </option>
+  </component>
+</project>

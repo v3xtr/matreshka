@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"grafana-nodeport","namespace":"monitoring"},"spec":{"ports":[{"nodePort":32000,"port":3000,"targetPort":3000}],"selector":{"app.kubernetes.io/instance":"monitoring-stack","app.kubernetes.io/name":"grafana"},"type":"NodePort"}}
+  creationTimestamp: "2026-02-26T13:19:39Z"
+  name: grafana-nodeport
+  namespace: monitoring
+  resourceVersion: "896950"
+  uid: 7b31ba0f-c3ff-4eb0-be58-ff22bda3590b
+spec:
+  clusterIP: 10.43.170.128
+  clusterIPs:
+    - 10.43.170.128
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - nodePort: 32000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app.kubernetes.io/instance: monitoring-stack
+    app.kubernetes.io/name: grafana
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

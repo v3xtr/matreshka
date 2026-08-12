@@ -1,0 +1,10 @@
+# These are independent git checkouts (their own branch/remote), not part of this snapshot
+/admin-service/
+/chat-service/
+/feed-service/
+/media-service/
+/thumbnail-service/
+/vk-oauth/
+
+# Carries live DB/Redis/Mongo credentials
+/docker-compose.yaml

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feed-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/feed-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/matreshka.iml" filepath="$PROJECT_DIR$/.idea/matreshka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/media-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/media-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/products-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/products-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/profile-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/profile-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/thumbnail-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/thumbnail-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/video-converter-worker.main.iml" filepath="$PROJECT_DIR$/.idea/modules/video-converter-worker.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/vk-oauth.main.iml" filepath="$PROJECT_DIR$/.idea/modules/vk-oauth.main.iml" />
+    </modules>
+  </component>
+</project>
