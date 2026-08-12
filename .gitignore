@@ -18,6 +18,13 @@ bin/
 !**/src/test/**/bin/
 /auth-deployment.yml
 
+### Secrets ###
+/src/main/resources/application.yaml
+/src/main/resources/application-test.yaml
+
+### Generated sources ###
+/src/main/generated/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

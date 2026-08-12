@@ -47,6 +47,7 @@ public class OutboxEventListener {
                             brokerProducer.produce(brokerEvent);
 
                             savedEntity.setProcessed(true);
+
                             outboxEventRepository.save(savedEntity);
 
                             log.info("Событие для пользователя {} успешно отправлено в Kafka", brokerEvent.id());

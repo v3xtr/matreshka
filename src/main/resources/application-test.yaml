@@ -5,8 +5,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${EMAIL_USER:smirnoffa675@gmail.com}
-    password: ${EMAIL_PASS:gmuh firu kxmu jlhb}
+    username: ${EMAIL_USER:placeholder@gmail.com}
+    password: ${EMAIL_PASS:placeholder}
     properties:
       mail:
         smtp:
@@ -84,5 +84,5 @@ server:
 
 jwt:
   secrets:
-    access: ${JWT_ACCESS_TOKEN_SECRET:b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA==}
-    refresh:  ${JWT_REFRESH_TOKEN_SECRET:b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA==}
+    access: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
+    refresh:  ${JWT_REFRESH_TOKEN_SECRET:placeholder}
