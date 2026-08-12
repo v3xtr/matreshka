@@ -37,7 +37,6 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/favicon.ico"
                         ).permitAll()
-                        .requestMatchers("/api/notifications/**").permitAll()
                         .anyRequest().authenticated()
                 ).build();
     }

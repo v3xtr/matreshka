@@ -40,4 +40,6 @@ out/
 ### Secrets ###
 src/main/resources/creds.json
 src/main/resources/*firebase*.json
+src/main/resources/application.yaml
+src/main/resources/application.yml
 notification-deployment.yml

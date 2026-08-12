@@ -23,7 +23,8 @@ public interface NotificationMapper {
     @Mapping(target = "isRead", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "body", ignore = true)
-    @Mapping(target = "fromUserId", source = "userId")
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "fromUserId", ignore = true)
     @Mapping(target = "token", source = "token")
     NotificationEntity toEntity(NotificationRequestDTO notificationRequestDTO);
 

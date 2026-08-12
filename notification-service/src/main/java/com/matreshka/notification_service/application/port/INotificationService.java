@@ -8,5 +8,5 @@ import java.util.List;
 public interface INotificationService {
     void sendPush(String fromUserId, String userId, String messageBody);
     List<NotificationResponseDTO> getNotifications(String userId);
-    void saveToken(NotificationRequestDTO notificationRequestDTO);
+    void saveToken(String userId, NotificationRequestDTO notificationRequestDTO);
 }

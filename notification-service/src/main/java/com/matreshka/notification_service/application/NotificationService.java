@@ -59,8 +59,9 @@ public class NotificationService implements INotificationService {
     }
 
     @Override
-    public void saveToken(NotificationRequestDTO notificationRequestDTO){
+    public void saveToken(String userId, NotificationRequestDTO notificationRequestDTO){
         NotificationEntity entity = notificationMapper.toEntity(notificationRequestDTO);
+        entity.setUserId(userId);
         notificationRepo.save(entity);
     }
 }

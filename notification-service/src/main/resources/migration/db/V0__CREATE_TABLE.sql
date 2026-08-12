@@ -1,4 +1,3 @@
--- Включаем расширение для работы с UUID, если его нет
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS notifications (
@@ -11,5 +10,4 @@ CREATE TABLE IF NOT EXISTS notifications (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
                              );
 
--- Индекс для быстрого поиска уведомлений конкретного пользователя
 CREATE INDEX idx_notifications_user_id ON notifications(user_id);

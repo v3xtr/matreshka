@@ -54,7 +54,7 @@ spring:
 jwt:
   access:
     token:
-      secret: ${JWT_ACCESS_TOKEN_SECRET}
+      secret: ${JWT_ACCESS_TOKEN_SECRET:place-holder}
 
 management:
   endpoints:
