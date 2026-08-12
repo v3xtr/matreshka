@@ -17,8 +17,9 @@ This is the monorepo root: each service lives on its **own branch**, named after
 | `notification-service` | notification-service | Java / Spring Boot | Push notifications (Firebase) |
 | `media-service` | media-service | Java / Spring Boot | Media upload, storage orchestration |
 | `video-converter-worker` | video-converter-worker | Java / Spring Boot | Video transcoding (ffmpeg → S3) |
-| `thumbnail-service` | thumbnail-service | Java / Spring Boot | Thumbnail generation (ffmpeg → S3) |
 | `admin-service` | admin-service | Java / Spring Boot | Platform administration *(early stage)* |
+
+Thumbnail generation used to be its own service (`thumbnail-service`, ffmpeg → S3); it turned out simpler to grab the first frame client-side instead, so that service isn't part of the live architecture anymore.
 
 ## System design
 
@@ -38,23 +39,51 @@ This is the monorepo root: each service lives on its **own branch**, named after
 }}}%%
 flowchart TB
     subgraph Identity
-        AUTH[auth-service<br/>PostgreSQL + Redis<br/>transactional outbox]
-        VK[vk-oauth-service<br/>PostgreSQL + Redis]
+        AUTH[auth-service<br/>transactional outbox]
+        AUTH_DB[(PostgreSQL)]
+        AUTH --> AUTH_DB
+
+        VK[vk-oauth-service]
+        VK_DB[(PostgreSQL)]
+        VK --> VK_DB
     end
 
     subgraph Core
-        PRODUCTS[products-service<br/>PostgreSQL + Redis<br/>plus Elasticsearch index]
-        FEED[feed-service<br/>PostgreSQL + Redis]
-        PROFILE[profile-service<br/>PostgreSQL + Redis]
-        CHAT[chat-service<br/>MongoDB + PostgreSQL]
-        NOTIF[notification-service<br/>PostgreSQL + Redis]
-        ADMIN[admin-service<br/>PostgreSQL + Redis]
+        PRODUCTS[products-service]
+        PRODUCTS_DB[(PostgreSQL)]
+        PRODUCTS_ES[(Elasticsearch<br/>read model)]
+        PRODUCTS --> PRODUCTS_DB
+        PRODUCTS -- projects on commit --> PRODUCTS_ES
+
+        FEED[feed-service]
+        FEED_DB[(PostgreSQL)]
+        FEED --> FEED_DB
+
+        PROFILE[profile-service]
+        PROFILE_DB[(PostgreSQL)]
+        PROFILE --> PROFILE_DB
+
+        CHAT[chat-service]
+        CHAT_DB[(PostgreSQL<br/>user mirror)]
+        CHAT_MONGO[(MongoDB<br/>rooms/messages)]
+        CHAT --> CHAT_DB
+        CHAT --> CHAT_MONGO
+
+        NOTIF[notification-service]
+        NOTIF_DB[(PostgreSQL)]
+        NOTIF --> NOTIF_DB
+
+        ADMIN[admin-service]
+        ADMIN_DB[(PostgreSQL)]
+        ADMIN --> ADMIN_DB
     end
 
     subgraph MediaPipeline[Media pipeline]
-        MEDIA[media-service<br/>PostgreSQL + Redis + S3]
-        CONVERTER[video-converter-worker<br/>S3 only, no DB]
-        THUMB[thumbnail-service<br/>PostgreSQL + Redis + S3]
+        MEDIA[media-service]
+        MEDIA_DB[(PostgreSQL)]
+        MEDIA --> MEDIA_DB
+
+        CONVERTER[video-converter-worker<br/>stateless, no DB]
     end
 
     KAFKA((Kafka))
@@ -72,8 +101,6 @@ flowchart TB
     KAFKA -- media-processor-result --> PRODUCTS
     MEDIA -- media.deleted --> KAFKA
     KAFKA -- media.deleted --> PRODUCTS
-    MEDIA -- thumbnail job --> KAFKA
-    KAFKA -- thumbnail job --> THUMB
 
     CHAT -- chat-messages-topic --> KAFKA
     KAFKA -- chat-messages-topic --> NOTIF
@@ -84,20 +111,19 @@ flowchart TB
 
     MEDIA -- store --> S3
     CONVERTER -- store --> S3
-    THUMB -- store --> S3
     S3 -- origin --> CDN
     CDN -- file URL --> CLIENTS[client apps]
+
+    REDIS_NOTE[/most services also run their own Redis in front of their store, as a local cache — omitted above for readability/]
 ```
 
-*Each box lists the database(s) it owns outright — no service reads or writes another's schema. The dashed edge is a known integration gap, not aspirational design — see below.*
+*Every database shape is its own instance, owned outright by the service pointing at it — even where two services both say "PostgreSQL," those are separate databases, never a shared one. The dashed edge is a known integration gap, not aspirational design — see below.*
 
 ### Kafka is the backbone
 
 Every service talks through Kafka — `auth-service` and the media pipeline included. `auth-service` is the source of truth for the `user.created` topic, written via a **transactional outbox** (the event is committed in the same DB transaction as the user row, then relayed by a background worker); `products-service`, `feed-service`, and `chat-service` are its only real consumers.
 
 `vk-oauth-service` also publishes to Kafka (`UserRegisteredEvent`, via `StreamBridge`), but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. That's a routing gap to close, not a broker problem.
-
-`thumbnail-service` is mid-migration off RabbitMQ onto Kafka to match the rest of the pipeline — the diagram already shows the target topology.
 
 ### Reliability patterns in use
 
@@ -120,15 +146,13 @@ No service reaches into another's database — every service owns its schema out
 | notification-service | PostgreSQL + Redis |
 | media-service | PostgreSQL + Redis |
 | video-converter-worker | none — stateless, S3 in/out only |
-| thumbnail-service | PostgreSQL + Redis |
 | admin-service | PostgreSQL + Redis |
 
-Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`/`thumbnail-service`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery. Files are never served straight out of S3 — it's origin storage only, sitting behind a CDN that client apps actually fetch from.
+Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `media-service`/`video-converter-worker`, Elasticsearch doubling as the platform-wide logging backend, and Firebase for `notification-service` push delivery. Files are never served straight out of S3 — it's origin storage only, sitting behind a CDN that client apps actually fetch from.
 
 ### Known gaps
 
 - VK sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
-- `thumbnail-service` is being rewritten from RabbitMQ to Kafka; `build.gradle` still carries the old `spring-cloud-stream-binder-rabbit` dependency until that lands.
 - `chat-service` declares an `ICacheRepo`/`CacheRepo` abstraction with no Redis dependency and an empty implementation — a caching layer that was planned but never wired up.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
 
