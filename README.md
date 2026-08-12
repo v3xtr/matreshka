@@ -10,7 +10,6 @@ This is the monorepo root: each service lives on its **own branch**, named after
 |---|---|---|---|
 | `auth-service` | auth-service | Java / Spring Boot | Registration, login, email verification, JWT issuance |
 | `vk-oauth-service` | vk-oauth | Java / Spring Boot | "Sign in with VK" |
-| `google-oauth-service` | google-oauth-service | TypeScript / Prisma | "Sign in with Google" *(not yet ported to Java)* |
 | `advert-service` | products-service | Java / Spring Boot | Listings (adverts): CRUD, search, media linking |
 | `feed-service` | feed-service | Java / Spring Boot | Video feed: metadata, views, favorites |
 | `profile-service` | profile-service | Java / Spring Boot | User profiles, employees, reviews |
@@ -41,7 +40,6 @@ flowchart TB
     subgraph Identity
         AUTH[auth-service<br/>PostgreSQL + Redis<br/>transactional outbox]
         VK[vk-oauth-service<br/>PostgreSQL + Redis]
-        GOOGLE[google-oauth-service<br/>PostgreSQL via Prisma<br/>TypeScript, legacy]
     end
 
     subgraph Core
