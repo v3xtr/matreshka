@@ -1,5 +1,6 @@
 package com.matreshka.media_service.internal.infrastructure.persistence;
 
+import com.matreshka.media_service.internal.domain.MEDIA_TYPE;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +26,9 @@ public class MediaEntity {
     @Column(name = "s3_key", unique = true, nullable = false, length = 512)
     private String s3Key;
 
+    @Column(name = "title", nullable = true, length = 30)
+    private String title;
+
     @Column(nullable = false, length = 2048)
     private String url;
 
@@ -32,7 +36,8 @@ public class MediaEntity {
     private String cdnUrl;
 
     @Column(nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private MEDIA_TYPE type;
 
     @Column(name = "mime_type", nullable = false)
     private String mimeType;
@@ -52,6 +57,9 @@ public class MediaEntity {
     @Column(name = "processed_at")
     private LocalDateTime processedAt;
 
+    @Column(name = "advert_id")
+    private String advertId;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -63,4 +71,5 @@ public class MediaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
 }

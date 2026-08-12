@@ -1,0 +1,1 @@
+ALTER TABLE media ADD COLUMN product_id VARCHAR(255);

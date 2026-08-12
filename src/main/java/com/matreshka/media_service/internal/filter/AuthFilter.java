@@ -31,17 +31,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
         log.info("[AuthFilter] Incoming path: {}", path);
-
-        if (path.contains("/api-docs") ||
-                path.contains("/v3/api-docs") ||
-                path.contains("/swagger-ui") ||
-                path.contains("/webjars") ||
-                path.equals("/favicon.ico")) {
-
-            log.debug("[AuthFilter] Skipping auth for swagger/docs path: {}", path);
-            filterChain.doFilter(request, response);
-            return;
-        }
+        log.info("[AuthFilter] Method: {}, Raw Cookie Header: {}", request.getMethod(), request.getHeader("Cookie"));
 
         String token = null;
         Cookie[] cookies = request.getCookies();
@@ -62,7 +52,7 @@ public class AuthFilter extends OncePerRequestFilter {
             String userId = jwtProvider.extractUserId(token);
             log.info("[AuthFilter] Token valid for user {} at {}", userId, path);
 
-            var auth = new UsernamePasswordAuthenticationToken(
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     userId,
                     null,
                     Collections.emptyList()

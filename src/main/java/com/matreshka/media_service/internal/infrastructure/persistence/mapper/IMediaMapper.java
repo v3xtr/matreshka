@@ -9,19 +9,14 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IMediaMapper {
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "fileName", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "publishedAt", ignore = true)
-    @Mapping(target = "processedAt", ignore = true)
-    @Mapping(target = "thumbnailUrl", ignore = true)
-    @Mapping(target = "fileExtension", ignore = true)
+    @Mapping(target = "fileName", source = "filename")
+    @Mapping(target = "fileExtension", source = "extension")
     @Mapping(source = "url", target = "cdnUrl")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "title", source = "title")
     MediaEntity toEntity(MediaCreateRequestDTO dto);
 
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "s3Key", target = "s3Key")
+    @Mapping(target = "extension", source = "fileExtension")
     MediaResponseDTO toResponseDTO(MediaEntity entity);
 }

@@ -33,13 +33,11 @@ spring:
       port: ${SPRING_DATA_REDIS_PORT:6379}
       password: ${SPRING_DATA_REDIS_PASSWORD:}
 
-  # Базовая конфигурация клиента Kafka (Настроена по аналогии с profile-service)
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      # Защита от ошибок десериализации, как в профилях
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
@@ -47,38 +45,41 @@ spring:
         spring.json.trusted.packages: "com.matreshka.*"
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
-
-  # Настройка биндингов Spring Cloud Stream
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
   cloud:
     function:
       definition: consumeUser;consumeUserCreated;consumeMediaDelete
     stream:
       default-binder: kafka
       bindings:
-        media-created-out-0:
-          destination: media-created-topic
-
-        consumeMedia-in-0:
-          destination: media-thumbnail-results-topic
-          group: media-service-group
-
         consumeUser-in-0:
-          destination: user-updates-topic
+          destination: user-updated-topic
           group: media-service-group
 
         consumeUserCreated-in-0:
-          destination: user-notifications-topic
+          destination: user.created
           group: media-service-created-group
 
+        videoSuccessBinding-out-0:
+          destination: media-processor-result
+          content-type: application/json
+        videoProcessBinding-out-0:
+          destination: media-processor-process
+
         consumeMediaDelete-in-0:
-          destination: media-delete-topic
+          destination: media.deleted
           group: media-service-group
 
-      # Привязка биндеров к брокеру Кафки
+        deleteMediaBinding-out-0:
+          destination: media.deleted
+
+        chatMediaBinding-out-0:
+          destination: chat-media-topic
+
       kafka:
         binder:
           brokers: ${SPRING_CLOUD_STREAM_KAFKA_STREAMS_BINDER_BROKERS:localhost:9092}
+          auto-create-topics: true
 
   jackson:
     deserialization:
@@ -91,8 +92,8 @@ server:
 aws:
   s3:
     region: ru-central-1
-    access-key: LM2JCURZW9HBM3IR6F8V
-    secret-key: x7cxbCcPWRV2rwjgnPyxmD566Qfe6cqbMZ69gj0F
+    access-key: ${AWS_S3_ACCESS_KEY:placeholder}
+    secret-key: ${AWS_S3_SECRET_KEY:placeholder}
     endpoint: https://s3.ru1.storage.beget.cloud
     bucket:
       name: 9cdb3a15dcd8-divine-roux
@@ -100,7 +101,7 @@ aws:
 jwt:
   access:
     token:
-      secret: ${JWT_ACCESS_TOKEN_SECRET:b9XPTrFJ5C06JPeZ9Im3Rw8eS37APlGbbxGRAwj4xbHMT447x6+dPPY45PTteT88g5Mb3cVsTDEmH0yov9SRSA==}
+      secret: ${JWT_ACCESS_TOKEN_SECRET:placeholder}
 
 
 springdoc:

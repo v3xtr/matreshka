@@ -4,6 +4,7 @@ import com.matreshka.media_service.internal.filter.AuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final AuthFilter authFilter;
@@ -36,7 +38,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/favicon.ico",
-                                "error"
+                                "/error"
                         ).permitAll()
                         .requestMatchers("/api/media/**").permitAll()
                         .anyRequest().authenticated()
@@ -50,7 +52,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:5173",
                 "http://85.198.96.229",
-                "http://85.198.96.229:5173/",
+                "http://85.198.96.229:5173",
                 "http://85.198.69.217*"
         ));
 

@@ -1,0 +1,1 @@
+ALtER TABLE media ADD COLUMN title VARCHAR(30);

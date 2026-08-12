@@ -16,8 +16,11 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JwtProvider implements IJwtProvider {
 
-    @Value("${jwt.access.token.secret}")
-    private String accessTokenSecret;
+    private final String accessTokenSecret;
+
+    public JwtProvider(@Value("${jwt.access.token.secret}") String accessTokenSecret) {
+        this.accessTokenSecret = accessTokenSecret;
+    }
 
     @Override
     public boolean isValidToken(String token) {
@@ -43,14 +46,13 @@ public class JwtProvider implements IJwtProvider {
 
     private Claims parseClaims(String token) {
         return Jwts.parser()
-                .verifyWith(getSignKey())
+                .verifyWith(getSignKey()).clockSkewSeconds(60)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
 
     private SecretKey getSignKey() {
-        byte[] keyBytes = accessTokenSecret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(accessTokenSecret.getBytes());
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE media RENAME COLUMN product_id TO advert_id;

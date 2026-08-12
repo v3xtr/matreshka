@@ -22,6 +22,12 @@ public record MediaCreateRequestDTO(
         String title,
 
         @NotBlank
-        String description
+        String description,
+
+        @NotBlank
+        String extension,
+
+        @NotBlank
+        String advertId
 ) {
 }

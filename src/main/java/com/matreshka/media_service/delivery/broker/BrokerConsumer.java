@@ -39,7 +39,7 @@ public class BrokerConsumer {
     public Consumer<MediaDeleteEvent> consumeMediaDelete() {
         return event -> {
             log.info("[Kafka Consumer] Received media delete event: {}", event);
-            mediaService.delete(event.id());
+            mediaService.deleteVideo(event);
         };
     }
 }

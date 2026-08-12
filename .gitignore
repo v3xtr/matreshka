@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 **/src/main/resources/*.properties
+/src/main/resources/application.yaml
+/src/main/resources/application.yml
 
 ### STS ###
 .apt_generated
@@ -17,8 +19,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-!**src/resources/application.yaml
-./media-deployment.yml
+/media-deployment.yml
 
 ### IntelliJ IDEA ###
 .idea

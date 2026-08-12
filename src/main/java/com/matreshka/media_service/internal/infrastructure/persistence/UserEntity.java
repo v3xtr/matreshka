@@ -1,8 +1,10 @@
 package com.matreshka.media_service.internal.infrastructure.persistence;
 
 import jakarta.persistence.*;
+import kotlin.collections.ArrayDeque;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,9 +16,10 @@ import java.util.List;
 @Builder
 public class UserEntity {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "s3Key", nullable = false)
     private String id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MediaEntity> media;
+    private List<MediaEntity> media = new ArrayList<>();
 }
