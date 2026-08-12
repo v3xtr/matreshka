@@ -1,0 +1,1 @@
+ALTER TABLE videos RENAME COLUMN product_id TO advert_id;

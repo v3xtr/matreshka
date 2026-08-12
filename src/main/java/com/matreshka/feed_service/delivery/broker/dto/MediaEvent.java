@@ -12,6 +12,6 @@ public record MediaEvent(
         String mimeType,
         String userId,
         String title,
-        String productId
+        String advertId
 ) {
 }

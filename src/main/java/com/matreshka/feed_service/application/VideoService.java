@@ -161,7 +161,8 @@ public class VideoService implements IVideoService {
         log.info("[VideoService] New view registered for video {} by user {}", videoId, userId);
     }
 
-    public void deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO, String userId) {
+    @Transactional
+    public VideoEntity deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO, String userId) {
 
         VideoEntity videoEntity = videoRepo.findById(deleteVideoRequestDTO.id()).orElseThrow(
                 () -> new EntityNotFoundException("Такого Видео не существует")
@@ -171,24 +172,25 @@ public class VideoService implements IVideoService {
             throw new ForbiddenException("У вас нет прав на удаление данного видео");
         }
 
-        videoRepo.deleteBys3Key(deleteVideoRequestDTO.s3Key());
+        videoRepo.delete(videoEntity);
+        return videoEntity;
     }
 
     @Transactional
     public void deleteVideo(MediaDeleteEvent mediaDeleteEvent) {
         try {
-            log.info("Attempting to delete video with s3Key: {}", mediaDeleteEvent.s3Key());
+            log.info("Attempting to delete video {}", mediaDeleteEvent.id());
 
             videoRepo.findById(mediaDeleteEvent.id()).ifPresentOrElse(
                     video -> {
-                        videoRepo.deleteBys3Key(video.getCdnUrl());
+                        videoRepo.delete(video);
                         log.debug("Видео успешно удалено из БД");
                     },
                     () -> log.debug("Такого видео не существует, так что нечего удалять")
             );
 
         } catch (Exception e) {
-            log.error("Failed to delete video from database for s3Key: {}", mediaDeleteEvent.s3Key(), e);
+            log.error("Failed to delete video from database for id: {}", mediaDeleteEvent.id(), e);
             throw new RuntimeException("Не удалось удалить видео", e);
         }
     }

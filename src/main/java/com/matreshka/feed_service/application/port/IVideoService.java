@@ -3,6 +3,7 @@ package com.matreshka.feed_service.application.port;
 import com.matreshka.feed_service.delivery.broker.dto.MediaDeleteEvent;
 import com.matreshka.feed_service.delivery.broker.dto.MediaEvent;
 import com.matreshka.feed_service.delivery.http.dto.*;
+import com.matreshka.feed_service.internal.infrastructure.persistence.VideoEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,5 +18,5 @@ public interface IVideoService {
     void unmarkAsFavorite(String userId, UUID videoId);
     VideoDetailResponseDTO getVideo(String userId, UUID videoId);
     void deleteVideo(MediaDeleteEvent mediaDeleteEvent);
-    void deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO);
+    VideoEntity deleteVideo(DeleteVideoRequestDTO deleteVideoRequestDTO, String userId);
 }

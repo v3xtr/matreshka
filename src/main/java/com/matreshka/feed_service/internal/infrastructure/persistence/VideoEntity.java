@@ -56,8 +56,11 @@ public class VideoEntity implements Persistable<UUID> {
     @CreationTimestamp
     private LocalDateTime publishedAt;
 
-    @Column(name = "product_id")
-    private UUID productId;
+    @Column(name = "advert_id")
+    private UUID advertId;
+
+    @Column(name = "s3_key")
+    private String s3Key;
 
     @Transient
     @Builder.Default

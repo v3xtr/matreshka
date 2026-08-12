@@ -27,6 +27,8 @@ out/
 !**/src/test/**/out/
 feed-deployment.yml
 /src/main/resources/application.properties
+/src/main/resources/application.yml
+/src/main/resources/application.yaml
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,4 +39,3 @@ feed-deployment.yml
 
 ### VS Code ###
 .vscode/
-feed-deployment.yml

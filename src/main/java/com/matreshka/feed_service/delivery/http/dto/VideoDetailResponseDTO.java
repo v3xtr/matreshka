@@ -17,5 +17,5 @@ public record VideoDetailResponseDTO(
         UserShortInfoDTO author,
         LocalDateTime publishedAt,
         Boolean isFavorite,
-        UUID productId
+        UUID advertId
 ) {}

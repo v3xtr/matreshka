@@ -4,12 +4,12 @@ import com.matreshka.feed_service.application.port.IVideoService;
 import com.matreshka.feed_service.delivery.broker.dto.MediaDeleteEvent;
 import com.matreshka.feed_service.delivery.broker.port.IBrokerProducer;
 import com.matreshka.feed_service.delivery.http.dto.*;
+import com.matreshka.feed_service.internal.infrastructure.persistence.VideoEntity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,10 +97,10 @@ public class VideoController {
             @RequestBody DeleteVideoRequestDTO deleteVideoRequestDTO,
             @AuthenticationPrincipal String userId
     ){
-        videoService.deleteVideo(deleteVideoRequestDTO, userId);
+        VideoEntity deletedVideo = videoService.deleteVideo(deleteVideoRequestDTO, userId);
         MediaDeleteEvent mediaDeleteEvent = new MediaDeleteEvent(
-                deleteVideoRequestDTO.id(),
-                deleteVideoRequestDTO.s3Key()
+                deletedVideo.getId(),
+                deletedVideo.getS3Key()
         );
         brokerProducer.publishMediaDeleted(mediaDeleteEvent);
         return ResponseEntity.status(200).body(Map.of("message", "Видео было успешно удалено"));

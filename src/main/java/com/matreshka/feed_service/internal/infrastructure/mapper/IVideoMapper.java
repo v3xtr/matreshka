@@ -19,7 +19,7 @@ public interface IVideoMapper {
     @Mapping(target = "comments", expression = "java(mapComments(videoEntity.getComments()))")
     @Mapping(target = "views", expression = "java(videoEntity.getViews() != null ? (long) videoEntity.getViews().size() : 0L)")
     @Mapping(target = "title", source = "videoEntity.title")
-    @Mapping(target = "productId", source = "videoEntity.productId")
+    @Mapping(target = "advertId", source = "videoEntity.advertId")
     VideoDetailResponseDTO toDetailResponseDTO(VideoEntity videoEntity, boolean isFavorite);
 
     default List<CommentResponseDTO> mapComments(List<CommentEntity> comments) {
@@ -41,7 +41,7 @@ public interface IVideoMapper {
     @Mapping(target = "likes", ignore = true)
     @Mapping(target = "comments", ignore = true)
     @Mapping(target = "isNew", ignore = true)
-    @Mapping(target = "productId", expression = "java(event.productId() != null && !event.productId().isBlank() ? java.util.UUID.fromString(event.productId()) : null)")
+    @Mapping(target = "advertId", expression = "java(event.advertId() != null && !event.advertId().isBlank() ? java.util.UUID.fromString(event.advertId()) : null)")
     VideoEntity toEntity(MediaEvent event);
 
     List<VideoShortResponseDTO> toShortResponseDTO(List<VideoEntity> videoEntities);
