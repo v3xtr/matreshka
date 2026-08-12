@@ -95,7 +95,7 @@ flowchart TB
 
 Every service talks through Kafka — `auth-service` and the media pipeline included. `auth-service` is the source of truth for the `user.created` topic, written via a **transactional outbox** (the event is committed in the same DB transaction as the user row, then relayed by a background worker); `products-service`, `feed-service`, and `chat-service` are its only real consumers.
 
-`vk-oauth-service` also publishes to Kafka (`UserRegisteredEvent`, via `StreamBridge`), but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. That's a routing gap to close, not a broker problem. `google-oauth-service` is the one straggler: still TypeScript/Prisma rather than the Java/Kafka pattern `vk-oauth-service` and `profile-service` already migrated to, so it isn't in the diagram's Kafka flow at all yet — porting it is the natural next step.
+`vk-oauth-service` also publishes to Kafka (`UserRegisteredEvent`, via `StreamBridge`), but to a different topic than `user.created` — so a VK sign-up doesn't currently fan out to the other services the way a password sign-up does. That's a routing gap to close, not a broker problem.
 
 `thumbnail-service` is mid-migration off RabbitMQ onto Kafka to match the rest of the pipeline — the diagram already shows the target topology.
 
@@ -113,7 +113,6 @@ No service reaches into another's database — every service owns its schema out
 |---|---|
 | auth-service | PostgreSQL + Redis |
 | vk-oauth-service | PostgreSQL + Redis |
-| google-oauth-service | PostgreSQL (via Prisma) |
 | products-service | PostgreSQL + Elasticsearch (search index) + Redis |
 | feed-service | PostgreSQL + Redis |
 | profile-service | PostgreSQL + Redis |
@@ -128,8 +127,7 @@ Outside the per-service stores: S3-compatible object storage (Beget Cloud) for `
 
 ### Known gaps
 
-- VK and Google sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
-- `google-oauth-service` hasn't made the TypeScript → Java / Kafka jump that `vk-oauth-service` and `profile-service` already went through.
+- VK sign-ups aren't wired into the `user.created` fan-out that password sign-ups get — see "Kafka is the backbone" above.
 - `thumbnail-service` is being rewritten from RabbitMQ to Kafka; `build.gradle` still carries the old `spring-cloud-stream-binder-rabbit` dependency until that lands.
 - `chat-service` declares an `ICacheRepo`/`CacheRepo` abstraction with no Redis dependency and an empty implementation — a caching layer that was planned but never wired up.
 - `admin-service` is early-stage — infrastructure (Postgres, Redis, Kafka) is wired, feature surface is minimal.
