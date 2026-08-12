@@ -15,10 +15,10 @@ public class BrokerProducer implements IBrokerProducer {
 
     private final StreamBridge streamBridge;
 
-    public void sendSuccess(String videoId, String resultUrl) {
+    public void sendSuccess(String videoId, String resultUrl, String advertId) {
         log.info("Отправляю успешный результат для видео: {}", videoId);
 
-        VideoResultEvent event = new VideoResultEvent(videoId, resultUrl, "SUCCESS");
+        VideoResultEvent event = new VideoResultEvent(videoId, resultUrl, "SUCCESS", advertId);
 
         boolean sent = streamBridge.send("video-success-out-0", event);
 

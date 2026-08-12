@@ -46,7 +46,7 @@ public class VideoProcessor implements IVideoProcessor {
                 .thenApplyAsync(videoConverter::convert, cpuExecutor)
                 .thenApplyAsync(s3::upload, ioExecutor)
                 .thenAccept(url -> {
-                    brokerProducer.sendSuccess(event.videoId(), url);
+                    brokerProducer.sendSuccess(event.videoId(), url, event.advertId());
                     log.info("Успех! Результат: {}", url);
                 })
                 .exceptionally(ex -> {
