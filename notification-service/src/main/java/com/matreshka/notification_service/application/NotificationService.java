@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +36,12 @@ public class NotificationService implements INotificationService {
 
     @Override
     public void sendPush(String fromUserId, String userId, String messageBody) {
-        String token = notificationRepo.findTokenByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
+        Optional<String> tokenOpt = notificationRepo.findTokenByUserId(userId);
+        if (tokenOpt.isEmpty()) {
+            log.info("Нет push-токена для userId {}, пропускаю отправку", userId);
+            return;
+        }
+        String token = tokenOpt.get();
 
         Notification notification = Notification.builder()
                 .setTitle("Новое сообщение от " + fromUserId)
