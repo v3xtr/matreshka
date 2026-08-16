@@ -63,7 +63,7 @@ public class NotificationService implements INotificationService {
         firebaseUtils.toCompletableFuture(FirebaseMessaging.getInstance().sendAsync(message))
                 .thenAccept(id -> log.info("Push delivered to: {}", id))
                 .exceptionally(ex -> {
-                    System.err.println("Ошибка отправки пуша: " + ex.getMessage());
+                    log.error("Ошибка отправки пуша: {}", ex.getMessage());
                     return null;
                 });
     }
