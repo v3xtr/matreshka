@@ -7,7 +7,9 @@ import com.matreshka.notification_service.application.port.INotificationService;
 import com.matreshka.notification_service.delivery.http.dto.NotificationRequestDTO;
 import com.matreshka.notification_service.delivery.http.dto.NotificationResponseDTO;
 import com.matreshka.notification_service.internal.components.FirebaseUtils;
+import com.matreshka.notification_service.internal.infrastructure.persistence.persistence.NotificationEntity;
 import com.matreshka.notification_service.internal.infrastructure.persistence.persistence.PushTokenEntity;
+import com.matreshka.notification_service.internal.models.NotificationEvent;
 import com.matreshka.notification_service.internal.mapper.NotificationMapper;
 import com.matreshka.notification_service.internal.repo.INotificationRepo;
 import com.matreshka.notification_service.internal.repo.IPushTokenRepo;
@@ -73,5 +75,13 @@ public class NotificationService implements INotificationService {
                 .orElseGet(() -> PushTokenEntity.builder().userId(userId).build());
         entity.setToken(notificationRequestDTO.token());
         pushTokenRepo.save(entity);
+    }
+
+    @Override
+    @Transactional
+    public void saveNotification(NotificationEvent event) {
+        NotificationEntity entity = notificationMapper.toEntity(event);
+        entity.setTitle("Новое сообщение от " + event.senderId());
+        notificationRepo.save(entity);
     }
 }

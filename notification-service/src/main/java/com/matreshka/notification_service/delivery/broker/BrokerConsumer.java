@@ -20,6 +20,7 @@ public class BrokerConsumer implements IBrokerConsumer {
     public Consumer<NotificationEvent> consumeChatMessages() {
         return event -> {
             log.info("[Notification Service consumeChatMessages]: Received notification event: {}", event);
+            notificationService.saveNotification(event);
             notificationService.sendPush(event.senderId(), event.receiverId(), event.message());
         };
     }
