@@ -18,6 +18,6 @@ public interface NotificationMapper {
     NotificationEntity toEntity(NotificationEvent notificationEvent);
 
     @Mapping(target = "message", source = "body")
-    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdAt", expression = "java(entity.getCreatedAt() != null ? entity.getCreatedAt().toString() : null)")
     NotificationResponseDTO toResponse(NotificationEntity entity);
 }

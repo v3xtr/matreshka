@@ -3,6 +3,7 @@ package com.matreshka.notification_service.internal.infrastructure.persistence.p
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -27,4 +28,7 @@ public class NotificationEntity {
 
     @Builder.Default
     private boolean isRead = false;
+
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
