@@ -6,25 +6,20 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "notifications")
+@Table(name = "push_tokens")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NotificationEntity {
+public class PushTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String title;
-
-    private String body;
-
+    @Column(nullable = false, unique = true)
     private String userId;
 
-    private String fromUserId;
-
-    @Builder.Default
-    private boolean isRead = false;
+    @Column(length = 512, nullable = false)
+    private String token;
 }

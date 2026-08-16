@@ -7,12 +7,14 @@ import com.matreshka.notification_service.application.port.INotificationService;
 import com.matreshka.notification_service.delivery.http.dto.NotificationRequestDTO;
 import com.matreshka.notification_service.delivery.http.dto.NotificationResponseDTO;
 import com.matreshka.notification_service.internal.components.FirebaseUtils;
-import com.matreshka.notification_service.internal.infrastructure.persistence.persistence.NotificationEntity;
+import com.matreshka.notification_service.internal.infrastructure.persistence.persistence.PushTokenEntity;
 import com.matreshka.notification_service.internal.mapper.NotificationMapper;
 import com.matreshka.notification_service.internal.repo.INotificationRepo;
+import com.matreshka.notification_service.internal.repo.IPushTokenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class NotificationService implements INotificationService {
 
     private final INotificationRepo notificationRepo;
+    private final IPushTokenRepo pushTokenRepo;
     private final NotificationMapper notificationMapper;
     private final FirebaseUtils firebaseUtils;
 
@@ -36,7 +39,7 @@ public class NotificationService implements INotificationService {
 
     @Override
     public void sendPush(String fromUserId, String userId, String messageBody) {
-        Optional<String> tokenOpt = notificationRepo.findTokenByUserId(userId);
+        Optional<String> tokenOpt = pushTokenRepo.findByUserId(userId).map(PushTokenEntity::getToken);
         if (tokenOpt.isEmpty()) {
             log.info("Нет push-токена для userId {}, пропускаю отправку", userId);
             return;
@@ -64,9 +67,11 @@ public class NotificationService implements INotificationService {
     }
 
     @Override
+    @Transactional
     public void saveToken(String userId, NotificationRequestDTO notificationRequestDTO){
-        NotificationEntity entity = notificationMapper.toEntity(notificationRequestDTO);
-        entity.setUserId(userId);
-        notificationRepo.save(entity);
+        PushTokenEntity entity = pushTokenRepo.findByUserId(userId)
+                .orElseGet(() -> PushTokenEntity.builder().userId(userId).build());
+        entity.setToken(notificationRequestDTO.token());
+        pushTokenRepo.save(entity);
     }
 }
